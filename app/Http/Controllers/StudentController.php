@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\StudentClass;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class StudentController extends Controller
 {
@@ -88,5 +89,43 @@ class StudentController extends Controller
         $student->delete();
 
         return redirect()->route('students.index')->with('success', 'Data siswa berhasil dihapus');
+    }
+
+
+    public function import(Request $request)
+    {
+        // Validasi input file
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        $file = $request->file('file')->getPathname();
+        $spreadsheet = IOFactory::load($file);
+        $sheet = $spreadsheet->getActiveSheet();
+        $rows = $sheet->toArray(null, true, true, true);
+
+        foreach ($rows as $key => $row) {
+            // Skip header row (key = 1)
+            if ($key == 1) continue;
+
+            // Proses untuk mengganti 'P' dan 'L' dengan 'Perempuan' dan 'Laki-laki'
+            $jk = $row['C'];  // Kolom C adalah jenis kelamin
+            if ($jk == 'P') {
+                $jk = 'Perempuan';
+            } elseif ($jk == 'L') {
+                $jk = 'Laki-laki';
+            }
+
+            // Simpan data ke tabel students
+            Student::create([
+                'nama' => $row['A'],  // Kolom A untuk nama
+                'kelas' => $row['B'], // Kolom B untuk kelas
+                'jk' => $jk,          // Simpan jenis kelamin yang sudah diproses
+                'nis' => $row['D'],   // Kolom D untuk NIS
+                'nisn' => $row['E'],  // Kolom E untuk NISN
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Data siswa berhasil diimpor!');
     }
 }

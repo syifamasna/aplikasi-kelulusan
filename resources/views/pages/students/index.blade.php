@@ -116,7 +116,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa</h6>
                             <div class="tombol">
                                 <a href="{{ route('students.create')}}" class="btn btn-primary ml-2 mb-2"> Tambah Data Siswa</a>
-                                <a href="#" class="btn btn-success ml-2 mb-2"> Import Excel</a>
+                                <a type="button" class="btn btn-success ml-2 mb-2" data-toggle="modal" data-target="#importStudentModal"> Import Excel</a>
                                 <a href="#" class="btn btn-secondary ml-2 mb-2"> Print</a>
                             </div>
                         </div>
@@ -170,6 +170,33 @@
     </div>
     <!-- End of Page Wrapper -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="importStudentModal" tabindex="-1" role="dialog" aria-labelledby="importStudentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importStudentModalLabel">Import Data Siswa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('students.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="file">Pilih File Excel:</label>
+                            <input type="file" name="file" id="file" class="form-control" accept=".xlsx,.xls" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Import</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -201,7 +228,7 @@
                 "autoWidth": false,
                 "responsive": true,
                 "pageLength": 5, // Default 5 data per halaman
-                "lengthMenu": [2, 5, 10, 25, 50, 100] // Pilihan jumlah data per halaman
+                "lengthMenu": [5, 10, 27, 50, 100] // Pilihan jumlah data per halaman
             });
         });
     </script>

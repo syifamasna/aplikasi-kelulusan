@@ -57,10 +57,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Data Rapor:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Rapor 6-A</a>
-                        <a class="collapse-item" href="utilities-border.html">Rapor 6-B</a>
-                        <a class="collapse-item" href="utilities-animation.html">Rapor 6-C</a>
-                        <a class="collapse-item" href="utilities-other.html">Rapor 6-D</a>
+                        <a class="collapse-item" href="utilities-color.html">Rapor 6A</a>
+                        <a class="collapse-item" href="utilities-border.html">Rapor 6B</a>
+                        <a class="collapse-item" href="utilities-animation.html">Rapor 6C</a>
+                        <a class="collapse-item" href="utilities-other.html">Rapor 6D</a>
                     </div>
                 </div>
             </li>
