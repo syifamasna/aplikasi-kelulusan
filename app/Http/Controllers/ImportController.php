@@ -5,10 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Models\Student;
-// use App\Models\Teacher;
-// use App\Models\Subject;
-// use App\Models\SchoolYear;
-// use App\Models\StudentClass;
 
 class ImportController extends Controller
 {

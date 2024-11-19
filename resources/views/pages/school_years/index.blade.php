@@ -125,8 +125,6 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Tabel Tahun Ajar</h6>
                                 <div class="tombol">
                                     <a href="{{ route('school_years.create') }}" class="btn btn-primary ml-2 mb-2"> Tambah Tahun Ajar</a>
-                                    <a href="#" class="btn btn-success ml-2 mb-2"> Import Excel</a>
-                                    <a href="#" class="btn btn-secondary ml-2 mb-2"> Print</a>
                                 </div>
                             </div>
                         </div>

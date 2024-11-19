@@ -117,7 +117,7 @@
                             <div class="tombol">
                                 <a href="{{ route('students.create')}}" class="btn btn-primary ml-2 mb-2"> Tambah Data Siswa</a>
                                 <a type="button" class="btn btn-success ml-2 mb-2" data-toggle="modal" data-target="#importStudentModal"> Import Excel</a>
-                                <a href="#" class="btn btn-secondary ml-2 mb-2"> Print</a>
+                                <a href="{{ route('students.export')}}" class="btn btn-secondary ml-2 mb-2">Export Excel</a>
                             </div>
                         </div>
 

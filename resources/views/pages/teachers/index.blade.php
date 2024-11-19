@@ -126,7 +126,7 @@
                                 <div class="tombol">
                                     <a href="{{ route('teachers.create')}}" class="btn btn-primary ml-2 mb-2"> Tambah Data Guru</a>
                                     <a href="#" class="btn btn-success ml-2 mb-2"> Import Excel</a>
-                                    <a href="#" class="btn btn-secondary ml-2 mb-2"> Print</a>
+                                    <a href="#" class="btn btn-secondary ml-2 mb-2">Export Excel</a>
                                 </div>
                             </div>
                         </div>

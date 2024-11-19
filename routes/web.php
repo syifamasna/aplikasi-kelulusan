@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\SchoolYearController;
-use App\Http\Controllers\ImportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,9 +16,7 @@ Route::get('/login', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard.dashboard');
-});
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 // Routing untuk resource Student
 Route::resource('students', StudentController::class);
@@ -36,3 +34,6 @@ Route::resource('school_years', SchoolYearController::class);
 Route::resource('student_classes', StudentClassController::class);
 
 Route::post('/students/import', [StudentController::class, 'import'])->name('students.import');
+
+// Pastikan route untuk export terdaftar dengan benar
+Route::get('/students/export', [StudentController::class, 'export'])->name('students.export');

@@ -118,8 +118,6 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Tabel Mata Pelajaran</h6>
                                 <div class="tombol">
                                     <a href="{{ route('subjects.create') }}" class="btn btn-primary ml-2 mb-2"> Tambah Mata Pelajaran</a>
-                                    <a href="#" class="btn btn-success ml-2 mb-2"> Import Excel</a>
-                                    <a href="#" class="btn btn-secondary ml-2 mb-2"> Print</a>
                                 </div>
                             </div>
                         </div>

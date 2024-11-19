@@ -128,4 +128,23 @@ class StudentController extends Controller
 
         return redirect()->back()->with('success', 'Data siswa berhasil diimpor!');
     }
+
+    public function export()
+    {
+        $students = Student::all();
+
+        // Menambahkan BOM untuk mendukung karakter UTF-8
+        $csvData = "\xEF\xBB\xBF";
+        $csvData .= "No.,Nama,Kelas,Jenis Kelamin,NIS,NISN\n"; // Header CSV
+
+        $no = 1;
+        foreach ($students as $student) {
+            $csvData .= "{$no},{$student->nama},{$student->kelas},{$student->jk},{$student->nis},{$student->nisn}\n";
+            $no++;
+        }
+
+        return response($csvData)
+            ->header('Content-Type', 'text/csv')
+            ->header('Content-Disposition', 'attachment; filename="students.csv"');
+    }
 }
