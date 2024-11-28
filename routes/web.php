@@ -1,39 +1,74 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\StudentClassController;
-use App\Http\Controllers\SchoolYearController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\StudentController as AdminStudentController;
+use App\Http\Controllers\Admin\TeacherController as AdminTeacherController;
+use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
+use App\Http\Controllers\Admin\StudentClassController as AdminStudentClassController;
+use App\Http\Controllers\Admin\SchoolYearController as AdminSchoolYearController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\StudentController as UserStudentController;
+use App\Http\Controllers\User\SubjectController as UserSubjectController;
+use App\Http\Controllers\User\SchoolYearController as UserSchoolYearController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+// ===========================================
+// Rute Login (umum untuk semua pengguna)
+// ===========================================
+Route::middleware('web')->group(function () {
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
-Route::get('/login', function () {
-    return view('auth.login');
+// ===========================================
+// Rute Admin
+// ===========================================
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::group(['middleware' => function ($request, $next) {
+        if (Auth::user()->role !== 'admin') {
+            abort(403, 'Unauthorized action.');
+        }
+        return $next($request);
+    }], function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+        // Resource Controllers Admin
+        Route::resource('students', AdminStudentController::class)->names('admin.students');
+        Route::resource('teachers', AdminTeacherController::class)->names('admin.teachers');
+        Route::resource('subjects', AdminSubjectController::class)->names('admin.subjects');
+        Route::resource('school_years', AdminSchoolYearController::class)->names('admin.school_years');
+        Route::resource('student_classes', AdminStudentClassController::class)->names('admin.student_classes');
+        Route::resource('users', AdminUserController::class)->names('admin.users');
+
+        // Import & Export routes Admin
+        Route::post('students/import', [AdminStudentController::class, 'import'])->name('admin.students.import');
+        Route::get('students/export', [AdminStudentController::class, 'export'])->name('admin.students.export');
+    });
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+// ===========================================
+// Rute User
+// ===========================================
+Route::middleware(['auth'])->prefix('user')->group(function () {
+    Route::group(['middleware' => function ($request, $next) {
+        if (Auth::user()->role !== 'user') {
+            abort(403, 'Unauthorized action.');
+        }
+        return $next($request);
+    }], function () {
+        Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
 
-// Routing untuk resource Student
-Route::resource('students', StudentController::class);
+        // Resource Controllers User
+        Route::resource('students', UserStudentController::class)->names('user.students');
+        Route::resource('subjects', UserSubjectController::class)->names('user.subjects');
+        Route::resource('school_years', UserSchoolYearController::class)->names('user.school_years');
 
-// Routing untuk resource Teacher
-Route::resource('teachers', TeacherController::class);
-
-// Routing untuk resource Subject
-Route::resource('subjects', SubjectController::class);
-
-// Routing untuk resource SchoolYear
-Route::resource('school_years', SchoolYearController::class);
-
-// Routing untuk resource StudentClass
-Route::resource('student_classes', StudentClassController::class);
-
-Route::post('/students/import', [StudentController::class, 'import'])->name('students.import');
-
-// Pastikan route untuk export terdaftar dengan benar
-Route::get('/students/export', [StudentController::class, 'export'])->name('students.export');
+        // Import & Export routes User
+        Route::post('students/import', [UserStudentController::class, 'import'])->name('user.students.import');
+        Route::get('students/export', [UserStudentController::class, 'export'])->name('user.students.export');
+    });
+});

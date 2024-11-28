@@ -22,44 +22,25 @@
 </head>
 
 <body id="page-top">
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Sidebar -->
-        @include('components.sidebar')
-        <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                @include('components.topbar')
-                <!-- End of Topbar -->
+    <!-- Main Content -->
+    <div id="content">
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-                    <!-- 404 Error Text -->
-                    <div class="text-center">
-                        <div class="error mx-auto" data-text="404">404</div>
-                        <p class="lead text-gray-800 mb-5">Page Not Found</p>
-                        <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
-                        <a href="#">&larr; Back to Dashboard</a>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
-
+            <!-- 404 Error Text -->
+            <div class="text-center">
+                <div class="error mx-auto" data-text="404">404</div>
+                <p class="lead text-gray-800 mb-5">Page Not Found</p>
+                <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
             </div>
-            <!-- End of Main Content -->
 
-            <!-- Footer -->
-            @include('components.footer')
-            <!-- End of Footer -->
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- /.container-fluid -->
+
     </div>
-    <!-- End of Page Wrapper -->
+    <!-- End of Main Content -->
 
     <!-- Menggunakan jQuery dari CDN (hanya satu kali) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -3,38 +3,46 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    // Tampilkan form login
+    public function showLoginForm()
     {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+        return view('auth.login'); // Pastikan file view ada di resources/views/auth/login.blade.php
+    }
+
+    // Proses login
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            // Periksa role user
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->role === 'user') {
+                return redirect()->route('user.dashboard');
+            }
+        }
+
+        return back()->withErrors(['email' => 'Kredensial tidak valid.']);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login'); // Mengarahkan ke halaman login setelah logout
     }
 }

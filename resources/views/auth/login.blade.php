@@ -9,7 +9,7 @@
     <meta name="author" content="">
 
     <title>Login - Aplikasi Kelulusan</title>
-    
+
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
     <!-- Custom fonts for this template-->
@@ -74,21 +74,34 @@
                         </div>
                         <div class="form-container text-center">
                             <h1 class="h4 text-gray-900 mb-4">Login Aplikasi Kelulusan SIT Aliya</h1>
-                            <form class="user">
+
+                            @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
+
+                            <form action="{{ route('login') }}" method="POST">
+                                @csrf
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Masukkan Email..." required>
+                                    <input type="email" name="email" class="form-control form-control-user" id="email" placeholder="Masukkan Email..." required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Masukkan Password..." required>
+                                    <input type="password" name="password" class="form-control form-control-user" id="password" placeholder="Masukkan Password..." required>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">Masuk</button>
                             </form>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 
