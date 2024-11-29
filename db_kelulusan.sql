@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2024 at 05:00 AM
+-- Generation Time: Nov 29, 2024 at 05:25 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -134,7 +134,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2024_11_21_053657_create_users_table', 16),
 (20, '2024_11_21_054030_add_default_role_to_users_table', 17),
 (21, '2024_11_21_055041_remove_default_role_from_users_table', 18),
-(22, '2024_11_26_042521_create_users_table', 19);
+(22, '2024_11_26_042521_create_users_table', 19),
+(23, '2024_11_28_041511_add_image_to_users_table', 20);
 
 -- --------------------------------------------------------
 
@@ -296,7 +297,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('65FCsjm6uGTjNC7PhsG2ofKmNb4PPh5egtclVfF0', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiejVGOGNtQnlESFlqeDJER2N3UFNqODUzRllhcEdDMlcyVlRqemdGVyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi91c2VycyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1732765946);
+('NudakYhnzOlNfpx8QtQoPQHsa3PeyhiQpsKN2MkF', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVUREZTlDRDF3MVE3UTVsSHJCajg3UWFLRkVCUnNQUERZdmtXcmVOdSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi91c2VycyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1732854192);
 
 -- --------------------------------------------------------
 
@@ -527,17 +528,21 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `role` enum('admin','user') NOT NULL DEFAULT 'user',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@gmail.com', '$2y$12$NUQuutV79ekyhPAQSEwmOuM/7z14FftlKvzkl1eWWXctWJciDKoZK', 'admin', '2024-11-25 21:27:28', '2024-11-25 21:27:28'),
-(3, 'Wali Kelas 6B', 'walas6b@gmail.com', '$2y$12$QFCH8Dzw/GhD/Zczmu8iC.wJca.GjJ5XtWF.h0WG3P4Ce/GidB6jS', 'user', '2024-11-27 20:35:42', '2024-11-27 20:38:13'),
-(4, 'Wali Kelas 6A', 'walas6a@gmail.com', '$2y$12$MvWYPcMgJFjEsSz9.QoIN.LETkgwnSgRluRw6sbTz0zab/efYPtmi', 'user', '2024-11-27 20:51:38', '2024-11-27 20:51:38');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `updated_at`, `image`) VALUES
+(1, 'Syifa Masna', 'syifakm@gmail.com', '$2y$12$NUQuutV79ekyhPAQSEwmOuM/7z14FftlKvzkl1eWWXctWJciDKoZK', 'admin', '2024-11-25 21:27:28', '2024-11-28 18:53:13', 'images/20230428_145038.jpg'),
+(3, 'Wali Kelas 6B', 'walas6b@gmail.com', '$2y$12$QFCH8Dzw/GhD/Zczmu8iC.wJca.GjJ5XtWF.h0WG3P4Ce/GidB6jS', 'user', '2024-11-27 20:35:42', '2024-11-27 20:38:13', NULL),
+(4, 'Wali Kelas 6A', 'walas6a@gmail.com', '$2y$12$MvWYPcMgJFjEsSz9.QoIN.LETkgwnSgRluRw6sbTz0zab/efYPtmi', 'user', '2024-11-27 20:51:38', '2024-11-28 19:00:02', 'images/logo.png.png'),
+(5, 'Admin', 'admin@gmail.com', '$2y$12$h0PrOiGr9DgCdQqYXdtm/.F8P1QkByI.8KxukvD5zzHkhS./6CUSi', 'admin', '2024-11-28 21:19:28', '2024-11-28 21:19:28', NULL),
+(6, 'Wali Kelas 6C', 'walas6c@gmail.com', '$2y$12$/POBcgGRJC98jBl7VS3NL.k.HytVyAZ2B9VF8ox5imUorHRZ5gUjm', 'user', '2024-11-28 21:22:50', '2024-11-28 21:22:50', NULL),
+(7, 'Wali Kelas 6D', 'walas6d@gmail.com', '$2y$12$Lf4SZeE/RodUsAr068Hpp.diZxzS/3O/7eOcmFO4bbenM1J9rVYku', 'user', '2024-11-28 21:23:11', '2024-11-28 21:23:11', NULL);
 
 --
 -- Indexes for dumped tables
@@ -696,7 +701,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -750,7 +755,7 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
