@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2024 at 05:25 AM
+-- Generation Time: Nov 29, 2024 at 05:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -297,7 +297,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('NudakYhnzOlNfpx8QtQoPQHsa3PeyhiQpsKN2MkF', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVUREZTlDRDF3MVE3UTVsSHJCajg3UWFLRkVCUnNQUERZdmtXcmVOdSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi91c2VycyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1732854192);
+('1olQer1B9nzgwi98VuvCAGfnCSPCSCt07iw9hC2g', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YToyOntzOjY6Il90b2tlbiI7czo0MDoialA4UTVIMFZKZ1lvYVFGSjhzRjFFRnVaeUIwMEY1ZFg3RU1hUFJ3WiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1732854534),
+('3KBL9jrStcTURhB420lBEf5n01KC2RC2y1DzOahj', 7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQjVzTEM3Q1pzOEUzQXpEV1lKSkZBV2ZVUjluZFRFVjhQMHZQU0NDdCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL2Rhc2hib2FyZCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjc7fQ==', 1732855758);
 
 -- --------------------------------------------------------
 
@@ -537,11 +538,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `updated_at`, `image`) VALUES
-(1, 'Syifa Masna', 'syifakm@gmail.com', '$2y$12$NUQuutV79ekyhPAQSEwmOuM/7z14FftlKvzkl1eWWXctWJciDKoZK', 'admin', '2024-11-25 21:27:28', '2024-11-28 18:53:13', 'images/20230428_145038.jpg'),
+(1, 'Syifa Masna', 'syifakm@gmail.com', '$2y$12$Kqffx9pOZR/pOJjYC6ryzOOmLVCH6g17/T9tvqJBk9eKi5lUPEkSW', 'admin', '2024-11-25 21:27:28', '2024-11-28 21:37:47', 'images/20230428_145038.jpg'),
 (3, 'Wali Kelas 6B', 'walas6b@gmail.com', '$2y$12$QFCH8Dzw/GhD/Zczmu8iC.wJca.GjJ5XtWF.h0WG3P4Ce/GidB6jS', 'user', '2024-11-27 20:35:42', '2024-11-27 20:38:13', NULL),
 (4, 'Wali Kelas 6A', 'walas6a@gmail.com', '$2y$12$MvWYPcMgJFjEsSz9.QoIN.LETkgwnSgRluRw6sbTz0zab/efYPtmi', 'user', '2024-11-27 20:51:38', '2024-11-28 19:00:02', 'images/logo.png.png'),
 (5, 'Admin', 'admin@gmail.com', '$2y$12$h0PrOiGr9DgCdQqYXdtm/.F8P1QkByI.8KxukvD5zzHkhS./6CUSi', 'admin', '2024-11-28 21:19:28', '2024-11-28 21:19:28', NULL),
-(6, 'Wali Kelas 6C', 'walas6c@gmail.com', '$2y$12$/POBcgGRJC98jBl7VS3NL.k.HytVyAZ2B9VF8ox5imUorHRZ5gUjm', 'user', '2024-11-28 21:22:50', '2024-11-28 21:22:50', NULL),
+(6, 'Wali Kelas 6C', 'walas6c@gmail.com', '$2y$12$oUHM9cKP/T9ZZYWaeKRKHu5eLaV3wQg/PmmI9h1MOREpysBGcyA3.', 'user', '2024-11-28 21:22:50', '2024-11-28 21:41:26', NULL),
 (7, 'Wali Kelas 6D', 'walas6d@gmail.com', '$2y$12$Lf4SZeE/RodUsAr068Hpp.diZxzS/3O/7eOcmFO4bbenM1J9rVYku', 'user', '2024-11-28 21:23:11', '2024-11-28 21:23:11', NULL);
 
 --
