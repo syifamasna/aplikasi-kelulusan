@@ -26,16 +26,20 @@ class ProfileController extends Controller
     {
         $user = User::find(Auth::id());  // Mendapatkan pengguna yang sedang login
 
-        // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'password' => 'nullable|string|min:8|confirmed', // Pastikan ada validasi 'confirmed'
         ]);
 
-        // Update nama dan email
         $user->name = $request->name;
         $user->email = $request->email;
+
+        // Cek jika password diisi, maka lakukan hashing dan update
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
 
         // Cek apakah ada file gambar yang diunggah
         if ($request->hasFile('image')) {

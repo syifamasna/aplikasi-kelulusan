@@ -116,7 +116,27 @@
                                 <!-- Password -->
                                 <div class="form-group">
                                     <label for="password">Password Baru <small>(Kosongkan jika tidak ingin mengubah)</small></label>
-                                    <input type="password" name="password" id="password" class="form-control">
+                                    <div class="input-group">
+                                        <input type="password" name="password" id="password" class="form-control">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-outline-secondary" id="toggle-password">
+                                                <i class="fas fa-eye-slash" id="password-icon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Konfirmasi Password -->
+                                <div class="form-group">
+                                    <label for="password_confirmation">Konfirmasi Password</label>
+                                    <div class="input-group">
+                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-outline-secondary" id="toggle-password-confirm">
+                                                <i class="fas fa-eye-slash" id="password-confirm-icon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <!-- Submit Button -->
@@ -167,6 +187,38 @@
             if (file) {
                 const imgPreview = document.getElementById('profile-img-preview');
                 imgPreview.src = URL.createObjectURL(file);
+            }
+        });
+
+        // Toggle visibility untuk password
+        document.getElementById('toggle-password').addEventListener('click', function() {
+            const passwordField = document.getElementById('password');
+            const passwordIcon = document.getElementById('password-icon');
+
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text'; // Tampilkan password
+                passwordIcon.classList.remove('fa-eye-slash'); // Ganti ikon
+                passwordIcon.classList.add('fa-eye');
+            } else {
+                passwordField.type = 'password'; // Sembunyikan password
+                passwordIcon.classList.remove('fa-eye'); // Ganti ikon
+                passwordIcon.classList.add('fa-eye-slash');
+            }
+        });
+
+        // Toggle visibility untuk password konfirmasi
+        document.getElementById('toggle-password-confirm').addEventListener('click', function() {
+            const passwordConfirmField = document.getElementById('password_confirmation');
+            const passwordConfirmIcon = document.getElementById('password-confirm-icon');
+
+            if (passwordConfirmField.type === 'password') {
+                passwordConfirmField.type = 'text'; // Tampilkan password konfirmasi
+                passwordConfirmIcon.classList.remove('fa-eye-slash'); // Ganti ikon
+                passwordConfirmIcon.classList.add('fa-eye');
+            } else {
+                passwordConfirmField.type = 'password'; // Sembunyikan password konfirmasi
+                passwordConfirmIcon.classList.remove('fa-eye'); // Ganti ikon
+                passwordConfirmIcon.classList.add('fa-eye-slash');
             }
         });
     </script>
