@@ -63,3 +63,14 @@
         </div>
     </div>
 </div>
+
+<style>
+    .text-gray-600.small {
+        font-size: 1rem;
+        /* Ukuran font yang tidak terlalu kecil atau besar */
+        font-weight: 600;
+        /* Tambahkan ketebalan teks agar lebih menonjol */
+        color: #5a5c69;
+        /* Warna teks default */
+    }
+</style>

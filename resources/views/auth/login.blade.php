@@ -18,22 +18,23 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+
     <style>
+        /* Latar belakang gradient */
+        body {
+            background: linear-gradient(135deg, #4e73df, #1cc88a) !important;
+        }
+
         .bg-login-image {
             display: flex;
             justify-content: center;
-            /* Menyelaraskan gambar di tengah */
             align-items: center;
-            /* Menyelaraskan gambar di tengah secara vertikal */
             height: 250px;
-            /* Tinggi gambar, sesuaikan sesuai kebutuhan */
         }
 
         .bg-login-image img {
             max-height: 100%;
-            /* Pastikan gambar tidak melebihi tinggi div */
             width: auto;
-            /* Mengatur lebar otomatis untuk menjaga rasio */
         }
 
         .form-container {
@@ -45,16 +46,42 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            /* Mengatur tinggi kontainer */
         }
 
         .card {
             margin: auto;
-            /* Menyelaraskan card di tengah */
             width: 100%;
-            /* Memastikan card lebar penuh */
             max-width: 600px;
-            /* Batasi lebar card */
+        }
+
+        /* Menambahkan styling untuk input password */
+        .password-container {
+            position: relative;
+        }
+
+        .password-container .fa-eye,
+        .password-container .fa-eye-slash {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            /* Warna biru */
+            border-color: #007bff;
+            /* Border biru */
+            color: #fff;
+            /* Warna teks */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            /* Warna lebih gelap saat hover */
+            border-color: #004085;
+            /* Warna border saat hover */
         }
     </style>
 </head>
@@ -63,8 +90,7 @@
     <div class="container login-container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
-
-            <div class="col-xl-12 col-lg-12 col-md-10"> <!-- Memperlebar kolom -->
+            <div class="col-xl-12 col-lg-12 col-md-10">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
@@ -93,8 +119,9 @@
                                 <div class="form-group">
                                     <input type="email" name="email" class="form-control form-control-user" id="email" placeholder="Masukkan Email..." required>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group password-container">
                                     <input type="password" name="password" class="form-control form-control-user" id="password" placeholder="Masukkan Password..." required>
+                                    <i class="fas fa-eye-slash" id="togglePassword"></i>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">Masuk</button>
                             </form>
@@ -114,6 +141,22 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin-2.min.js')}}"></script>
+
+    <script>
+        // Toggle password visibility
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordField = document.getElementById("password");
+
+        togglePassword.addEventListener("click", function() {
+            // Toggle the type of the password field
+            const type = passwordField.type === "password" ? "text" : "password";
+            passwordField.type = type;
+
+            // Toggle the icon
+            this.classList.toggle("fa-eye-slash");
+            this.classList.toggle("fa-eye");
+        });
+    </script>
 
 </body>
 
