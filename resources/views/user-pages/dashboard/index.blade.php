@@ -104,6 +104,15 @@
                             <i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
 
+                    <!-- Alert box with close button -->
+                    <div class="alert alert-info alert-dismissible fade show" role="alert" style="background-color: #e9f7fe; border-radius: 8px; border: 1px solid #bee3f8;">
+                        <strong>Selamat Datang, {{ Auth::user()->name }}!</strong>
+                        Selamat datang di dashboard Aplikasi Kelulusan! Anda dapat mulai mengelola data dengan mudah di sini.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
                     <!-- Content Row -->
                     <div class="row">
 

@@ -1,4 +1,7 @@
 <IfModule mod_rewrite.c>
+    # Enable symlink if required
+    Options +FollowSymLinks
+
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
@@ -8,6 +11,11 @@
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Allow access to storage files
+    RewriteCond %{REQUEST_URI} ^/storage/.*$
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^storage/(.*)$ /storage/$1 [L]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d

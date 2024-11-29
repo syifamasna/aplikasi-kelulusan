@@ -144,3 +144,13 @@
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
+
+        <!-- Add CSS Styles here -->
+        <style>
+            /* Sidebar Background Gradient (Biru Primary ke Hijau) */
+            #accordionSidebar {
+                background: linear-gradient(to bottom, #4e73df, #34bfa3);
+                /* Gradient dari biru primary ke hijau */
+                color: #fff;
+            }
+        </style>

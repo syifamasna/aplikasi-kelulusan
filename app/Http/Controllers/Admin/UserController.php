@@ -10,10 +10,16 @@ use Illuminate\Support\Facades\Hash; // Import Hash facade
 class UserController extends Controller
 {
     // Menampilkan daftar pengguna
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all(); // Ambil semua data pengguna
-        return view('admin-pages.users.index', compact('users'));
+        $keyword = $request->input('keyword', '');
+
+        $users = User::where('name', 'like', "%$keyword%")
+            ->orWhere('role', 'like', "%$keyword%")
+            ->orderBy('role', 'asc')
+            ->orderBy('name', 'asc')
+            ->get();
+        return view('admin-pages.users.index', compact('users', 'keyword'));
     }
 
     // Menampilkan form untuk menambah pengguna
@@ -73,7 +79,7 @@ class UserController extends Controller
         } else {
             unset($validated['password']); // Jangan perbarui password jika tidak ada perubahan
         }
-        
+
         return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil diperbarui');
     }
 
