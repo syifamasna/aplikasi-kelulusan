@@ -81,7 +81,7 @@
                                                 <label for="kelas" class="control-label">Kelas</label>
                                                 <select class="form-control" name="kelas" id="kelas" required>
                                                     <option value="" selected disabled>Pilih Kelas</option>
-                                                    @foreach ($classes as $class)
+                                                    @foreach ($classes->sortBy('kelas') as $class)
                                                     <option value="{{ $class->kelas }}">{{ $class->kelas }}</option>
                                                     @endforeach
                                                 </select>

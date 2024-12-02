@@ -12,16 +12,26 @@ class StudentController extends Controller
 {
     public function index(Request $request)
     {
-        $keyword = $request->input('keyword', '');
+        // Ambil data kelas dan urutkan berdasarkan abjad
+        $classes = StudentClass::orderBy('kelas', 'asc')->get();
 
-        $students = Student::where('nama', 'like', "%$keyword%")
-            ->orWhere('kelas', 'like', "%$keyword%")
-            ->orderBy('kelas', 'asc')
-            ->orderBy('nama', 'asc')
+        // Ambil filter kelas dan keyword pencarian
+        $kelasFilter = $request->input('kelas');
+        $keyword = $request->input('keyword');
+
+        // Filter siswa berdasarkan kelas dan keyword, kemudian urutkan berdasarkan kelas dan nama
+        $students = Student::where('kelas', 'like', '%' . $kelasFilter . '%')
+            ->where(function ($query) use ($keyword) {
+                $query->where('nama', 'like', '%' . $keyword . '%')
+                    ->orWhere('kelas', 'like', '%' . $keyword . '%');
+            })
+            ->orderBy('kelas', 'asc')  // Urutkan berdasarkan kelas
+            ->orderBy('nama', 'asc')   // Urutkan berdasarkan nama setelah kelas
             ->get();
 
-        return view('user-pages.students.index', compact('students', 'keyword'));
+        return view('user-pages.students.index', compact('students', 'classes', 'kelasFilter', 'keyword'));
     }
+
 
     public function create()
     {

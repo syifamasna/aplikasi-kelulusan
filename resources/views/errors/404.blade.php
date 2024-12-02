@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
 
@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Halaman tidak ditemukan</title>
+    <title>Halaman Tidak Ditemukan</title>
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
     <!-- Custom fonts for this template-->
@@ -19,12 +19,23 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
 
+    <style>
+        /* Style untuk memastikan konten berada di tengah layar */
+        .main-content {
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+    </style>
+
 </head>
 
 <body id="page-top">
 
     <!-- Main Content -->
-    <div id="content">
+    <div id="content" class="main-content">
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -32,8 +43,10 @@
             <!-- 404 Error Text -->
             <div class="text-center">
                 <div class="error mx-auto" data-text="404">404</div>
-                <p class="lead text-gray-800 mb-5">Page Not Found</p>
-                <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
+                <p class="lead text-gray-800 mb-5">Halaman Tidak Ditemukan</p>
+                <p class="text-gray-500 mb-0">Sepertinya Anda menemukan kesalahan pada sistem...</p>
+                <!-- Tombol Kembali ke Halaman Sebelumnya -->
+                <a href="{{ url()->previous() }}" class="btn btn-primary mt-3">Kembali ke Halaman Sebelumnya</a>
             </div>
 
         </div>
@@ -55,5 +68,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin-2.min.js')}}"></script>
+
+</body>
 
 </html>

@@ -2,14 +2,13 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Edit Siswa - Aplikasi Kelulusan</title>
+    <title>Tambah Kelas - Aplikasi Kelulusan</title>
 
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
@@ -19,7 +18,6 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
-
 </head>
 
 <body id="page-top">
@@ -60,85 +58,47 @@
                     <!-- Page Heading -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Edit Data Siswa</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Tambah Kelas</h6>
                         </div>
+
                         <div class="card-body">
                             <div class="table-responsive">
-                                <!-- Input Form -->
-                                <form action="{{ route('admin.students.update', $student->id) }}" method="POST" style="overflow-x: hidden;">
-                                    @csrf
-                                    @method('PUT') <!-- Method PUT untuk update -->
+                                <form action="{{ route('admin.student_classes.store') }}" method="POST" style="overflow-x: hidden;">
+                                    @csrf <!-- Gunakan CSRF untuk keamanan -->
+
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="nama" class="control-label">Nama</label>
-                                                <input type="text" name="nama" value="{{ old('nama', $student->nama) }}" class="form-control" id="nama">
+                                                <label for="kelas" class="control-label">Kelas</label>
+                                                <input type="text" name="kelas" class="form-control" id="kelas" required>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="kelas">Kelas</label>
-                                                <select name="kelas" class="form-control" id="kelas">
-                                                    <option value="" selected disabled>Pilih Kelas</option>
-                                                    @foreach ($classes->sortBy('kelas') as $class)
-                                                    <option value="{{ $class->kelas }}" {{ $class->kelas == old('kelas', $student->kelas) ? 'selected' : '' }}>
-                                                        {{ $class->kelas }}
-                                                    </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="jk" class="control-label">Jenis Kelamin</label>
-                                                <select class="form-control" name="jk" id="jk" required>
-                                                    <option value="" selected disabled>Pilih Jenis Kelamin</option>
-                                                    <option value="Laki-laki">Laki-Laki</option>
-                                                    <option value="Perempuan">Perempuan</option>
-                                                </select>
+                                                <label for="nama_guru" class="control-label">Wali Kelas</label>
+                                                <input type="text" name="nama_guru" class="form-control" id="nama_guru" required>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <input type="hidden" name="id" value="{{ $student->id }}">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="nis" class="control-label">NIS</label>
-                                                <input type="text" name="nis" value="{{ old('nis', $student->nis) }}" class="form-control" id="nis">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="nisn" class="control-label">NISN</label>
-                                                <input type="text" name="nisn" value="{{ old('nisn', $student->nisn) }}" class="form-control" id="nisn">
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <br>
                                     <button type="submit" class="btn btn-success">Simpan</button>
-                                    <a href="{{ route('admin.students.index') }}" class="btn btn-warning">Kembali</a>
+                                    <a href="{{ route('admin.student_classes.index') }}" class="btn btn-warning">Kembali</a>
                                     <div class="clearfix"></div>
                                     <br>
                                 </form>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
             @include('admin-pages.components.footer')
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
 
@@ -157,6 +117,12 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin-2.min.js')}}"></script>
 
+    <!-- Page level plugins -->
+    <script src="{{ asset('vendor/chart.js/Chart.min.js')}}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{ asset('js/demo/chart-area-demo.js')}}"></script>
+    <script src="{{ asset('js/demo/chart-pie-demo.js')}}"></script>
 </body>
 
 </html>

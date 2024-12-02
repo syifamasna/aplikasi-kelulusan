@@ -110,14 +110,50 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Daftar Siswa Kelas 6 SIT Aliya</h1><br>
 
+                    @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+
+                    @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+
+                    <!-- Filter Kelas dan Pencarian -->
+                    <form method="GET" action="{{ route('admin.students.index') }}">
+                        <div class="form-row mb-3">
+                            <div class="col-md-3">
+                                <select name="kelas" class="form-control" onchange="this.form.submit()">
+                                    <option value="">-- Pilih Kelas --</option>
+                                    @foreach($classes as $class)
+                                    <option value="{{ $class->kelas }}" {{ $kelasFilter == $class->kelas ? 'selected' : '' }}>
+                                        {{ $class->kelas }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" name="keyword" class="form-control" placeholder="Cari Nama atau Kelas" value="{{ $keyword }}" />
+                            </div>
+                        </div>
+                    </form>
+
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa</h6>
                             <div class="tombol">
-                                <a href="{{ route('admin.students.create')}}" class="btn btn-primary ml-2 mb-2"> Tambah Data Siswa</a>
-                                <a type="button" class="btn btn-success ml-2 mb-2" data-toggle="modal" data-target="#importStudentModal"> Import Excel</a>
-                                <a href="{{ route('admin.students.export')}}" class="btn btn-secondary ml-2 mb-2">Export Excel</a>
+                                <a href="{{ route('admin.students.create')}}" class="btn btn-primary ml-2 mb-2">Tambah Data Siswa</a>
+                                <a type="button" class="btn btn-success ml-2 mb-2" data-toggle="modal" data-target="#importStudentModal">Import Excel</a>
                             </div>
                         </div>
 
@@ -222,7 +258,7 @@
             $('#dataTable').DataTable({
                 "paging": true,
                 "lengthChange": true,
-                "searching": true,
+                "searching": false,
                 "ordering": false,
                 "info": true,
                 "autoWidth": false,

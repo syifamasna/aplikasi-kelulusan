@@ -8,16 +8,41 @@ use Illuminate\Http\Request; // Tambahkan ini untuk mengimpor Request
 
 class StudentClassController extends Controller
 {
-    public function index()
+    // Menampilkan daftar guru
+    public function index(Request $request)
     {
-        $student_classes = StudentClass::all(); // Mendapatkan semua data kelas
-        return view('admin-pages.student_classes.index', compact('student_classes')); // Mengirim data kelas ke view
+        // Ambil keyword dari input pencarian (jika ada)
+        $keyword = $request->input('keyword', '');
+
+        // Mengambil data siswa berdasarkan pencarian dan dengan pagination
+        $student_classes = StudentClass::where('kelas', 'like', "%$keyword%")
+            ->orderBy('kelas', 'asc') // Urutkan berdasarkan nama secara alfabet
+            ->get(); // Pagination 5 data per halaman
+
+        return view('admin-pages.student_classes.index', compact('student_classes', 'keyword'));
     }
 
     public function show($id)
     {
         $student_classes = StudentClass::findOrFail($id);
         return view('admin-pages.student_classes.show', compact('student_classes'));
+    }
+
+    public function create()
+    {
+        return view('admin-pages.student_classes.create'); // Menampilkan form untuk menambah kelas
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'kelas' => 'required|string|max:255',  // Validasi input nama kelas
+            'nama_guru' => 'required|string|max:255', // Validasi input guru kelas
+        ]);
+
+        StudentClass::create($validated); // Menyimpan data kelas ke dalam database
+
+        return redirect()->route('admin.student_classes.index'); // Mengarahkan ke halaman daftar kelas
     }
 
     // Menampilkan halaman Edit
@@ -48,5 +73,13 @@ class StudentClassController extends Controller
 
         // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('admin.student_classes.index')->with('success', 'Data siswa berhasil diperbarui');
+    }
+
+    public function destroy($id)
+    {
+        $student_classes = StudentClass::findOrFail($id); // Mencari mata pelajaran berdasarkan id
+        $student_classes->delete(); // Menghapus mata pelajaran
+
+        return redirect()->route('admin.student_classes.index'); // Mengarahkan kembali ke halaman daftar mata pelajaran
     }
 }
