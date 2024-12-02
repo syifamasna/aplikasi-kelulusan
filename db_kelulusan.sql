@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2024 at 08:31 AM
+-- Generation Time: Dec 02, 2024 at 04:26 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -297,9 +297,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('1olQer1B9nzgwi98VuvCAGfnCSPCSCt07iw9hC2g', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YToyOntzOjY6Il90b2tlbiI7czo0MDoialA4UTVIMFZKZ1lvYVFGSjhzRjFFRnVaeUIwMEY1ZFg3RU1hUFJ3WiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1732854534),
-('HE4P6CtIBcUmW0qNxqfsgcNoJPNvBA6F1txkygIi', 4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUXFXdmw3clJqdmlWWllOa20zUGpiZzhiSE5Qd3lsbDRoVWE0VEhCeSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL2Rhc2hib2FyZCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ7fQ==', 1732865246),
-('kuc8WJO6IGSArLFGeczXNIBuMgH4UWdJICFatCLr', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YToyOntzOjY6Il90b2tlbiI7czo0MDoiaFJmRTZ3UzQxM1IzREJHWjh5bktZb2p1a3BvMHhZOEhQSUhMdGpjeiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1732863111);
+('C0TGfTOeNUadlaLUwCn9tvZx21UZbTglzZDFd920', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVmRCQlQybHhZMXFERlh1THVCbFE3VVJqOVpuQUVBUVg5SEpkNkRjUiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL3Byb2ZpbGUiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO30=', 1733109885);
 
 -- --------------------------------------------------------
 
@@ -350,7 +348,7 @@ INSERT INTO `students` (`id`, `nis`, `nisn`, `nama`, `kelas`, `jk`, `created_at`
 (131, '192001098', '3139111309', 'Raissa Hasanaty Labiba', '6B', 'Perempuan', '2024-11-15 01:03:12', '2024-11-15 01:03:12'),
 (132, '192001105', '0124473423', 'Shaina Anindya Putri Septiadi', '6B', 'Perempuan', '2024-11-15 01:03:12', '2024-11-15 01:03:12'),
 (133, '192001106', '0139085647', 'Syauqi Zharfan Yamani', '6B', 'Laki-laki', '2024-11-15 01:03:12', '2024-11-15 01:03:12'),
-(134, '192001006', '125110010', 'Aisyah Zahira Ramadhani', '6A', 'Perempuan', '2024-11-15 01:07:47', '2024-11-15 01:07:47'),
+(134, '192001006', '125110010', 'Aisyah Zahira Ramadhani', '6A', 'Perempuan', '2024-11-15 01:07:47', '2024-12-01 19:58:14'),
 (135, '192001009', '128970710', 'Alifiandra Rasyid Putra Anggriawan', '6A', 'Laki-laki', '2024-11-15 01:07:47', '2024-11-15 01:07:47'),
 (136, '192001015', '124210237', 'Aqsazura Kinar Akbar', '6A', 'Perempuan', '2024-11-15 01:07:47', '2024-11-15 01:07:47'),
 (137, '192001017', '124107962', 'Arkan Ramaditia Hayza', '6A', 'Laki-laki', '2024-11-15 01:07:47', '2024-11-15 01:07:47'),
@@ -540,7 +538,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `updated_at`, `image`) VALUES
 (1, 'Syifa Masna', 'syifakm@gmail.com', '$2y$12$Kqffx9pOZR/pOJjYC6ryzOOmLVCH6g17/T9tvqJBk9eKi5lUPEkSW', 'admin', '2024-11-25 21:27:28', '2024-11-28 21:37:47', 'images/20230428_145038.jpg'),
-(3, 'Wali Kelas 6B', 'walas6b@gmail.com', '$2y$12$QFCH8Dzw/GhD/Zczmu8iC.wJca.GjJ5XtWF.h0WG3P4Ce/GidB6jS', 'user', '2024-11-27 20:35:42', '2024-11-27 20:38:13', NULL),
+(3, 'Wali Kelas 6B', 'walas6b@gmail.com', '$2y$12$PvfqVg8u4EwgZDVCzQdE4OvigzN6iU7t6jijp2HjNVAcBYHGuc8AG', 'user', '2024-11-27 20:35:42', '2024-12-01 20:24:25', NULL),
 (4, 'Wali Kelas 6A', 'walas6a@gmail.com', '$2y$12$MvWYPcMgJFjEsSz9.QoIN.LETkgwnSgRluRw6sbTz0zab/efYPtmi', 'user', '2024-11-27 20:51:38', '2024-11-28 19:00:02', 'images/logo.png.png'),
 (5, 'Admin', 'admin@gmail.com', '$2y$12$h0PrOiGr9DgCdQqYXdtm/.F8P1QkByI.8KxukvD5zzHkhS./6CUSi', 'admin', '2024-11-28 21:19:28', '2024-11-28 21:19:28', NULL),
 (6, 'Wali Kelas 6C', 'walas6c@gmail.com', '$2y$12$oUHM9cKP/T9ZZYWaeKRKHu5eLaV3wQg/PmmI9h1MOREpysBGcyA3.', 'user', '2024-11-28 21:22:50', '2024-11-28 21:41:26', NULL),
@@ -739,7 +737,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `student_classes`
 --
 ALTER TABLE `student_classes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `subjects`
