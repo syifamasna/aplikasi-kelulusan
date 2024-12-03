@@ -79,7 +79,6 @@ class StudentController extends Controller
             'nisn' => 'required',
             'nama' => 'required',
             'kelas' => 'required',
-            'jk' => 'required|in:Laki-laki,Perempuan', // Validasi jk
         ]);
 
         $student = Student::findOrFail($id);
@@ -87,18 +86,23 @@ class StudentController extends Controller
         $student->nisn = $request->nisn;
         $student->nama = $request->nama;
         $student->kelas = $request->kelas;
-        $student->jk = $request->jk; // Update jk
+        $student->jk = $request->jk ?? $student->jk; // Jika tidak ada input, tetap pakai data lama
         $student->save();
 
         return redirect()->route('admin.students.index')->with('success', 'Data siswa berhasil diperbarui');
     }
+
 
     public function destroy($id)
     {
         $student = Student::findOrFail($id);
         $student->delete();
 
-        return redirect()->route('admin.students.index')->with('success', 'Data siswa berhasil dihapus');
+        // Pastikan setelah penghapusan, Anda mengarahkan kembali dengan parameter pencarian yang ada
+        return redirect()->route('admin.students.index', [
+            'kelas' => request('kelas'),
+            'keyword' => request('keyword')
+        ])->with('success', 'Data siswa berhasil dihapus');
     }
 
 

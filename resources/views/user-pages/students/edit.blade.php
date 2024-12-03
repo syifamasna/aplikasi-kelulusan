@@ -77,24 +77,18 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="kelas">Kelas</label>
-                                                <select name="kelas" class="form-control" id="kelas">
-                                                    <option value="" selected disabled>Pilih Kelas</option>
-                                                    @foreach ($classes as $class)
-                                                    <option value="{{ $class->kelas }}" {{ $class->kelas == old('kelas', $student->kelas) ? 'selected' : '' }}>
-                                                        {{ $class->kelas }}
-                                                    </option>
-                                                    @endforeach
+                                                <label for="kelas" class="control-label">Kelas</label>
+                                                <select class="form-control" name="kelas" id="kelas" required disabled>
+                                                    <option value="{{ $class->kelas }}" selected>{{ $class->kelas }}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="jk" class="control-label">Jenis Kelamin</label>
-                                                <select class="form-control" name="jk" id="jk" required>
-                                                    <option value="" selected disabled>Pilih Jenis Kelamin</option>
-                                                    <option value="Laki-laki">Laki-Laki</option>
-                                                    <option value="Perempuan">Perempuan</option>
+                                                <select class="form-control" name="jk" id="jk">
+                                                    <option value="Laki-laki" {{ $student->jk == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                                    <option value="Perempuan" {{ $student->jk == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                                                 </select>
                                             </div>
                                         </div>

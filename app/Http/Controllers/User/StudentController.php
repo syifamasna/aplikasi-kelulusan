@@ -20,25 +20,28 @@ class StudentController extends Controller
         // Ambil class_id dari user yang sedang login (wali kelas)
         $classId = Auth::user()->class_id;  // Menggunakan Auth::user()
 
-        // Filter siswa berdasarkan kelas wali kelas yang login dan keyword
-        $students = Student::where('kelas', $classId)  // Menggunakan 'kelas' yang ada di tabel 'students'
+        // Filter siswa berdasarkan kelas yang ada di tabel students dan keyword
+        $students = Student::where('kelas', $classId)  // Filter berdasarkan 'kelas' di tabel students
             ->when($keyword, function ($query, $keyword) {
                 $query->where('nama', 'like', "%{$keyword}%")
                     ->orWhere('nis', 'like', "%{$keyword}%")
                     ->orWhere('nisn', 'like', "%{$keyword}%");
             })
             ->orderBy('nama', 'asc')
-            ->paginate(10);
+            ->get();
 
         return view('user-pages.students.index', compact('students', 'keyword'));
     }
 
-
-
     public function create()
     {
-        $classes = StudentClass::all();
-        return view('user-pages.students.create', compact('classes'));
+        // Ambil class_id dari user yang sedang login (wali kelas)
+        $classId = Auth::user()->class_id;
+
+        // Ambil data kelas yang sesuai dengan wali kelas yang login
+        $class = StudentClass::where('kelas', $classId)->first();
+
+        return view('user-pages.students.create', compact('class')); // Kirim kelas ke view
     }
 
     public function store(Request $request)
@@ -47,15 +50,15 @@ class StudentController extends Controller
             'nis' => 'required|unique:students',
             'nisn' => 'required',
             'nama' => 'required',
-            'kelas' => 'required',
             'jk' => 'required|in:Laki-laki,Perempuan', // Validasi jk
         ]);
 
+        // Simpan data siswa dengan class_id yang sesuai dengan wali kelas yang login
         $student = new Student();
         $student->nis = $request->nis;
         $student->nisn = $request->nisn;
         $student->nama = $request->nama;
-        $student->kelas = $request->kelas;
+        $student->kelas = Auth::user()->class_id; // Gunakan class_id wali kelas yang login
         $student->jk = $request->jk; // Simpan jk
         $student->save();
 
@@ -68,11 +71,18 @@ class StudentController extends Controller
         return view('user-pages.students.show', compact('student'));
     }
 
+
     public function edit($id)
     {
         $student = Student::findOrFail($id);
-        $classes = StudentClass::all();
-        return view('user-pages.students.edit', compact('student', 'classes'));
+
+        // Ambil class_id dari user yang sedang login (wali kelas)
+        $classId = Auth::user()->class_id;
+
+        // Ambil data kelas yang sesuai dengan wali kelas yang login
+        $class = StudentClass::where('kelas', $classId)->first();
+
+        return view('user-pages.students.edit', compact('student', 'class')); // Kirim kelas dan siswa ke view
     }
 
     public function update(Request $request, $id)
@@ -81,29 +91,18 @@ class StudentController extends Controller
             'nis' => 'required',
             'nisn' => 'required',
             'nama' => 'required',
-            'kelas' => 'required',
-            'jk' => 'required|in:Laki-laki,Perempuan', // Validasi jk
+            // Tidak perlu validasi lagi untuk jk, karena akan diambil dari data yang sudah ada
         ]);
 
         $student = Student::findOrFail($id);
         $student->nis = $request->nis;
         $student->nisn = $request->nisn;
         $student->nama = $request->nama;
-        $student->kelas = $request->kelas;
-        $student->jk = $request->jk; // Update jk
+        $student->jk = $request->jk ?? $student->jk; // Jika tidak ada input, tetap pakai data lama
         $student->save();
 
         return redirect()->route('user.students.index')->with('success', 'Data siswa berhasil diperbarui');
     }
-
-    public function destroy($id)
-    {
-        $student = Student::findOrFail($id);
-        $student->delete();
-
-        return redirect()->route('user.students.index')->with('success', 'Data siswa berhasil dihapus');
-    }
-
 
     public function import(Request $request)
     {

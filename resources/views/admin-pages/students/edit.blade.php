@@ -91,10 +91,9 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="jk" class="control-label">Jenis Kelamin</label>
-                                                <select class="form-control" name="jk" id="jk" required>
-                                                    <option value="" selected disabled>Pilih Jenis Kelamin</option>
-                                                    <option value="Laki-laki">Laki-Laki</option>
-                                                    <option value="Perempuan">Perempuan</option>
+                                                <select class="form-control" name="jk" id="jk">
+                                                    <option value="Laki-laki" {{ $student->jk == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                                    <option value="Perempuan" {{ $student->jk == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                                                 </select>
                                             </div>
                                         </div>

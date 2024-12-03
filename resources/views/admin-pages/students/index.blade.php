@@ -128,6 +128,25 @@
                     </div>
                     @endif
 
+                    <!-- Filter Kelas dan Pencarian -->
+                    <form method="GET" action="{{ route('admin.students.index') }}">
+                        <div class="form-row mb-3">
+                            <div class="col-md-3">
+                                <select name="kelas" class="form-control" onchange="this.form.submit()">
+                                    <option value="">-- Pilih Kelas --</option>
+                                    @foreach($classes as $class)
+                                    <option value="{{ $class->kelas }}" {{ $kelasFilter == $class->kelas ? 'selected' : '' }}>
+                                        {{ $class->kelas }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" name="keyword" class="form-control" placeholder="Cari Nama atau Kelas" value="{{ $keyword }}" />
+                            </div>
+                        </div>
+                    </form>
+
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
@@ -161,11 +180,9 @@
                                                 <!-- Tombol Edit -->
                                                 <a href="{{ route('admin.students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                 <!-- Tombol Hapus -->
-                                                <form action="{{ route('admin.students.destroy', $student->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda mau menghapus?');">Hapus</button>
-                                                </form>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ $student->id }}">
+                                                    Hapus
+                                                </button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -187,7 +204,35 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Modal -->
+    <!-- Modal Konfirmasi Hapus -->
+    @foreach($students as $student)
+    <div class="modal fade" id="deleteModal{{ $student->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin menghapus data siswa ini?
+                </div>
+                <div class="modal-footer">
+                    <!-- Pastikan form ini memiliki ID siswa yang sesuai -->
+                    <form method="POST" action="{{ route('admin.students.destroy', $student->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
+    <!-- Modal Import -->
     <div class="modal fade" id="importStudentModal" tabindex="-1" role="dialog" aria-labelledby="importStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -197,59 +242,44 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('admin.students.import') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
+                <div class="modal-body">
+                    <form action="{{ route('admin.students.import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="form-group">
-                            <label for="file">Pilih File Excel:</label>
-                            <input type="file" name="file" id="file" class="form-control" accept=".xlsx,.xls" required>
+                            <label for="file">Pilih File Excel</label>
+                            <input type="file" name="file" class="form-control" id="file" accept=".xlsx, .xls, .csv" required>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Import</button>
-                    </div>
-                </form>
+                        <button type="submit" class="btn btn-success">Import</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <!-- JavaScript -->
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
-    <!-- Menggunakan jQuery dari CDN (hanya satu kali) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/sb-admin-2.min.js')}}"></script>
-
-    <!-- Skrip untuk DataTable dan inisialisasi lainnya -->
+    <!-- DataTables -->
+    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                "paging": true,
-                "lengthChange": true,
-                "searching": false,
-                "ordering": false,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-                "pageLength": 5, // Default 5 data per halaman
-                "lengthMenu": [5, 10, 27, 50, 100] // Pilihan jumlah data per halaman
+                "paging": true, // Aktifkan pagination
+                "lengthChange": true, // Izinkan user untuk memilih jumlah data per halaman
+                "searching": false, // Aktifkan fitur pencarian
+                "ordering": false, // Nonaktifkan fitur pengurutan
+                "info": true, // Tampilkan informasi pagination (misalnya, 1 to 10 of 100)
+                "autoWidth": false, // Nonaktifkan auto width
+                "responsive": true, // Membuat tabel responsif
+                "pageLength": 5, // Set default data per halaman (misalnya, 20 data per halaman)
+                "lengthMenu": [5, 10, 27, 50, 100], // Pilihan jumlah data per halaman
             });
         });
     </script>
-
 </body>
 
 </html>

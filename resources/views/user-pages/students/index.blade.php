@@ -128,25 +128,6 @@
                     </div>
                     @endif
 
-                    <!-- Filter Kelas dan Pencarian -->
-                    <form method="GET" action="{{ route('user.students.index') }}">
-                        <div class="form-row mb-3">
-                            <div class="col-md-3">
-                                <select name="kelas" class="form-control" onchange="this.form.submit()">
-                                    <option value="">-- Pilih Kelas --</option>
-                                    @foreach($classes as $class)
-                                    <option value="{{ $class->kelas }}" {{ $kelasFilter == $class->kelas ? 'selected' : '' }}>
-                                        {{ $class->kelas }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-9">
-                                <input type="text" name="keyword" class="form-control" placeholder="Cari Nama atau Kelas" value="{{ $keyword }}" />
-                            </div>
-                        </div>
-                    </form>
-
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
@@ -259,7 +240,7 @@
             $('#dataTable').DataTable({
                 "paging": true,
                 "lengthChange": true,
-                "searching": false,
+                "searching": true,
                 "ordering": false,
                 "info": true,
                 "autoWidth": false,

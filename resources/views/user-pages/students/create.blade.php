@@ -79,11 +79,8 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="kelas" class="control-label">Kelas</label>
-                                                <select class="form-control" name="kelas" id="kelas" required>
-                                                    <option value="" selected disabled>Pilih Kelas</option>
-                                                    @foreach ($classes as $class)
-                                                    <option value="{{ $class->kelas }}">{{ $class->kelas }}</option>
-                                                    @endforeach
+                                                <select class="form-control" name="kelas" id="kelas" required disabled>
+                                                    <option value="{{ $class->kelas }}" selected>{{ $class->kelas }}</option>
                                                 </select>
                                             </div>
                                         </div>
