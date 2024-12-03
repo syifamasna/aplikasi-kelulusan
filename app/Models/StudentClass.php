@@ -15,4 +15,9 @@ class StudentClass extends Model
         'kelas',
         'nama_guru',
     ];
+
+    public function students()
+    {
+        return $this->hasMany(Student::class, 'class_id');
+    }
 }

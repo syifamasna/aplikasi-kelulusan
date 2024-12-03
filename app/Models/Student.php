@@ -18,4 +18,9 @@ class Student extends Model
         'nis',
         'nisn',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'kelas'); // Menggunakan 'kelas' sebagai kolom yang menghubungkan ke User
+    }
 }

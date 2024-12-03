@@ -21,6 +21,7 @@ class User extends Authenticatable
         'password',
         'role',
         'image',
+        'class_id',
     ];
 
     /**
@@ -41,4 +42,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function studentClass()
+    {
+        return $this->belongsTo(StudentClass::class, 'class_id');
+    }
 }

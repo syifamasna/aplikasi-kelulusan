@@ -6,31 +6,33 @@ use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\StudentClass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class StudentController extends Controller
 {
+
     public function index(Request $request)
     {
-        // Ambil data kelas dan urutkan berdasarkan abjad
-        $classes = StudentClass::orderBy('kelas', 'asc')->get();
-
-        // Ambil filter kelas dan keyword pencarian
-        $kelasFilter = $request->input('kelas');
+        // Ambil filter kelas dan keyword
         $keyword = $request->input('keyword');
 
-        // Filter siswa berdasarkan kelas dan keyword, kemudian urutkan berdasarkan kelas dan nama
-        $students = Student::where('kelas', 'like', '%' . $kelasFilter . '%')
-            ->where(function ($query) use ($keyword) {
-                $query->where('nama', 'like', '%' . $keyword . '%')
-                    ->orWhere('kelas', 'like', '%' . $keyword . '%');
-            })
-            ->orderBy('kelas', 'asc')  // Urutkan berdasarkan kelas
-            ->orderBy('nama', 'asc')   // Urutkan berdasarkan nama setelah kelas
-            ->get();
+        // Ambil class_id dari user yang sedang login (wali kelas)
+        $classId = Auth::user()->class_id;  // Menggunakan Auth::user()
 
-        return view('user-pages.students.index', compact('students', 'classes', 'kelasFilter', 'keyword'));
+        // Filter siswa berdasarkan kelas wali kelas yang login dan keyword
+        $students = Student::where('kelas', $classId)  // Menggunakan 'kelas' yang ada di tabel 'students'
+            ->when($keyword, function ($query, $keyword) {
+                $query->where('nama', 'like', "%{$keyword}%")
+                    ->orWhere('nis', 'like', "%{$keyword}%")
+                    ->orWhere('nisn', 'like', "%{$keyword}%");
+            })
+            ->orderBy('nama', 'asc')
+            ->paginate(10);
+
+        return view('user-pages.students.index', compact('students', 'keyword'));
     }
+
 
 
     public function create()
@@ -105,7 +107,6 @@ class StudentController extends Controller
 
     public function import(Request $request)
     {
-        // Validasi input file
         $request->validate([
             'file' => 'required|mimes:xlsx,xls',
         ]);
@@ -115,38 +116,49 @@ class StudentController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $rows = $sheet->toArray(null, true, true, true);
 
+        $errors = [];
         foreach ($rows as $key => $row) {
-            // Skip header row (key = 1)
+            // Lewati header
             if ($key == 1) continue;
 
-            // Proses untuk mengganti 'P' dan 'L' dengan 'Perempuan' dan 'Laki-laki'
-            $jk = $row['C'];  // Kolom C adalah jenis kelamin
-            if ($jk == 'P') {
-                $jk = 'Perempuan';
-            } elseif ($jk == 'L') {
-                $jk = 'Laki-laki';
-            }
+            try {
+                $jk = $row['C'] === 'P' ? 'Perempuan' : ($row['C'] === 'L' ? 'Laki-laki' : null);
 
-            // Simpan data ke tabel students
-            Student::create([
-                'nama' => $row['A'],  // Kolom A untuk nama
-                'kelas' => $row['B'], // Kolom B untuk kelas
-                'jk' => $jk,          // Simpan jenis kelamin yang sudah diproses
-                'nis' => $row['D'],   // Kolom D untuk NIS
-                'nisn' => $row['E'],  // Kolom E untuk NISN
-            ]);
+                if (!$jk) {
+                    $errors[] = "Baris {$key}: Jenis kelamin tidak valid.";
+                    continue;
+                }
+
+                // Gunakan class_id dari user yang login
+                $classId = Auth::user()->class_id;
+
+                Student::create([
+                    'nama' => $row['A'],
+                    'kelas' => $row['B'],
+                    'jk' => $jk,
+                    'nis' => $row['D'],
+                    'nisn' => $row['E'],
+                    'class_id' => $classId, // Pastikan siswa terhubung dengan kelas wali kelas yang login
+                ]);
+            } catch (\Exception $e) {
+                $errors[] = "Baris {$key}: " . $e->getMessage();
+            }
+        }
+
+        if ($errors) {
+            return redirect()->back()->with('error', implode('<br>', $errors));
         }
 
         return redirect()->back()->with('success', 'Data siswa berhasil diimpor!');
     }
 
+
     public function export()
     {
-        $students = Student::all();
+        // Ambil siswa yang memiliki class_id sesuai dengan kelas wali kelas yang login
+        $students = Student::where('class_id', Auth::user()->class_id)->get();
 
-        // Menambahkan BOM untuk mendukung karakter UTF-8
-        $csvData = "\xEF\xBB\xBF";
-        $csvData .= "No.,Nama,Kelas,Jenis Kelamin,NIS,NISN\n"; // Header CSV
+        $csvData = "\xEF\xBB\xBFNo.,Nama,Kelas,Jenis Kelamin,NIS,NISN\n";
 
         $no = 1;
         foreach ($students as $student) {
