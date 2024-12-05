@@ -35,7 +35,7 @@ class SchoolYearController extends Controller
 
         SchoolYear::create($request->all());
 
-        return redirect()->route('user.school_years.index')->with('success', 'Tahun ajar berhasil ditambahkan.');
+        return redirect()->route('user.school_years.index')->with('success', 'Tahun ajar berhasil ditambahkan');
     }
 
     // Menampilkan form edit tahun ajar
@@ -55,7 +55,7 @@ class SchoolYearController extends Controller
         $schoolYear = SchoolYear::findOrFail($id);
         $schoolYear->update($request->all());
 
-        return redirect()->route('user.school_years.index')->with('success', 'Tahun ajar berhasil diperbarui.');
+        return redirect()->route('user.school_years.index')->with('success', 'Tahun ajar berhasil diperbarui');
     }
 
     // Menghapus tahun ajar
@@ -64,6 +64,6 @@ class SchoolYearController extends Controller
         $schoolYear = SchoolYear::findOrFail($id);
         $schoolYear->delete();
 
-        return redirect()->route('user.school_years.index')->with('success', 'Tahun ajar berhasil dihapus.');
+        return redirect()->route('user.school_years.index')->with('success', 'Tahun ajar berhasil dihapus');
     }
 }

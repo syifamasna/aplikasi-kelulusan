@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\StudentClass;
 use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,6 +19,7 @@ class DashboardController extends Controller
         $totalTeachers = Teacher::count();
         $totalClasses = StudentClass::count();
         $totalSubjects = Subject::count();
+        $totalUsers = User::count();
 
         // Kirim data ke view dashboard
         return view('admin-pages.dashboard.index', [
@@ -25,6 +27,7 @@ class DashboardController extends Controller
             'totalTeachers' => $totalTeachers,
             'totalClasses' => $totalClasses,
             'totalSubjects' => $totalSubjects,
+            'totalUsers' => $totalUsers,
         ]);
     }
 }

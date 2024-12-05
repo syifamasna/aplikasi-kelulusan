@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2024 at 09:40 AM
+-- Generation Time: Dec 05, 2024 at 04:53 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -275,7 +275,7 @@ CREATE TABLE `school_years` (
 INSERT INTO `school_years` (`id`, `tahun_ajar`, `created_at`, `updated_at`) VALUES
 (1, '2022/2023', '2024-11-13 18:44:45', '2024-11-13 18:52:40'),
 (3, '2023/2024', '2024-11-13 18:52:52', '2024-11-13 18:52:52'),
-(4, '2024/2025', '2024-11-13 18:52:59', '2024-11-13 18:52:59');
+(7, '2024/2025', '2024-12-04 18:49:48', '2024-12-04 18:49:48');
 
 -- --------------------------------------------------------
 
@@ -297,7 +297,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('KQLw5v8saCGQPcN3u5wMxcKJ8g6iaRrDMR7wkEJd', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoidjg2UndPUUdUMnRYZk0zWVFyZ0RPamFjdHNmeVRHNEd2aTBQaTVrVCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9zdHVkZW50cz9rZWxhcz02RCZrZXl3b3JkPSI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjU7fQ==', 1733214270);
+('cp2B7pKQ0TvicD1ROlVIuqY5662wseVo81vO77Ha', 7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiRzhUbERYaXpJZ0RhYlBKOU9pRDdaYXBBbjREbFJjbVpWaVlkZVM2NCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL3N0dWRlbnRzIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Nzt9', 1733370817);
 
 -- --------------------------------------------------------
 
@@ -426,7 +426,9 @@ INSERT INTO `students` (`id`, `nis`, `nisn`, `nama`, `kelas`, `jk`, `created_at`
 (210, '192001086', '0138088207', 'Natasya Kayla Lathiifah', '6D', 'Perempuan', '2024-11-15 01:10:20', '2024-11-15 01:10:20'),
 (211, '192001087', '3125385793', 'Naufal Dzaky Kurniawan', '6D', 'Laki-laki', '2024-11-15 01:10:20', '2024-11-15 01:10:20'),
 (212, '192001090', '0139938654', 'Pranajarafa Dzakwan Fadhlurrohman', '6D', 'Laki-laki', '2024-11-15 01:10:20', '2024-11-15 01:10:20'),
-(213, '192001092', '0138164866', 'Rachel Sabita Humaira', '6D', 'Perempuan', '2024-11-15 01:10:20', '2024-11-15 01:10:20');
+(213, '192001092', '0138164866', 'Rachel Sabita Humaira', '6D', 'Perempuan', '2024-11-15 01:10:20', '2024-11-15 01:10:20'),
+(218, '192001110', '0121425793', 'Zahran Ibrahim Hernanda', '6D', 'Laki-laki', '2024-12-04 20:51:04', '2024-12-04 20:51:04'),
+(219, '192001005', '0137060260', 'Aila Syifa Raihana Sihombing', '6D', 'Perempuan', '2024-12-04 20:53:37', '2024-12-04 20:53:37');
 
 -- --------------------------------------------------------
 
@@ -510,8 +512,7 @@ CREATE TABLE `teachers` (
 INSERT INTO `teachers` (`id`, `nama`, `nip`, `jk_guru`, `guru_status`, `created_at`, `updated_at`) VALUES
 (2, 'Raka Al Isya', '123456789', 'Laki-laki', 'Wali Kelas', '2024-11-12 20:10:05', '2024-11-12 20:26:18'),
 (3, 'Syifa K.M', '111', 'Perempuan', 'Guru Aktif', '2024-11-13 18:53:41', '2024-11-13 18:56:24'),
-(4, 'Aditya', '123', 'Laki-laki', 'Wali Kelas', '2024-11-13 20:46:06', '2024-11-13 20:46:06'),
-(5, 'Rachel Mira Lestya', '000', 'Perempuan', 'Wali Kelas', '2024-11-14 20:08:39', '2024-11-14 20:10:02');
+(4, 'Aditya', '123', 'Laki-laki', 'Wali Kelas', '2024-11-13 20:46:06', '2024-11-13 20:46:06');
 
 -- --------------------------------------------------------
 
@@ -727,37 +728,37 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `school_years`
 --
 ALTER TABLE `school_years`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
 
 --
 -- AUTO_INCREMENT for table `student_classes`
 --
 ALTER TABLE `student_classes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

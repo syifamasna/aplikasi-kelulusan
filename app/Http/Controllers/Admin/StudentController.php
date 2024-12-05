@@ -140,7 +140,7 @@ class StudentController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Data siswa berhasil diimpor!');
+        return redirect()->back()->with('success', 'Data siswa berhasil diimpor');
     }
 
     public function export()

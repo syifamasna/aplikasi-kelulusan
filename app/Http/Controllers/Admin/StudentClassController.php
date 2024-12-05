@@ -42,7 +42,7 @@ class StudentClassController extends Controller
 
         StudentClass::create($validated); // Menyimpan data kelas ke dalam database
 
-        return redirect()->route('admin.student_classes.index'); // Mengarahkan ke halaman daftar kelas
+        return redirect()->route('admin.student_classes.index')->with('success', 'Kelas berhasil ditambahkan'); // Mengarahkan ke halaman daftar kelas
     }
 
     // Menampilkan halaman Edit
@@ -72,14 +72,14 @@ class StudentClassController extends Controller
         $student_classes->save();
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('admin.student_classes.index')->with('success', 'Data siswa berhasil diperbarui');
+        return redirect()->route('admin.student_classes.index')->with('success', 'Kelas berhasil diperbarui');
     }
 
     public function destroy($id)
     {
-        $student_classes = StudentClass::findOrFail($id); // Mencari mata pelajaran berdasarkan id
-        $student_classes->delete(); // Menghapus mata pelajaran
+        $student_classes = StudentClass::findOrFail($id);
+        $student_classes->delete();
 
-        return redirect()->route('admin.student_classes.index'); // Mengarahkan kembali ke halaman daftar mata pelajaran
+        return redirect()->route('admin.student_classes.index')->with('success', 'Kelas berhasil dihapus');
     }
 }

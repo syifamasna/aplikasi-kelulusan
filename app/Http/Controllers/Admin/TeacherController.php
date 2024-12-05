@@ -74,7 +74,7 @@ class TeacherController extends Controller
             'guru_status' => $request->guru_status,
         ]);
 
-        return redirect()->route('admin.teachers.index')->with('success', 'Data guru berhasil diubah.');
+        return redirect()->route('admin.teachers.index')->with('success', 'Data guru berhasil diubah');
     }
 
     // Menghapus data guru
@@ -82,6 +82,6 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::findOrFail($id);
         $teacher->delete();
-        return redirect()->route('admin.teachers.index')->with('success', 'Data guru berhasil dihapus.');
+        return redirect()->route('admin.teachers.index')->with('success', 'Data guru berhasil dihapus');
     }
 }

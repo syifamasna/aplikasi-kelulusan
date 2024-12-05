@@ -169,4 +169,13 @@ class StudentController extends Controller
             ->header('Content-Type', 'text/csv')
             ->header('Content-Disposition', 'attachment; filename="students.csv"');
     }
+
+    // Menghapus tahun ajar
+    public function destroy($id)
+    {
+        $students = Student::findOrFail($id);
+        $students->delete();
+
+        return redirect()->route('user.students.index')->with('success', 'Data siswa berhasil dihapus');
+    }
 }

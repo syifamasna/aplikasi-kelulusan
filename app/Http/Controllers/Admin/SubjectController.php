@@ -34,7 +34,7 @@ class SubjectController extends Controller
 
         Subject::create($validated); // Menyimpan data mata pelajaran ke dalam database
 
-        return redirect()->route('admin.subjects.index'); // Mengarahkan ke halaman daftar mata pelajaran
+        return redirect()->route('admin.subjects.index')->with('success', 'Mata Pelajaran berhasil ditambahkan'); // Mengarahkan ke halaman daftar mata pelajaran
     }
 
     public function edit($id)
@@ -53,7 +53,7 @@ class SubjectController extends Controller
         $subject = Subject::findOrFail($id); // Mencari mata pelajaran berdasarkan id
         $subject->update($validated); // Memperbarui data mata pelajaran
 
-        return redirect()->route('admin.subjects.index'); // Kembali ke halaman daftar mata pelajaran
+        return redirect()->route('admin.subjects.index')->with('success', 'Mata Pelajaran berhasil diperbarui'); // Kembali ke halaman daftar mata pelajaran
     }
 
     public function destroy($id)
@@ -61,6 +61,6 @@ class SubjectController extends Controller
         $subject = Subject::findOrFail($id); // Mencari mata pelajaran berdasarkan id
         $subject->delete(); // Menghapus mata pelajaran
 
-        return redirect()->route('admin.subjects.index'); // Mengarahkan kembali ke halaman daftar mata pelajaran
+        return redirect()->route('admin.subjects.index')->with('success', 'Mata Pelajaran berhasil dihapus'); // Mengarahkan kembali ke halaman daftar mata pelajaran
     }
 }

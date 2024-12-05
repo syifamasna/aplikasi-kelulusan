@@ -162,11 +162,10 @@
                                                 <!-- Tombol Edit -->
                                                 <a href="{{ route('user.students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                 <!-- Tombol Hapus -->
-                                                <form action="{{ route('user.students.destroy', $student->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda mau menghapus?');">Hapus</button>
-                                                </form>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#deleteModal" data-id="{{ $student->id }}">
+                                                    Hapus
+                                                </button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -188,7 +187,7 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Modal -->
+    <!-- Modal Impor -->
     <div class="modal fade" id="importStudentModal" tabindex="-1" role="dialog" aria-labelledby="importStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -209,6 +208,32 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Import</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Hapus -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="deleteForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah Anda yakin ingin menghapus data ini?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
                     </div>
                 </form>
             </div>
@@ -247,6 +272,14 @@
                 "responsive": true,
                 "pageLength": 5, // Default 5 data per halaman
                 "lengthMenu": [5, 10, 27, 50, 100] // Pilihan jumlah data per halaman
+            });
+
+            $('#deleteModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var form = $('#deleteForm');
+                var action = "{{ route('user.students.destroy', ':id') }}";
+                form.attr('action', action.replace(':id', id));
             });
         });
     </script>
