@@ -75,7 +75,7 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800">Edit Profil</h1>
 
-                    <a href="{{ route('admin.profile.index') }}" class="btn btn-back mb-4">
+                    <a href="{{ route('admin.profile.index') }}" class="btn btn-back btn-secondary mb-4">
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
 

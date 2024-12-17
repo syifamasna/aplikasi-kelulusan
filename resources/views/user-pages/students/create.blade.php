@@ -112,7 +112,7 @@
                                     </div>
                                     <br>
                                     <button type="submit" class="btn btn-success">Simpan</button>
-                                    <a href="{{ route('user.students.index') }}" class="btn btn-warning">Kembali</a>
+                                    <a href="{{ route('user.students.index') }}" class="btn btn-secondary">Kembali</a>
                                     <div class="clearfix"></div>
                                     <br>
                                 </form>

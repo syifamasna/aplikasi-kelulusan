@@ -19,48 +19,4 @@ class SubjectController extends Controller
 
         return view('user-pages.subjects.index', compact('subjects', 'keyword'));
     }
-
-    public function create()
-    {
-        return view('user-pages.subjects.create'); // Menampilkan form untuk menambah mata pelajaran
-    }
-
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nama' => 'required|string|max:255',  // Validasi input nama mata pelajaran
-            'guru_mapel' => 'required|string|max:255', // Validasi input guru mata pelajaran
-        ]);
-
-        Subject::create($validated); // Menyimpan data mata pelajaran ke dalam database
-
-        return redirect()->route('user.subjects.index')->with('success', 'Mata Pelajaran berhasil ditambahkan'); // Mengarahkan ke halaman daftar mata pelajaran
-    }
-
-    public function edit($id)
-    {
-        $subject = Subject::findOrFail($id); // Mengambil data mata pelajaran berdasarkan id
-        return view('user-pages.subjects.edit', compact('subject')); // Menampilkan form edit
-    }
-
-    public function update(Request $request, $id)
-    {
-        $validated = $request->validate([
-            'nama' => 'required|string|max:255', // Validasi nama mata pelajaran
-            'guru_mapel' => 'required|string|max:255', // Validasi guru mata pelajaran
-        ]);
-
-        $subject = Subject::findOrFail($id); // Mencari mata pelajaran berdasarkan id
-        $subject->update($validated); // Memperbarui data mata pelajaran
-
-        return redirect()->route('user.subjects.index')->with('success', 'Mata pelajaran berhasil diperbarui'); // Kembali ke halaman daftar mata pelajaran
-    }
-
-    public function destroy($id)
-    {
-        $subject = Subject::findOrFail($id); // Mencari mata pelajaran berdasarkan id
-        $subject->delete(); // Menghapus mata pelajaran
-
-        return redirect()->route('user.subjects.index')->with('success', 'Mata pelajaran berhasil dihapus'); // Mengarahkan kembali ke halaman daftar mata pelajaran
-    }
 }

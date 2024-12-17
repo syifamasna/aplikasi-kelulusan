@@ -2,18 +2,22 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Mata Pelajaran - Aplikasi Kelulusan</title>
+    <title>Data Rapor - Aplikasi Kelulusan</title>
+
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
@@ -91,25 +95,29 @@
 </head>
 
 <body id="page-top">
+
     <!-- Page Wrapper -->
     <div id="wrapper">
+
         <!-- Sidebar -->
-        @include('user-pages.components.sidebar')
+        @include('admin-pages.components.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
+
             <!-- Main Content -->
             <div id="content">
+
                 <!-- Topbar -->
-                @include('user-pages.components.topbar')
+                @include('admin-pages.components.topbar')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Daftar Mata Pelajaran SIT Aliya</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Daftar Rapor 6 SIT Aliya</h1><br>
 
                     @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -129,12 +137,29 @@
                     </div>
                     @endif
 
+                    <!-- Filter Kelas dan Pencarian -->
+                    <form method="GET" action="{{ route('admin.report_cards.index') }}">
+                        <div class="form-row mb-3">
+                            <div class="col-md-3">
+                                <select name="kelas" class="form-control" onchange="this.form.submit()">
+                                    <option value="">-- Pilih Kelas --</option>
+                                    @foreach($classes->sortBy('kelas') as $class)
+                                    <option value="{{ $class->kelas }}" {{ $kelasFilter == $class->kelas ? 'selected' : '' }}>
+                                        {{ $class->kelas }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" name="keyword" class="form-control" placeholder="Cari Nama atau Kelas" value="{{ $keyword }}" />
+                            </div>
+                        </div>
+                    </form>
+
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                                <h6 class="m-0 font-weight-bold text-primary">Tabel Mata Pelajaran</h6>
-                            </div>
+                            <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa Kelas 6</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -142,16 +167,25 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Guru Pengajar</th>
+                                            <th>Nama</th>
+                                            <th>Kelas</th>
+                                            <th>NIS</th>
+                                            <th>NISN</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($subjects as $subject)
+                                        @foreach($students as $student)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $subject->nama }}</td>
-                                            <td>{{ $subject->guru_mapel }}</td>
+                                            <td>{{ $student->nama }}</td>
+                                            <td>{{ $student->kelas }}</td>
+                                            <td>{{ $student->nis }}</td>
+                                            <td>{{ $student->nisn }}</td>
+                                            <td>
+                                                <!-- Tombol Input Nilai, Arahkan ke halaman student_report terlebih dahulu -->
+                                                <a href="{{ route('admin.report_cards.student_report', $student->id) }}" class="btn btn-warning btn-sm">Input Nilai</a>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -162,83 +196,54 @@
                 </div>
                 <!-- /.container-fluid -->
 
-                <!-- Footer -->
-                @include('user-pages.components.footer')
-                <!-- End of Footer -->
             </div>
-            <!-- End of Content Wrapper -->
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            @include('admin-pages.components.footer')
+            <!-- End of Footer -->
+
         </div>
-        <!-- End of Page Wrapper -->
+        <!-- End of Content Wrapper -->
 
-        <!-- Modal Hapus -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form id="deleteForm" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Apakah Anda yakin ingin menghapus data ini?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-danger">Hapus</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+    </div>
+    <!-- End of Page Wrapper -->
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-        <!-- Menggunakan jQuery dari CDN (hanya satu kali) -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Menggunakan jQuery dari CDN (hanya satu kali) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-        <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
-        <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="{{ asset('js/sb-admin-2.min.js')}}"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="{{ asset('js/sb-admin-2.min.js')}}"></script>
 
-        <!-- Skrip untuk DataTable dan inisialisasi lainnya -->
-        <script>
-            $(document).ready(function() {
-                $('#dataTable').DataTable({
-                    "paging": true, // Aktifkan pagination
-                    "lengthChange": true, // Izinkan user untuk memilih jumlah data per halaman
-                    "searching": true, // Aktifkan fitur pencarian
-                    "ordering": false, // Nonaktifkan fitur pengurutan
-                    "info": true, // Tampilkan informasi pagination (misalnya, 1 to 10 of 100)
-                    "autoWidth": false, // Nonaktifkan auto width
-                    "responsive": true, // Membuat tabel responsif
-                    "pageLength": 5, // Set default data per halaman (misalnya, 20 data per halaman)
-                    "lengthMenu": [5, 10, 20, 50, 100], // Pilihan jumlah data per halaman
-                });
-
-                $('#deleteModal').on('show.bs.modal', function(event) {
-                    var button = $(event.relatedTarget);
-                    var id = button.data('id');
-                    var form = $('#deleteForm');
-                    var action = "{{ route('user.subjects.destroy', ':id') }}";
-                    form.attr('action', action.replace(':id', id));
-                });
+    <!-- Skrip untuk DataTable dan inisialisasi lainnya -->
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                "paging": true, // Aktifkan pagination
+                "lengthChange": true, // Izinkan user untuk memilih jumlah data per halaman
+                "searching": false, // Aktifkan fitur pencarian
+                "ordering": false, // Nonaktifkan fitur pengurutan
+                "info": true, // Tampilkan informasi pagination (misalnya, 1 to 10 of 100)
+                "autoWidth": false, // Nonaktifkan auto width
+                "responsive": true, // Membuat tabel responsif
+                "pageLength": 5, // Set default data per halaman (misalnya, 20 data per halaman)
+                "lengthMenu": [5, 10, 27, 50, 100], // Pilihan jumlah data per halaman
             });
-        </script>
+        });
+    </script>
 
 </body>
 

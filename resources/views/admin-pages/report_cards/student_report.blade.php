@@ -8,15 +8,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Tahun Ajar - Aplikasi Kelulusan</title>
-
+    <title>Data Rapor {{ $student->nama }} - Aplikasi Kelulusan</title>
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
@@ -94,29 +91,27 @@
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
-        @include('user-pages.components.sidebar')
+        @include('admin-pages.components.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
             <div id="content">
-
                 <!-- Topbar -->
-                @include('user-pages.components.topbar')
+                @include('admin-pages.components.topbar')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Daftar Tahun Ajar SIT Aliya</h1>
+                    <h1 class="h3 text-gray-800">Data Rapor {{ $student->nama }}</h1><br>
+                    <a href="{{ route('admin.report_cards.index') }}" class="btn btn-back btn-secondary mb-4">
+                        <i class="fas fa-arrow-left"></i> Kembali
+                    </a>
 
                     @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -140,23 +135,38 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                                <h6 class="m-0 font-weight-bold text-primary">Tabel Tahun Ajar</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Tabel Semester</h6>
+                                <div class="tombol">
+                                    <a href="{{ route('admin.report_cards.create', $student->id) }}" class="btn btn-primary ml-2 mb-2">Tambah Nilai Rapor</a>
+                                </div>
                             </div>
                         </div>
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
+                                            <th>Semester</th>
                                             <th>Tahun Ajar</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($schoolYears as $schoolYear)
+                                        @foreach($reportCards as $index => $data)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $schoolYear->tahun_ajar }}</td> <!-- Perbaikan nama field -->
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>Semester {{ $data->semester }}</td>
+                                            <td>{{ $data->tahun_ajar }}</td>
+                                            <td>
+                                                <a href="{{ route('admin.report_cards.show', [$student->id, $data->id]) }}" class="btn btn-info btn-sm">Detail</a>
+                                                <a href="{{ route('admin.report_cards.edit', $data->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                <!-- Tombol Hapus -->
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" data-id="{{ $data->id }}">
+                                                    Hapus
+                                                </button>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -170,12 +180,10 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('user-pages.components.footer')
+            @include('admin-pages.components.footer')
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
 
@@ -210,45 +218,39 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- JavaScript -->
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/sb-admin-2.min.js')}}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-    <!-- Custom scripts for DataTables -->
+    <!-- DataTables -->
+    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": false,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-                "pageLength": 5, // Default 5 data per halaman
-                "lengthMenu": [2, 5, 10, 25, 50, 100] // Pilihan jumlah data per halaman
+                "paging": false, // Aktifkan pagination
+                "lengthChange": false, // Izinkan user untuk memilih jumlah data per halaman
+                "searching": false, // Aktifkan fitur pencarian
+                "ordering": true, // Aktifkan fitur pengurutan
+                "info": false, // Tampilkan informasi pagination (misalnya, 1 to 10 of 100)
+                "autoWidth": false, // Nonaktifkan auto width
+                "responsive": true, // Membuat tabel responsif
+                "pageLength": false, // Set default data per halaman (misalnya, 20 data per halaman)
+                "lengthMenu": [5, 10, 27, 50, 100], // Pilihan jumlah data per halaman
             });
 
             $('#deleteModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);
-                var id = button.data('id');
+                var id = button.data('id'); // Mengambil ID dari tombol yang diklik
                 var form = $('#deleteForm');
-                var action = "{{ route('user.school_years.destroy', ':id') }}";
-                form.attr('action', action.replace(':id', id));
+                var action = "{{ route('admin.report_cards.destroy', ':id') }}";
+                form.attr('action', action.replace(':id', id)); // Ganti :id dengan ID yang sesuai
             });
+
         });
     </script>
-
 </body>
 
 </html>

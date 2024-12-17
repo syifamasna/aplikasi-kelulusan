@@ -50,7 +50,7 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Daftar Siswa SIT Aliya</h1>
 
-                    <a href="{{ route('user.students.index') }}" class="btn btn-warning ml-4 mb-2"> Kembali</a>
+                    <a href="{{ route('user.students.index') }}" class="btn btn-secondary ml-4 mb-2"> Kembali</a>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">

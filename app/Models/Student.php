@@ -23,4 +23,10 @@ class Student extends Model
     {
         return $this->belongsTo(StudentClass::class, 'kelas', 'kelas');
     }
+
+    // Relasi ke rapor
+    public function reportCards()
+    {
+        return $this->hasMany(ReportCard::class, 'student_id', 'id');
+    }
 }

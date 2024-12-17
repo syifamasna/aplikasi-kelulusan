@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2024 at 04:53 AM
+-- Generation Time: Dec 17, 2024 at 03:51 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -135,7 +135,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (20, '2024_11_21_054030_add_default_role_to_users_table', 17),
 (21, '2024_11_21_055041_remove_default_role_from_users_table', 18),
 (22, '2024_11_26_042521_create_users_table', 19),
-(23, '2024_11_28_041511_add_image_to_users_table', 20);
+(23, '2024_11_28_041511_add_image_to_users_table', 20),
+(24, '2024_11_29_075718_add_user_id_to_student_classes', 21),
+(25, '2024_12_06_020900_create_report_cards_table', 21);
 
 -- --------------------------------------------------------
 
@@ -225,6 +227,82 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `report_cards`
+--
+
+CREATE TABLE `report_cards` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `student_id` bigint(20) UNSIGNED NOT NULL,
+  `semester` int(11) NOT NULL,
+  `tahun_ajar` varchar(255) NOT NULL,
+  `sakit` int(11) DEFAULT NULL,
+  `izin` int(11) DEFAULT NULL,
+  `alfa` int(11) DEFAULT NULL,
+  `ekskul` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`ekskul`)),
+  `nilai_ekskul` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`nilai_ekskul`)),
+  `ket_ekskul` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`ket_ekskul`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `report_cards`
+--
+
+INSERT INTO `report_cards` (`id`, `student_id`, `semester`, `tahun_ajar`, `sakit`, `izin`, `alfa`, `ekskul`, `nilai_ekskul`, `ket_ekskul`, `created_at`, `updated_at`) VALUES
+(24, 107, 9, '2024/2025', 2, 3, NULL, '\"[\\\"Pramuka\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Sangat Baik\\\",null]\"', '2024-12-13 00:21:30', '2024-12-16 03:10:35'),
+(25, 107, 7, '2022/2023', NULL, 2, 3, '\"[\\\"Pramuka\\\",\\\"Silat\\\"]\"', '\"[\\\"90\\\",\\\"70\\\"]\"', '\"[\\\"Sangat Baik\\\",\\\"Kurang Baik\\\"]\"', '2024-12-16 02:28:40', '2024-12-16 03:24:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report_card_subjects`
+--
+
+CREATE TABLE `report_card_subjects` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `report_card_id` bigint(20) UNSIGNED NOT NULL,
+  `subject_id` bigint(20) UNSIGNED NOT NULL,
+  `nilai` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `report_card_subjects`
+--
+
+INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai`) VALUES
+(29, 24, 1, 86),
+(30, 24, 3, 85),
+(31, 24, 4, 90),
+(32, 24, 5, 99),
+(33, 24, 6, 91),
+(34, 24, 7, 84),
+(35, 24, 8, 85),
+(36, 24, 9, 88),
+(37, 24, 10, 80),
+(38, 24, 11, 90),
+(39, 24, 12, 99),
+(40, 24, 13, 98),
+(41, 24, 14, 90),
+(42, 24, 15, 91),
+(43, 25, 1, 70),
+(44, 25, 3, 98),
+(45, 25, 4, 65),
+(46, 25, 5, 50),
+(47, 25, 6, 90),
+(48, 25, 7, 99),
+(49, 25, 8, 97),
+(50, 25, 9, 98),
+(51, 25, 10, 80),
+(52, 25, 11, 81),
+(53, 25, 12, 83),
+(54, 25, 13, 79),
+(55, 25, 14, 90),
+(56, 25, 15, 85);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `roles`
 --
 
@@ -275,7 +353,8 @@ CREATE TABLE `school_years` (
 INSERT INTO `school_years` (`id`, `tahun_ajar`, `created_at`, `updated_at`) VALUES
 (1, '2022/2023', '2024-11-13 18:44:45', '2024-11-13 18:52:40'),
 (3, '2023/2024', '2024-11-13 18:52:52', '2024-11-13 18:52:52'),
-(7, '2024/2025', '2024-12-04 18:49:48', '2024-12-04 18:49:48');
+(7, '2024/2025', '2024-12-04 18:49:48', '2024-12-04 18:49:48'),
+(9, '2021/2022', '2024-12-16 19:08:36', '2024-12-16 19:08:36');
 
 -- --------------------------------------------------------
 
@@ -297,7 +376,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('cp2B7pKQ0TvicD1ROlVIuqY5662wseVo81vO77Ha', 7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiRzhUbERYaXpJZ0RhYlBKOU9pRDdaYXBBbjREbFJjbVpWaVlkZVM2NCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL3N0dWRlbnRzIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Nzt9', 1733370817);
+('YBIQ4eVp9hyI57Fe993HJBDNWjMgyjax04MybmsG', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiT1hMQ1NTN2t6QVhMdVdNSnlqUEFKMGNnYk1HcjE3dDdJTVVIU2UyNCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9yZXBvcnQtY2FyZHMvMTA3L3N0dWRlbnQtcmVwb3J0Ijt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1734403841);
 
 -- --------------------------------------------------------
 
@@ -428,7 +507,8 @@ INSERT INTO `students` (`id`, `nis`, `nisn`, `nama`, `kelas`, `jk`, `created_at`
 (212, '192001090', '0139938654', 'Pranajarafa Dzakwan Fadhlurrohman', '6D', 'Laki-laki', '2024-11-15 01:10:20', '2024-11-15 01:10:20'),
 (213, '192001092', '0138164866', 'Rachel Sabita Humaira', '6D', 'Perempuan', '2024-11-15 01:10:20', '2024-11-15 01:10:20'),
 (218, '192001110', '0121425793', 'Zahran Ibrahim Hernanda', '6D', 'Laki-laki', '2024-12-04 20:51:04', '2024-12-04 20:51:04'),
-(219, '192001005', '0137060260', 'Aila Syifa Raihana Sihombing', '6D', 'Perempuan', '2024-12-04 20:53:37', '2024-12-04 20:53:37');
+(219, '192001005', '0137060260', 'Aila Syifa Raihana Sihombing', '6D', 'Perempuan', '2024-12-04 20:53:37', '2024-12-04 20:53:37'),
+(221, '0', '0', 'Syifa Khairunisa Masna', '5A', 'Perempuan', '2024-12-16 19:07:32', '2024-12-16 19:08:02');
 
 -- --------------------------------------------------------
 
@@ -441,18 +521,20 @@ CREATE TABLE `student_classes` (
   `kelas` varchar(255) NOT NULL,
   `nama_guru` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `student_classes`
 --
 
-INSERT INTO `student_classes` (`id`, `kelas`, `nama_guru`, `created_at`, `updated_at`) VALUES
-(1, '6A', '', NULL, '2024-11-14 22:23:34'),
-(2, '6B', '', NULL, NULL),
-(3, '6C', '', NULL, NULL),
-(4, '6D', '', NULL, NULL);
+INSERT INTO `student_classes` (`id`, `kelas`, `nama_guru`, `created_at`, `updated_at`, `user_id`) VALUES
+(1, '6A', '', NULL, '2024-11-14 22:23:34', NULL),
+(2, '6B', '', NULL, NULL, NULL),
+(3, '6C', '', NULL, NULL, NULL),
+(4, '6D', '', NULL, NULL, NULL),
+(13, '5A', '...', '2024-12-16 19:07:18', '2024-12-16 19:07:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -487,7 +569,8 @@ INSERT INTO `subjects` (`id`, `nama`, `guru_mapel`, `created_at`, `updated_at`, 
 (12, 'Al-Qur\'an Metode Ummi', '-', '2024-11-13 23:39:06', '2024-11-13 23:39:06', NULL),
 (13, 'Tahfiz', '-', '2024-11-13 23:39:14', '2024-11-13 23:39:21', NULL),
 (14, 'Hadis', '-', '2024-11-13 23:39:38', '2024-11-13 23:39:38', NULL),
-(15, 'Informatika (Komputer)', '-', '2024-11-13 23:39:58', '2024-11-13 23:39:58', NULL);
+(15, 'Informatika (Komputer)', '-', '2024-11-13 23:39:58', '2024-11-13 23:39:58', NULL),
+(18, 'B. Jepang', '...', '2024-12-16 19:06:13', '2024-12-16 19:06:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -511,7 +594,6 @@ CREATE TABLE `teachers` (
 
 INSERT INTO `teachers` (`id`, `nama`, `nip`, `jk_guru`, `guru_status`, `created_at`, `updated_at`) VALUES
 (2, 'Raka Al Isya', '123456789', 'Laki-laki', 'Wali Kelas', '2024-11-12 20:10:05', '2024-11-12 20:26:18'),
-(3, 'Syifa K.M', '111', 'Perempuan', 'Guru Aktif', '2024-11-13 18:53:41', '2024-11-13 18:56:24'),
 (4, 'Aditya', '123', 'Laki-laki', 'Wali Kelas', '2024-11-13 20:46:06', '2024-11-13 20:46:06');
 
 -- --------------------------------------------------------
@@ -622,6 +704,22 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indexes for table `report_cards`
+--
+ALTER TABLE `report_cards`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `tahun_ajar` (`tahun_ajar`);
+
+--
+-- Indexes for table `report_card_subjects`
+--
+ALTER TABLE `report_card_subjects`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `report_card_id` (`report_card_id`),
+  ADD KEY `subject_id` (`subject_id`);
+
+--
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
@@ -640,7 +738,8 @@ ALTER TABLE `role_has_permissions`
 --
 ALTER TABLE `school_years`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `school_years_tahun_ajar_unique` (`tahun_ajar`);
+  ADD UNIQUE KEY `school_years_tahun_ajar_unique` (`tahun_ajar`),
+  ADD UNIQUE KEY `tahun_ajar` (`tahun_ajar`);
 
 --
 -- Indexes for table `sessions`
@@ -662,13 +761,16 @@ ALTER TABLE `students`
 --
 ALTER TABLE `student_classes`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `kelas` (`kelas`);
+  ADD UNIQUE KEY `kelas` (`kelas`),
+  ADD KEY `student_classes_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `subjects`
 --
 ALTER TABLE `subjects`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `id_2` (`id`);
 
 --
 -- Indexes for table `teachers`
@@ -704,7 +806,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -719,6 +821,18 @@ ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `report_cards`
+--
+ALTER TABLE `report_cards`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `report_card_subjects`
+--
+ALTER TABLE `report_card_subjects`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+
+--
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
@@ -728,25 +842,25 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `school_years`
 --
 ALTER TABLE `school_years`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
 
 --
 -- AUTO_INCREMENT for table `student_classes`
 --
 ALTER TABLE `student_classes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `teachers`
@@ -777,6 +891,20 @@ ALTER TABLE `model_has_roles`
   ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `report_cards`
+--
+ALTER TABLE `report_cards`
+  ADD CONSTRAINT `report_cards_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `report_cards_ibfk_2` FOREIGN KEY (`tahun_ajar`) REFERENCES `school_years` (`tahun_ajar`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `report_card_subjects`
+--
+ALTER TABLE `report_card_subjects`
+  ADD CONSTRAINT `report_card_subjects_ibfk_1` FOREIGN KEY (`report_card_id`) REFERENCES `report_cards` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `report_card_subjects_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `role_has_permissions`
 --
 ALTER TABLE `role_has_permissions`
@@ -788,6 +916,12 @@ ALTER TABLE `role_has_permissions`
 --
 ALTER TABLE `students`
   ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`kelas`) REFERENCES `student_classes` (`kelas`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `student_classes`
+--
+ALTER TABLE `student_classes`
+  ADD CONSTRAINT `student_classes_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `users`

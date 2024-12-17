@@ -14,4 +14,9 @@ class SchoolYear extends Model
     protected $fillable = [
         'tahun_ajar'
     ];
+
+    public function reportCards()
+    {
+        return $this->hasMany(ReportCard::class, 'tahun_ajar', 'tahun_ajar');
+    }
 }

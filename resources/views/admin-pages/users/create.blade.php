@@ -111,7 +111,7 @@
 
                                     <br>
                                     <button type="submit" class="btn btn-success">Simpan</button>
-                                    <a href="{{ route('admin.users.index') }}" class="btn btn-warning">Kembali</a>
+                                    <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Kembali</a>
                                     <div class="clearfix"></div>
 
                                     <br>

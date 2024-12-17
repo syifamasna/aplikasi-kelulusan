@@ -14,4 +14,10 @@ class Subject extends Model
         'guru_mapel',  // Nama guru pengampu
         'tujuan_pembelajaran'
     ];
+
+    public function reportCards()
+    {
+        return $this->belongsToMany(ReportCard::class, 'report_card_subjects')
+            ->withPivot('nilai');
+    }
 }

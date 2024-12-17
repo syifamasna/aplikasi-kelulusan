@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\TeacherController as AdminTeacherController;
 use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
 use App\Http\Controllers\Admin\StudentClassController as AdminStudentClassController;
 use App\Http\Controllers\Admin\SchoolYearController as AdminSchoolYearController;
+use App\Http\Controllers\Admin\ReportCardController as AdminReportCardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\ProfileController as UserProfileController;
@@ -50,6 +51,23 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::put('profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
         Route::get('profile', [AdminProfileController::class, 'index'])->name('admin.profile.index');
         Route::get('profile/edit', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
+
+        // Rute untuk menampilkan daftar siswa berdasarkan kelas
+        Route::get('report_cards', [AdminReportCardController::class, 'index'])->name('admin.report_cards.index');
+        // Rute untuk menampilkan data rapor siswa tertentu
+        Route::get('report-cards/{student}/student-report', [AdminReportCardController::class, 'showStudentReport'])->name('admin.report_cards.student_report');
+        // Rute untuk melihat detail rapor berdasarkan ID rapor
+        Route::get('report_cards/{student}/show/{reportCard}', [AdminReportCardController::class, 'show'])->name('admin.report_cards.show');
+        // Rute untuk menampilkan halaman tambah nilai rapor siswa
+        Route::get('report_cards/{student}/create', [AdminReportCardController::class, 'create'])->name('admin.report_cards.create');
+        // Rute untuk menyimpan nilai rapor baru
+        Route::post('report_cards/{student}', [AdminReportCardController::class, 'store'])->name('admin.report_cards.store');
+        // Rute untuk menampilkan halaman edit rapor siswa
+        Route::get('report_cards/{id}/edit', [AdminReportCardController::class, 'edit'])->name('admin.report_cards.edit');
+        // Rute untuk memperbarui data rapor siswa
+        Route::put('/report_cards/{student_id}/{report_card_id}', [AdminReportCardController::class, 'update'])->name('admin.report_cards.update');
+        // Rute untuk menghapus nilai rapor siswa
+        Route::delete('report_cards/{id}', [AdminReportCardController::class, 'destroy'])->name('admin.report_cards.destroy');
 
         // Import & Export routes Admin
         Route::post('students/import', [AdminStudentController::class, 'import'])->name('admin.students.import');

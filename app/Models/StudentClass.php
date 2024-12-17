@@ -20,4 +20,10 @@ class StudentClass extends Model
     {
         return $this->hasMany(Student::class, 'kelas', 'kelas');
     }
+
+    // Relasi ke mata pelajaran
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class, 'kelas', 'kelas'); // Asumsi ada kolom `kelas` di tabel `subjects`
+    }
 }
