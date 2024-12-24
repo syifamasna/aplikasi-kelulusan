@@ -77,19 +77,47 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead style="background-color: #343a40; color: white;">
+                                    <thead style="background-color: #343a40; color: white; text-align: center;">
                                         <tr>
-                                            <th>No</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Nilai</th>
+                                            <th style="text-align: center; vertical-align: middle;">No</th>
+                                            <th style="text-align: left;">Mata Pelajaran</th>
+                                            <th style="text-align: center; vertical-align: middle;">Nilai</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($reportCard->subjects as $subject)
                                         <tr class="{{ $loop->odd ? 'odd-row' : 'even-row' }}">
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $subject->nama }}</td>
+                                            <td style="text-align: center; vertical-align: middle;">{{ $loop->iteration }}</td>
                                             <td>
+                                                <strong>{{ $subject->nama }}</strong><br>
+
+                                                <!-- Memastikan apakah subject memiliki detail -->
+                                                @php
+                                                $details = json_decode($subject->pivot->details, true);
+                                                @endphp
+
+                                                <!-- Garis Pemisah jika membutuhkan informasi tambahan -->
+                                                @if (in_array($subject->id, [12, 13, 14, 15]))
+                                                <hr style="border: 1px solid #ddd; margin-top: 5px; margin-bottom: 10px;">
+                                                @endif
+
+                                                <!-- Menampilkan informasi tambahan untuk mata pelajaran tertentu -->
+                                                @if ($subject->id == 12 || $subject->id == 13)
+                                                <p>Target Akhir Semester: {{ $details['target'] ?? 'Tidak ada target' }}</p>
+                                                <hr style="border: 1px solid #ddd; margin-top: 5px; margin-bottom: 10px;">
+                                                <p>Capaian Saat Ini: {{ $details['capaian'] ?? 'Tidak ada capaian' }}</p>
+                                                @elseif ($subject->id == 14)
+                                                <p>Target: {{ $details['target'] ?? 'Tidak ada target' }}</p>
+                                                @elseif ($subject->id == 15)
+                                                @php
+                                                $aplikasi = $details['aplikasi'] ?? null;
+                                                @endphp
+                                                <p>Aplikasi/Program: {{ $aplikasi ?? 'Tidak ada aplikasi/program' }}</p>
+                                                @endif
+                                            </td>
+
+                                            <!-- Kolom Nilai -->
+                                            <td style="text-align: center; vertical-align: middle;">
                                                 @php
                                                 $nilai = $reportCard->subjects->firstWhere('id', $subject->id)->pivot->nilai ?? 'Belum diisi';
                                                 @endphp
@@ -138,6 +166,29 @@
                                     <p><strong>Alfa:</strong> {{ $reportCard->alfa ?? '-' }}</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Prestasi -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3" style="background-color: #4e73df; color: white;">
+                            <h6 class="m-0 font-weight-bold text-center">Prestasi</h6>
+                        </div>
+                        <div class="card-body">
+                            @php
+                            $prestasi = json_decode($reportCard->prestasi);
+                            $ket_prestasi = json_decode($reportCard->ket_prestasi);
+                            @endphp
+                            @foreach ($prestasi as $index => $prestasiItem)
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Prestasi {{ $index + 1 }}:</strong> {{ $prestasiItem ?? '-' }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Keterangan:</strong> {{ $ket_prestasi[$index] ?? '-' }}</p>
+                                </div>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
 

@@ -12,12 +12,12 @@ class Subject extends Model
     protected $fillable = [
         'nama',        // Nama mata pelajaran
         'guru_mapel',  // Nama guru pengampu
-        'tujuan_pembelajaran'
     ];
 
+    // Di model Subject
     public function reportCards()
     {
         return $this->belongsToMany(ReportCard::class, 'report_card_subjects')
-            ->withPivot('nilai');
+            ->withPivot('nilai', 'details'); // Mengambil nilai dan details dari pivot
     }
 }

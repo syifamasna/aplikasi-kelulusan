@@ -20,9 +20,11 @@ class ReportCard extends Model
         'sakit',
         'izin',
         'alfa',
+        'prestasi',
+        'ket_prestasi',
         'ekskul',
         'nilai_ekskul',
-        'ket_ekskul'
+        'ket_ekskul',
     ];
 
     // Tentukan kolom JSON yang akan dikelola oleh Eloquent
@@ -45,19 +47,19 @@ class ReportCard extends Model
         return $this->belongsTo(SchoolYear::class, 'tahun_ajar', 'tahun_ajar');
     }
 
+    // ReportCard.php
+
     public function subjects()
     {
         return $this->belongsToMany(Subject::class, 'report_card_subjects')
-            ->withPivot('nilai');
+            ->withPivot('nilai', 'details'); // Ambil nilai dan details dari pivot
     }
 
-    public function addSubject($subjectId, $nilai)
+    public function addSubject($subjectId, $nilai, $details = null)
     {
-        $this->subjects()->attach($subjectId, ['nilai' => $nilai]);
-    }
-
-    public function reportCardSubjects()
-    {
-        return $this->hasMany(ReportCardSubject::class);
+        $this->subjects()->attach($subjectId, [
+            'nilai' => $nilai,
+            'details' => $details,  // Laravel akan menangani json encoding dan decoding secara otomatis
+        ]);
     }
 }

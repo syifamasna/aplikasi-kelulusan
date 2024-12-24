@@ -7,15 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReportCardSubject extends Model
 {
-
     use HasFactory;
 
     protected $table = 'report_card_subjects';
 
+    protected $casts = [
+        'details' => 'array', // Otomatis decode JSON menjadi array
+    ];
+
     protected $fillable = [
         'report_card_id',
         'subject_id',
-        'nilai'
+        'nilai',
+        'details',
     ];
 
     public function reportCard()

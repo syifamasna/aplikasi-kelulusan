@@ -117,15 +117,89 @@
                             <h6 class="m-0 font-weight-bold text-primary text-center">Muatan Lokal & Muatan Khas SDIT Aliya</h6><br>
                             <div class="row">
                                 @foreach ($subjects as $subject)
-                                @if ($subject->id >= 10 && $subject->id <= 15)
-                                    <div class="col-md-4">
+                                @if ($subject->id >= 10 && $subject->id <= 11)
+                                    <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="mata_pelajaran[{{ $subject->id }}]">{{ $subject->nama }}</label>
-                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $reportCard->subjects->where('id', $subject->id)->first()->pivot->nilai ?? '') }}" placeholder="Masukkan Nilai..." required>
+                                        <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $nilai[$subject->id] ?? '') }}" placeholder="Masukkan Nilai..." required>
                                     </div>
                             </div>
                             @endif
                             @endforeach
+                        </div>
+
+                        <!-- Muatan Lokal & Khas SDIT Aliya (ID 12-15) -->
+                        <div class="row">
+                            @foreach ($subjects as $subject)
+                            @if ($subject->id >= 12 && $subject->id <= 15)
+                                <!-- Untuk mata pelajaran dengan id 12 -->
+                                @if ($subject->id == 12)
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $nilai[$subject->id] ?? '') }}" placeholder="Masukkan Nilai..." required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="target[{{ $subject->id }}]">Target Akhir Semester</label>
+                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_12" class="form-control" value="{{ old('target.' . $subject->id, $pivotData[$subject->id]['target'] ?? '') }}" placeholder="Contoh: Lulus Tajwid Jilid 9" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="capaian[{{ $subject->id }}]">Capaian Saat Ini</label>
+                                        <input type="text" name="capaian[{{ $subject->id }}]" id="capaian_12" class="form-control" value="{{ old('capaian.' . $subject->id, $pivotData[$subject->id]['capaian'] ?? '') }}" placeholder="Contoh: Jilid 5 Hal 40" required>
+                                    </div>
+                                </div>
+                                @elseif ($subject->id == 13)
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $nilai[$subject->id] ?? '') }}" placeholder="Masukkan Nilai..." required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="target[{{ $subject->id }}]">Target Akhir Semester</label>
+                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_13" class="form-control" value="{{ old('target.' . $subject->id, $pivotData[$subject->id]['target'] ?? '') }}" placeholder="Contoh: Q.S Al-Infithar" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="capaian[{{ $subject->id }}]">Capaian Saat Ini</label>
+                                        <input type="text" name="capaian[{{ $subject->id }}]" id="capaian_13" class="form-control" value="{{ old('capaian.' . $subject->id, $pivotData[$subject->id]['capaian'] ?? '') }}" placeholder="Contoh: Q.S Al-Muthaffifin ayat 1" required>
+                                    </div>
+                                </div>
+                                @elseif ($subject->id == 14)
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $nilai[$subject->id] ?? '') }}" placeholder="Masukkan Nilai..." required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="target[{{ $subject->id }}]">Target</label>
+                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_14" class="form-control" value="{{ old('target.' . $subject->id, $pivotData[$subject->id]['target'] ?? '') }}" placeholder="Contoh: Hadis 1 s.d 5" required>
+                                    </div>
+                                </div>
+                                @elseif ($subject->id == 15)
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $nilai[$subject->id] ?? '') }}" placeholder="Masukkan Nilai..." required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="aplikasi[{{ $subject->id }}]">Aplikasi/Program</label>
+                                        <input type="text" name="aplikasi[{{ $subject->id }}]" id="aplikasi_{{ $subject->id }}" class="form-control" value="{{ old('aplikasi.' . $subject->id, $pivotData[$subject->id]['aplikasi'] ?? '') }}" placeholder="Contoh: Ms. Office Excel" required>
+                                    </div>
+                                </div>
+                                @endif
+                                @endif
+                                @endforeach
                         </div>
 
                         <!-- Subjudul untuk Absensi -->
@@ -152,6 +226,44 @@
                             </div>
                         </div>
 
+                        <!-- Subjudul untuk Prestasi -->
+                        <br>
+                        <h6 class="m-0 font-weight-bold text-primary text-center">Prestasi</h6><br>
+                        @php
+                        $prestasi = json_decode($reportCard->prestasi, true) ?? [];
+                        $ket_prestasi = json_decode($reportCard->ket_prestasi, true) ?? [];
+                        @endphp
+                        <!-- Prestasi 1 -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="prestasi">Jenis Prestasi 1</label>
+                                    <input type="text" name="prestasi[]" id="prestasi" class="form-control" value="{{ old('prestasi.0', $prestasi[0] ?? '') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="ket_prestasi">Keterangan</label>
+                                    <input type="text" name="ket_prestasi[]" id="ket_prestasi" class="form-control" value="{{ old('ket_prestasi.0', $ket_prestasi[0] ?? '') }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prestasi 2 -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="prestasi_2">Jenis Prestasi 2</label>
+                                    <input type="text" name="prestasi[]" id="prestasi_2" class="form-control" value="{{ old('prestasi.1', $prestasi[1] ?? '') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="ket_prestasi_2">Keterangan</label>
+                                    <input type="text" name="ket_prestasi[]" id="ket_prestasi_2" class="form-control" value="{{ old('ket_prestasi.1', $ket_prestasi[1] ?? '') }}">
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Subjudul untuk Ekstrakurikuler -->
                         <br>
