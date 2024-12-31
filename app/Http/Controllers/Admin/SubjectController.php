@@ -29,7 +29,7 @@ class SubjectController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:255',  // Validasi input nama mata pelajaran
-            'guru_mapel' => 'required|string|max:255', // Validasi input guru mata pelajaran
+            'guru_mapel' => 'nullable|string|max:255', // Validasi input guru mata pelajaran
         ]);
 
         Subject::create($validated); // Menyimpan data mata pelajaran ke dalam database
@@ -47,7 +47,7 @@ class SubjectController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:255', // Validasi nama mata pelajaran
-            'guru_mapel' => 'required|string|max:255', // Validasi guru mata pelajaran
+            'guru_mapel' => 'nullable|string|max:255', // Validasi guru mata pelajaran
         ]);
 
         $subject = Subject::findOrFail($id); // Mencari mata pelajaran berdasarkan id

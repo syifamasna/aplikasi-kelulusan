@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Data Rapor - Aplikasi Kelulusan</title>
+    <title>Ijazah Kelulusan - Aplikasi Kelulusan</title>
 
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
@@ -117,7 +117,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Daftar Rapor Kelas 6 SIT Aliya</h1><br>
+                    <h1 class="h3 mb-2 text-gray-800">Daftar Ijazah Kelas 6 SIT Aliya</h1><br>
 
                     @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -138,7 +138,7 @@
                     @endif
 
                     <!-- Filter Kelas dan Pencarian -->
-                    <form method="GET" action="{{ route('admin.report_cards.index') }}">
+                    <form method="GET" action="{{ route('admin.graduation_grades.index') }}">
                         <div class="form-row mb-3">
                             <div class="col-md-3">
                                 <select name="kelas" class="form-control" onchange="this.form.submit()">
@@ -184,7 +184,7 @@
                                             <td>{{ $student->nisn }}</td>
                                             <td>
                                                 <!-- Tombol Input Nilai, Arahkan ke halaman student_report terlebih dahulu -->
-                                                <a href="{{ route('admin.report_cards.student_report', $student->id) }}" class="btn btn-warning btn-sm">Input Nilai</a>
+                                                <a href="#" class="btn btn-warning btn-sm">Lihat Ijazah</a>
                                             </td>
                                         </tr>
                                         @endforeach

@@ -76,7 +76,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="guru-mapel" class="control-label">Guru Pengajar</label>
-                                                <input type="text" name="guru_mapel" class="form-control" id="guru_mapel" required>
+                                                <input type="text" name="guru_mapel" class="form-control" id="guru_mapel">
                                             </div>
                                         </div>
                                     </div>

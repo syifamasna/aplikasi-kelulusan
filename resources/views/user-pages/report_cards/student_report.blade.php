@@ -2,22 +2,18 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Data Rapor - Aplikasi Kelulusan</title>
-
+    <title>Data Rapor {{ $student->nama }} - Aplikasi Kelulusan</title>
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
@@ -95,29 +91,27 @@
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
-        @include('admin-pages.components.sidebar')
+        @include('user-pages.components.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
             <div id="content">
-
                 <!-- Topbar -->
-                @include('admin-pages.components.topbar')
+                @include('user-pages.components.topbar')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Daftar Rapor Kelas 6 SIT Aliya</h1><br>
+                    <h1 class="h3 text-gray-800">Data Rapor {{ $student->nama }}</h1><br>
+                    <a href="{{ route('user.report_cards.index') }}" class="btn btn-back btn-secondary mb-4">
+                        <i class="fas fa-arrow-left"></i> Kembali
+                    </a>
 
                     @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -137,54 +131,41 @@
                     </div>
                     @endif
 
-                    <!-- Filter Kelas dan Pencarian -->
-                    <form method="GET" action="{{ route('admin.report_cards.index') }}">
-                        <div class="form-row mb-3">
-                            <div class="col-md-3">
-                                <select name="kelas" class="form-control" onchange="this.form.submit()">
-                                    <option value="">-- Pilih Kelas --</option>
-                                    @foreach($classes->sortBy('kelas') as $class)
-                                    <option value="{{ $class->kelas }}" {{ $kelasFilter == $class->kelas ? 'selected' : '' }}>
-                                        {{ $class->kelas }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-9">
-                                <input type="text" name="keyword" class="form-control" placeholder="Cari Nama atau Kelas" value="{{ $keyword }}" />
-                            </div>
-                        </div>
-                    </form>
-
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa Kelas 6</h6>
+                            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold text-primary">Tabel Semester</h6>
+                                <div class="tombol">
+                                    <a href="{{ route('user.report_cards.create', $student->id) }}" class="btn btn-primary ml-2 mb-2">Tambah Nilai Rapor</a>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Nama</th>
-                                            <th>Kelas</th>
-                                            <th>NIS</th>
-                                            <th>NISN</th>
+                                            <th>Semester</th>
+                                            <th>Tahun Ajar</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($students as $student)
+                                        @foreach($reportCards as $index => $data)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $student->nama }}</td>
-                                            <td>{{ $student->kelas }}</td>
-                                            <td>{{ $student->nis }}</td>
-                                            <td>{{ $student->nisn }}</td>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>Semester {{ $data->semester }}</td>
+                                            <td>{{ $data->tahun_ajar }}</td>
                                             <td>
-                                                <!-- Tombol Input Nilai, Arahkan ke halaman student_report terlebih dahulu -->
-                                                <a href="{{ route('admin.report_cards.student_report', $student->id) }}" class="btn btn-warning btn-sm">Input Nilai</a>
+                                                <a href="{{ route('user.report_cards.show', [$student->id, $data->id]) }}" class="btn btn-info btn-sm">Detail</a>
+                                                <a href="{{ route('user.report_cards.edit', $data->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                <!-- Tombol Hapus -->
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" data-id="{{ $data->id }}">
+                                                    Hapus
+                                                </button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -195,17 +176,14 @@
                     </div>
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('admin-pages.components.footer')
+            @include('user-pages.components.footer')
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
 
@@ -214,37 +192,65 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Menggunakan jQuery dari CDN (hanya satu kali) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Modal Hapus -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="deleteForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah Anda yakin ingin menghapus data ini?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+    <!-- JavaScript -->
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/sb-admin-2.min.js')}}"></script>
-
-    <!-- Skrip untuk DataTable dan inisialisasi lainnya -->
+    <!-- DataTables -->
+    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                "paging": true, // Aktifkan pagination
-                "lengthChange": true, // Izinkan user untuk memilih jumlah data per halaman
+                "paging": false, // Aktifkan pagination
+                "lengthChange": false, // Izinkan user untuk memilih jumlah data per halaman
                 "searching": false, // Aktifkan fitur pencarian
-                "ordering": false, // Nonaktifkan fitur pengurutan
-                "info": true, // Tampilkan informasi pagination (misalnya, 1 to 10 of 100)
+                "ordering": true, // Aktifkan fitur pengurutan
+                "info": false, // Tampilkan informasi pagination (misalnya, 1 to 10 of 100)
                 "autoWidth": false, // Nonaktifkan auto width
                 "responsive": true, // Membuat tabel responsif
-                "pageLength": 5, // Set default data per halaman (misalnya, 20 data per halaman)
+                "pageLength": false, // Set default data per halaman (misalnya, 20 data per halaman)
                 "lengthMenu": [5, 10, 27, 50, 100], // Pilihan jumlah data per halaman
             });
+
+            $('#deleteModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id'); // Mengambil ID dari tombol yang diklik
+                var form = $('#deleteForm');
+                var action = "{{ route('user.report_cards.destroy', ':id') }}";
+                form.attr('action', action.replace(':id', id)); // Ganti :id dengan ID yang sesuai
+            });
+
         });
     </script>
-
 </body>
 
 </html>

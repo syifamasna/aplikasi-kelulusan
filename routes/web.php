@@ -9,12 +9,14 @@ use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
 use App\Http\Controllers\Admin\StudentClassController as AdminStudentClassController;
 use App\Http\Controllers\Admin\SchoolYearController as AdminSchoolYearController;
 use App\Http\Controllers\Admin\ReportCardController as AdminReportCardController;
+use App\Http\Controllers\Admin\GraduationGradeController as AdminGraduationGradeController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\ProfileController as UserProfileController;
 use App\Http\Controllers\User\StudentController as UserStudentController;
 use App\Http\Controllers\User\SubjectController as UserSubjectController;
 use App\Http\Controllers\User\SchoolYearController as UserSchoolYearController;
+use App\Http\Controllers\User\ReportCardController as UserReportCardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +71,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         // Rute untuk menghapus nilai rapor siswa
         Route::delete('report_cards/{id}', [AdminReportCardController::class, 'destroy'])->name('admin.report_cards.destroy');
 
+        Route::get('graduation_grades', [AdminGraduationGradeController::class, 'index'])->name('admin.graduation_grades.index');
+
         // Import & Export routes Admin
         Route::post('students/import', [AdminStudentController::class, 'import'])->name('admin.students.import');
         Route::get('students/export', [AdminStudentController::class, 'export'])->name('admin.students.export');
@@ -96,6 +100,23 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
         Route::put('profile', [UserProfileController::class, 'update'])->name('user.profile.update');
         Route::get('profile', [UserProfileController::class, 'index'])->name('user.profile.index');
         Route::get('profile/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit');
+
+        // Rute untuk menampilkan daftar siswa berdasarkan kelas
+        Route::get('report_cards', [UserReportCardController::class, 'index'])->name('user.report_cards.index');
+        // Rute untuk menampilkan data rapor siswa tertentu
+        Route::get('report-cards/{student}/student-report', [UserReportCardController::class, 'showStudentReport'])->name('user.report_cards.student_report');
+        // Rute untuk melihat detail rapor berdasarkan ID rapor
+        Route::get('report_cards/{student}/show/{reportCard}', [UserReportCardController::class, 'show'])->name('user.report_cards.show');
+        // Rute untuk menampilkan halaman tambah nilai rapor siswa
+        Route::get('report_cards/{student}/create', [UserReportCardController::class, 'create'])->name('user.report_cards.create');
+        // Rute untuk menyimpan nilai rapor baru
+        Route::post('report_cards/{student}', [UserReportCardController::class, 'store'])->name('user.report_cards.store');
+        // Rute untuk menampilkan halaman edit rapor siswa
+        Route::get('report_cards/{id}/edit', [UserReportCardController::class, 'edit'])->name('user.report_cards.edit');
+        // Rute untuk memperbarui data rapor siswa
+        Route::put('/report_cards/{student_id}/{report_card_id}', [UserReportCardController::class, 'update'])->name('user.report_cards.update');
+        // Rute untuk menghapus nilai rapor siswa
+        Route::delete('report_cards/{id}', [UserReportCardController::class, 'destroy'])->name('user.report_cards.destroy');
 
         // Import & Export routes User
         Route::post('students/import', [UserStudentController::class, 'import'])->name('user.students.import');

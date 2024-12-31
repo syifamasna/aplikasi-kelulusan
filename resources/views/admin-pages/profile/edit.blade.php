@@ -75,7 +75,7 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800">Edit Profil</h1>
 
-                    <a href="{{ route('admin.profile.index') }}" class="btn btn-back btn-secondary mb-4">
+                    <a href="{{ route('admin.profile.index') }}" class="btn btn-secondary mb-4">
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
 
@@ -93,12 +93,18 @@
                                 <div class="text-center mb-4">
                                     <img id="profile-img-preview"
                                         src="{{ $user->image ? asset('storage/' . $user->image) : asset('img/default-user.png') }}"
-                                        alt="Tambahkan Foto Profil"
+                                        alt="Foto Profil"
                                         class="profile-img-preview">
                                     <div class="form-group">
                                         <label for="image">Foto Profil</label>
                                         <input type="file" name="image" id="profile-img-input" class="form-control-file">
                                     </div>
+                                    @if($user->image)
+                                    <button type="button" id="delete-photo-btn" class="btn btn-danger btn-sm mt-2">
+                                        <i class="fas fa-trash-alt"></i> Hapus Foto
+                                    </button>
+                                    <input type="hidden" name="delete_photo" id="delete-photo-input" value="0"> <!-- Default tidak menghapus -->
+                                    @endif
                                 </div>
 
                                 <!-- Nama -->
@@ -188,6 +194,18 @@
                 const imgPreview = document.getElementById('profile-img-preview');
                 imgPreview.src = URL.createObjectURL(file);
             }
+        });
+
+        // Hapus foto profil
+        document.getElementById('delete-photo-btn').addEventListener('click', function() {
+            const imgPreview = document.getElementById('profile-img-preview');
+            const deletePhotoInput = document.getElementById('delete-photo-input');
+
+            // Set gambar ke default
+            imgPreview.src = "{{ asset('img/default-user.png') }}";
+
+            // Tandai bahwa foto harus dihapus
+            deletePhotoInput.value = '1';
         });
 
         // Toggle visibility untuk password

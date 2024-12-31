@@ -16,10 +16,10 @@
 
 <body id="page-top">
     <div id="wrapper">
-        @include('admin-pages.components.sidebar')
+        @include('user-pages.components.sidebar')
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                @include('admin-pages.components.topbar')
+                @include('user-pages.components.topbar')
 
                 @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -41,7 +41,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <form action="{{ route('admin.report_cards.store', $student->id) }}" method="POST" style="overflow-x: hidden;">
+                                <form action="{{ route('user.report_cards.store', $student->id) }}" method="POST" style="overflow-x: hidden;">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-4">
@@ -318,7 +318,7 @@
             </div>
         </div>
     </div>
-    @include('admin-pages.components.footer')
+    @include('user-pages.components.footer')
     </div>
     </div>
 

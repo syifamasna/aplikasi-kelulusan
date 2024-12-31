@@ -100,7 +100,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include('admin-pages.components.sidebar')
+        @include('user-pages.components.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -110,7 +110,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('admin-pages.components.topbar')
+                @include('user-pages.components.topbar')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -136,25 +136,6 @@
                         </button>
                     </div>
                     @endif
-
-                    <!-- Filter Kelas dan Pencarian -->
-                    <form method="GET" action="{{ route('admin.report_cards.index') }}">
-                        <div class="form-row mb-3">
-                            <div class="col-md-3">
-                                <select name="kelas" class="form-control" onchange="this.form.submit()">
-                                    <option value="">-- Pilih Kelas --</option>
-                                    @foreach($classes->sortBy('kelas') as $class)
-                                    <option value="{{ $class->kelas }}" {{ $kelasFilter == $class->kelas ? 'selected' : '' }}>
-                                        {{ $class->kelas }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-9">
-                                <input type="text" name="keyword" class="form-control" placeholder="Cari Nama atau Kelas" value="{{ $keyword }}" />
-                            </div>
-                        </div>
-                    </form>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -184,7 +165,7 @@
                                             <td>{{ $student->nisn }}</td>
                                             <td>
                                                 <!-- Tombol Input Nilai, Arahkan ke halaman student_report terlebih dahulu -->
-                                                <a href="{{ route('admin.report_cards.student_report', $student->id) }}" class="btn btn-warning btn-sm">Input Nilai</a>
+                                                <a href="{{ route('user.report_cards.student_report', $student->id) }}" class="btn btn-warning btn-sm">Input Nilai</a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -200,7 +181,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('admin-pages.components.footer')
+            @include('user-pages.components.footer')
             <!-- End of Footer -->
 
         </div>
@@ -234,7 +215,7 @@
             $('#dataTable').DataTable({
                 "paging": true, // Aktifkan pagination
                 "lengthChange": true, // Izinkan user untuk memilih jumlah data per halaman
-                "searching": false, // Aktifkan fitur pencarian
+                "searching": true, // Aktifkan fitur pencarian
                 "ordering": false, // Nonaktifkan fitur pengurutan
                 "info": true, // Tampilkan informasi pagination (misalnya, 1 to 10 of 100)
                 "autoWidth": false, // Nonaktifkan auto width

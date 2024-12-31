@@ -22,7 +22,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        @include('admin-pages.components.sidebar')
+        @include('user-pages.components.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -30,7 +30,7 @@
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                @include('admin-pages.components.topbar')
+                @include('user-pages.components.topbar')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -252,7 +252,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('admin-pages.components.footer')
+            @include('user-pages.components.footer')
             <!-- End of Footer -->
 
         </div>

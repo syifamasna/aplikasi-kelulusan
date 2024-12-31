@@ -93,10 +93,14 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="role" class="control-label">Tipe Pengguna</label>
-                                                <select name="role" id="role" class="form-control" required>
-                                                    <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
-                                                    <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                                                <label for="class_id" class="control-label">Kelas</label>
+                                                <select name="class_id" id="class_id" class="form-control" required>
+                                                    <option value="">Pilih Kelas</option> <!-- Opsi default untuk memilih kelas -->
+                                                    @foreach($classes->sortBy('kelas') as $class)
+                                                    <option value="{{ $class->kelas }}" {{ $user->class_id == $class->kelas ? 'selected' : '' }}>
+                                                        {{ $class->kelas }}
+                                                    </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

@@ -278,19 +278,19 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="ekskul">Ekstrakurikuler 1</label>
-                                    <input type="text" name="ekskul[]" id="ekskul" class="form-control" value="{{ old('ekskul.0', $ekskul[0] ?? '') }}" required>
+                                    <input type="text" name="ekskul[]" id="ekskul" class="form-control" value="{{ old('ekskul.0', $ekskul[0] ?? '') }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="nilai_ekskul">Nilai</label>
-                                    <input type="number" name="nilai_ekskul[]" id="nilai_ekskul" class="form-control" value="{{ old('nilai_ekskul.0', $nilai_ekskul[0] ?? '') }}" required>
+                                    <input type="number" name="nilai_ekskul[]" id="nilai_ekskul" class="form-control" value="{{ old('nilai_ekskul.0', $nilai_ekskul[0] ?? '') }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="ket_ekskul">Keterangan</label>
-                                    <input type="text" name="ket_ekskul[]" id="ket_ekskul" class="form-control" value="{{ old('ket_ekskul.0', $ket_ekskul[0] ?? '') }}" required>
+                                    <input type="text" name="ket_ekskul[]" id="ket_ekskul" class="form-control" value="{{ old('ket_ekskul.0', $ket_ekskul[0] ?? '') }}">
                                 </div>
                             </div>
                         </div>

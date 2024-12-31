@@ -37,7 +37,7 @@ class StudentClassController extends Controller
     {
         $validated = $request->validate([
             'kelas' => 'required|string|max:255',  // Validasi input nama kelas
-            'nama_guru' => 'required|string|max:255', // Validasi input guru kelas
+            'nama_guru' => 'nullable|string|max:255', // Validasi input guru kelas
         ]);
 
         StudentClass::create($validated); // Menyimpan data kelas ke dalam database
@@ -60,7 +60,7 @@ class StudentClassController extends Controller
         // Validasi request jika perlu
         $request->validate([
             'kelas' => 'required',
-            'nama_guru' => 'required',
+            'nama_guru' => 'nullable',
         ]);
 
         // Temukan data kelas berdasarkan ID

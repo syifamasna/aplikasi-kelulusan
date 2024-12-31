@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2024 at 03:26 AM
+-- Generation Time: Dec 31, 2024 at 04:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -60,6 +60,21 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `graduation_grades`
+--
+
+CREATE TABLE `graduation_grades` (
+  `id` bigint(20) NOT NULL,
+  `student_id` bigint(20) UNSIGNED NOT NULL,
+  `average_subjects` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`average_subjects`)),
+  `final_average` decimal(5,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -252,13 +267,14 @@ CREATE TABLE `report_cards` (
 --
 
 INSERT INTO `report_cards` (`id`, `student_id`, `semester`, `tahun_ajar`, `sakit`, `izin`, `alfa`, `prestasi`, `ket_prestasi`, `ekskul`, `nilai_ekskul`, `ket_ekskul`, `created_at`, `updated_at`) VALUES
-(24, 107, 9, '2024/2025', 2, 3, NULL, NULL, '', '\"[\\\"Pramuka\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Sangat Baik\\\",null]\"', '2024-12-13 00:21:30', '2024-12-16 03:10:35'),
+(24, 107, 9, '2024/2025', 2, 3, NULL, '[\"Juara 2 Cerdas Cermat\",null]', '[null,null]', '\"[\\\"Pramuka\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Sangat Baik\\\",null]\"', '2024-12-13 00:21:30', '2024-12-23 21:06:27'),
 (25, 107, 7, '2022/2023', NULL, 2, 3, NULL, '', '\"[\\\"Pramuka\\\",\\\"Silat\\\"]\"', '\"[\\\"90\\\",\\\"70\\\"]\"', '\"[\\\"Sangat Baik\\\",\\\"Kurang Baik\\\"]\"', '2024-12-16 02:28:40', '2024-12-16 03:24:27'),
-(28, 221, 5, '2021/2022', 3, 2, 1, NULL, '', '\"[\\\"Japanese Club\\\",null]\"', '\"[\\\"70\\\",null]\"', '\"[\\\"Kurang Baik\\\",null]\"', '2024-12-16 20:06:07', '2024-12-16 20:06:07'),
 (31, 221, 7, '2021/2022', NULL, NULL, NULL, NULL, '', '\"[\\\"Japanese Club\\\",null]\"', '\"[\\\"7\\\",null]\"', '\"[\\\"Kurang Baik\\\",null]\"', '2024-12-17 20:06:51', '2024-12-17 20:06:51'),
 (32, 221, 8, '2023/2024', 3, 2, 1, NULL, '', '\"[\\\"Badminton\\\",\\\"B. Inggris\\\"]\"', '\"[\\\"95\\\",\\\"80\\\"]\"', '\"[\\\"Sangat Baik\\\",\\\"Baik\\\"]\"', '2024-12-19 22:58:23', '2024-12-19 23:01:20'),
 (33, 221, 9, '2024/2025', 2, 2, 1, NULL, '', '\"[\\\"Badminton\\\",null]\"', '\"[\\\"80\\\",null]\"', '\"[\\\"Baik\\\",null]\"', '2024-12-19 23:03:29', '2024-12-19 23:03:54'),
-(34, 221, 10, '2024/2025', 1, 1, 1, '[\"Juara 2 Lomba Story Telling\",null]', '[null,null]', '\"[\\\"English Club\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Baik\\\",null]\"', '2024-12-23 19:13:24', '2024-12-23 19:21:49');
+(34, 221, 10, '2024/2025', 1, 1, 1, '[\"Juara 2 Lomba Story Telling\",null]', '[null,null]', '\"[\\\"English Club\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Baik\\\",null]\"', '2024-12-23 19:13:24', '2024-12-23 19:21:49'),
+(35, 221, 11, '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2024-12-24 23:50:18', '2024-12-24 23:50:18'),
+(36, 221, 12, '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2024-12-30 19:29:53', '2024-12-30 19:29:53');
 
 -- --------------------------------------------------------
 
@@ -279,20 +295,20 @@ CREATE TABLE `report_card_subjects` (
 --
 
 INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai`, `details`) VALUES
-(29, 24, 1, 86, ''),
-(30, 24, 3, 85, ''),
-(31, 24, 4, 90, ''),
-(32, 24, 5, 99, ''),
-(33, 24, 6, 91, ''),
-(34, 24, 7, 84, ''),
-(35, 24, 8, 85, ''),
-(36, 24, 9, 88, ''),
-(37, 24, 10, 80, ''),
-(38, 24, 11, 90, ''),
-(39, 24, 12, 99, ''),
-(40, 24, 13, 98, ''),
-(41, 24, 14, 90, ''),
-(42, 24, 15, 91, ''),
+(29, 24, 1, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(30, 24, 3, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(31, 24, 4, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(32, 24, 5, 99, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(33, 24, 6, 91, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(34, 24, 7, 84, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(35, 24, 8, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(36, 24, 9, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(37, 24, 10, 80, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(38, 24, 11, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(39, 24, 12, 99, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 4 Hal 40\",\"aplikasi\":\"\"}'),
+(40, 24, 13, 98, '{\"target\":\"Q.S An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\",\"aplikasi\":\"\"}'),
+(41, 24, 14, 90, '{\"target\":\"Hadis 10 sd. 20\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(42, 24, 15, 91, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office word\"}'),
 (43, 25, 1, 70, ''),
 (44, 25, 3, 98, ''),
 (45, 25, 4, 65, ''),
@@ -307,20 +323,6 @@ INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai
 (54, 25, 13, 79, ''),
 (55, 25, 14, 90, ''),
 (56, 25, 15, 85, ''),
-(85, 28, 1, 3, ''),
-(86, 28, 3, 3, ''),
-(87, 28, 4, 3, ''),
-(88, 28, 5, 3, ''),
-(89, 28, 6, 3, ''),
-(90, 28, 7, 3, ''),
-(91, 28, 8, 3, ''),
-(92, 28, 9, 3, ''),
-(93, 28, 10, 3, ''),
-(94, 28, 11, 3, ''),
-(95, 28, 12, 3, ''),
-(96, 28, 13, 3, ''),
-(97, 28, 14, 3, ''),
-(98, 28, 15, 3, ''),
 (99, 31, 1, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
 (100, 31, 3, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
 (101, 31, 4, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
@@ -363,20 +365,48 @@ INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai
 (138, 33, 13, 98, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.S Al-Asr ayat 3\",\"aplikasi\":\"\"}'),
 (139, 33, 14, 89, '{\"target\":\"Hadis 1 sd. 5\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
 (140, 33, 15, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office Excel\"}'),
-(141, 34, 1, 10, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(142, 34, 3, 9, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(143, 34, 4, 8, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(144, 34, 5, 10, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(145, 34, 6, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(146, 34, 7, 8, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(147, 34, 8, 9, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(148, 34, 9, 9, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(149, 34, 10, 10, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(150, 34, 11, 9, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(151, 34, 12, 10, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 4 Hal 40\",\"aplikasi\":\"\"}'),
-(152, 34, 13, 9, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.S Al-Asr ayat 3\",\"aplikasi\":\"\"}'),
-(153, 34, 14, 9, '{\"target\":\"Hadis 1 s.d 10\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(154, 34, 15, 8, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office Power Point\"}');
+(141, 34, 1, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(142, 34, 3, 95, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(143, 34, 4, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(144, 34, 5, 80, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(145, 34, 6, 78, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(146, 34, 7, 81, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(147, 34, 8, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(148, 34, 9, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(149, 34, 10, 95, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(150, 34, 11, 92, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(151, 34, 12, 88, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 4 Hal 40\",\"aplikasi\":\"\"}'),
+(152, 34, 13, 89, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.S Al-Asr ayat 3\",\"aplikasi\":\"\"}'),
+(153, 34, 14, 84, '{\"target\":\"Hadis 1 s.d 10\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(154, 34, 15, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office Power Point\"}'),
+(155, 35, 1, 82, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(156, 35, 3, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(157, 35, 4, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(158, 35, 5, 92, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(159, 35, 6, 95, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(160, 35, 7, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(161, 35, 8, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(162, 35, 9, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(163, 35, 10, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(164, 35, 11, 91, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(165, 35, 12, 90, '{\"target\":\"9\",\"capaian\":\"9\",\"aplikasi\":\"\"}'),
+(166, 35, 13, 85, '{\"target\":\"9\",\"capaian\":\"9\",\"aplikasi\":\"\"}'),
+(167, 35, 14, 91, '{\"target\":\"9\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(168, 35, 15, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"9\"}'),
+(169, 36, 1, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(170, 36, 3, 81, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(171, 36, 4, 82, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(172, 36, 5, 83, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(173, 36, 6, 84, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(174, 36, 7, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(175, 36, 8, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(176, 36, 9, 80, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(177, 36, 10, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(178, 36, 11, 99, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(179, 36, 12, 91, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":null}'),
+(180, 36, 13, 85, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.S Al-Asr ayat 3\",\"aplikasi\":null}'),
+(181, 36, 14, 88, '{\"target\":\"Hadis 10 sd. 20\",\"capaian\":null,\"aplikasi\":null}'),
+(182, 36, 15, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office word\"}');
 
 -- --------------------------------------------------------
 
@@ -454,7 +484,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('g4lW0UHSMcI9eLJcWnPXgeWrpsNuoK6bAEte5iwV', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiS3I2Y2FsYldYY0psdVFINGFZWGIwUEhFTzIyWTJVek1FMDg1Tm9VdiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0MDoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2FkbWluL3JlcG9ydF9jYXJkcyI7fX0=', 1735006975);
+('MM6YZYO6KAzKJZTxRvLY9kHKgVhDQYALpZMbPpBx', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQmhsWDdoQzk3UFRKY0s5NnA1aEtveDF4a2JEZHJqeWV3aGtISEhIUCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9ncmFkdWF0aW9uX2dyYWRlcyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjU7fQ==', 1735616334);
 
 -- --------------------------------------------------------
 
@@ -586,8 +616,7 @@ INSERT INTO `students` (`id`, `nis`, `nisn`, `nama`, `kelas`, `jk`, `created_at`
 (213, '192001092', '0138164866', 'Rachel Sabita Humaira', '6D', 'Perempuan', '2024-11-15 01:10:20', '2024-11-15 01:10:20'),
 (218, '192001110', '0121425793', 'Zahran Ibrahim Hernanda', '6D', 'Laki-laki', '2024-12-04 20:51:04', '2024-12-04 20:51:04'),
 (219, '192001005', '0137060260', 'Aila Syifa Raihana Sihombing', '6D', 'Perempuan', '2024-12-04 20:53:37', '2024-12-04 20:53:37'),
-(221, '0', '0', 'Syifa Khairunisa Masna', '5A', 'Perempuan', '2024-12-16 19:07:32', '2024-12-16 19:08:02'),
-(222, '2', '1', 'Aulia Putri', '6B', 'Perempuan', '2024-12-16 19:52:46', '2024-12-16 19:53:17');
+(221, '1', '0076633459', 'Syifa Khairunisa Masna', '5A', 'Perempuan', '2024-12-16 19:07:32', '2024-12-23 19:38:11');
 
 -- --------------------------------------------------------
 
@@ -598,22 +627,23 @@ INSERT INTO `students` (`id`, `nis`, `nisn`, `nama`, `kelas`, `jk`, `created_at`
 CREATE TABLE `student_classes` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `kelas` varchar(255) NOT NULL,
-  `nama_guru` varchar(255) NOT NULL,
+  `nama_guru` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `student_classes`
 --
 
-INSERT INTO `student_classes` (`id`, `kelas`, `nama_guru`, `created_at`, `updated_at`, `user_id`) VALUES
-(1, '6A', '', NULL, '2024-11-14 22:23:34', NULL),
-(2, '6B', '', NULL, NULL, NULL),
-(3, '6C', '', NULL, NULL, NULL),
-(4, '6D', '', NULL, NULL, NULL),
-(13, '5A', '...', '2024-12-16 19:07:18', '2024-12-16 19:07:18', NULL);
+INSERT INTO `student_classes` (`id`, `kelas`, `nama_guru`, `created_at`, `updated_at`) VALUES
+(1, '6A', '', NULL, '2024-11-14 22:23:34'),
+(2, '6B', '', NULL, NULL),
+(3, '6C', '', NULL, NULL),
+(4, '6D', '', NULL, NULL),
+(13, '5A', NULL, '2024-12-16 19:07:18', '2024-12-27 03:13:28'),
+(14, '5B', NULL, '2024-12-24 00:47:05', '2024-12-27 03:13:38'),
+(15, '5C', NULL, '2024-12-27 03:13:03', '2024-12-27 03:13:03');
 
 -- --------------------------------------------------------
 
@@ -624,7 +654,7 @@ INSERT INTO `student_classes` (`id`, `kelas`, `nama_guru`, `created_at`, `update
 CREATE TABLE `subjects` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `guru_mapel` varchar(255) NOT NULL,
+  `guru_mapel` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -637,8 +667,8 @@ INSERT INTO `subjects` (`id`, `nama`, `guru_mapel`, `created_at`, `updated_at`) 
 (1, 'Pendidikan Agama Islam dan Budi Pekerti', '...', '2024-11-13 20:09:32', '2024-11-13 20:11:12'),
 (3, 'Pendidikan Pancasila', '...', '2024-11-13 23:26:30', '2024-11-13 23:26:30'),
 (4, 'Bahasa Indonesia', '...', '2024-11-13 23:26:45', '2024-11-13 23:26:45'),
-(5, 'Matematika', '...', '2024-11-13 23:26:54', '2024-11-13 23:26:54'),
-(6, 'Ilmu Pengetahuan Alam dan Sosial', '...', '2024-11-13 23:27:22', '2024-11-13 23:27:22'),
+(5, 'Matematika', NULL, '2024-11-13 23:26:54', '2024-12-27 03:20:00'),
+(6, 'Ilmu Pengetahuan Alam dan Sosial', NULL, '2024-11-13 23:27:22', '2024-12-27 03:19:48'),
 (7, 'Pendidikan Jasmani, Olahraga dan Kesehatan', '...', '2024-11-13 23:27:52', '2024-11-13 23:28:05'),
 (8, 'Seni Budaya dan Prakarya', '...', '2024-11-13 23:28:20', '2024-11-13 23:28:20'),
 (9, 'Bahasa Inggris', '...', '2024-11-13 23:28:35', '2024-11-13 23:28:35'),
@@ -647,8 +677,7 @@ INSERT INTO `subjects` (`id`, `nama`, `guru_mapel`, `created_at`, `updated_at`) 
 (12, 'Al-Qur\'an Metode Ummi', '-', '2024-11-13 23:39:06', '2024-11-13 23:39:06'),
 (13, 'Tahfiz', '-', '2024-11-13 23:39:14', '2024-11-13 23:39:21'),
 (14, 'Hadis', '-', '2024-11-13 23:39:38', '2024-11-13 23:39:38'),
-(15, 'Informatika (Komputer)', '-', '2024-11-13 23:39:58', '2024-11-13 23:39:58'),
-(18, 'B. Jepang', '...', '2024-12-16 19:06:13', '2024-12-16 19:06:32');
+(15, 'Informatika (Komputer)', '-', '2024-11-13 23:39:58', '2024-11-13 23:39:58');
 
 -- --------------------------------------------------------
 
@@ -689,7 +718,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `class_id` varchar(10) DEFAULT NULL
+  `class_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -697,12 +726,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `updated_at`, `image`, `class_id`) VALUES
-(1, 'Syifa Masna', 'syifakm@gmail.com', '$2y$12$Kqffx9pOZR/pOJjYC6ryzOOmLVCH6g17/T9tvqJBk9eKi5lUPEkSW', 'admin', '2024-11-25 21:27:28', '2024-11-28 21:37:47', 'images/20230428_145038.jpg', NULL),
 (3, 'Wali Kelas 6B', 'walas6b@aliya.com', '$2y$12$PvfqVg8u4EwgZDVCzQdE4OvigzN6iU7t6jijp2HjNVAcBYHGuc8AG', 'user', '2024-11-27 20:35:42', '2024-12-01 20:24:25', NULL, '6B'),
-(4, 'Wali Kelas 6A', 'walas6a@aliya.com', '$2y$12$MvWYPcMgJFjEsSz9.QoIN.LETkgwnSgRluRw6sbTz0zab/efYPtmi', 'user', '2024-11-27 20:51:38', '2024-11-28 19:00:02', 'images/logo.png.png', '6A'),
-(5, 'Admin', 'admin@gmail.com', '$2y$12$h0PrOiGr9DgCdQqYXdtm/.F8P1QkByI.8KxukvD5zzHkhS./6CUSi', 'admin', '2024-11-28 21:19:28', '2024-11-28 21:19:28', NULL, NULL),
+(4, 'Wali Kelas 6A', 'walas6a@aliya.com', '$2y$12$MvWYPcMgJFjEsSz9.QoIN.LETkgwnSgRluRw6sbTz0zab/efYPtmi', 'user', '2024-11-27 20:51:38', '2024-12-27 01:36:24', NULL, '6A'),
+(5, 'Admin', 'admin@aliya.com', '$2y$12$h0PrOiGr9DgCdQqYXdtm/.F8P1QkByI.8KxukvD5zzHkhS./6CUSi', 'admin', '2024-11-28 21:19:28', '2024-12-27 01:58:27', 'images/logo.png', NULL),
 (6, 'Wali Kelas 6C', 'walas6c@aliya.com', '$2y$12$oUHM9cKP/T9ZZYWaeKRKHu5eLaV3wQg/PmmI9h1MOREpysBGcyA3.', 'user', '2024-11-28 21:22:50', '2024-11-28 21:41:26', NULL, '6C'),
-(7, 'Wali Kelas 6D', 'walas6d@aliya.com', '$2y$12$Lf4SZeE/RodUsAr068Hpp.diZxzS/3O/7eOcmFO4bbenM1J9rVYku', 'user', '2024-11-28 21:23:11', '2024-11-28 21:23:11', NULL, '6D');
+(7, 'Wali Kelas 6D', 'walas6d@aliya.com', '$2y$12$Lf4SZeE/RodUsAr068Hpp.diZxzS/3O/7eOcmFO4bbenM1J9rVYku', 'user', '2024-11-28 21:23:11', '2024-11-28 21:23:11', NULL, '6D'),
+(16, 'Wali Kelas 5A', 'walas5a@aliya.com', '$2y$12$IN6J0AwH9Ej8dKzb009LU.h4QcwRLYJLu3HE3HcbLJPyFyRPNtA9a', 'user', '2024-12-24 00:43:03', '2024-12-27 03:07:18', NULL, '5A'),
+(24, 'Wali Kelas 5B', 'walas5b@aliya.com', '$2y$12$/tsskAzszU621MmYVrrhseOlKleo6GymWyCdyn7GVLq9XjbyMump2', 'user', '2024-12-27 03:00:52', '2024-12-27 03:00:52', NULL, '5B');
 
 --
 -- Indexes for dumped tables
@@ -726,6 +756,13 @@ ALTER TABLE `cache_locks`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `graduation_grades`
+--
+ALTER TABLE `graduation_grades`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `jobs`
@@ -839,8 +876,7 @@ ALTER TABLE `students`
 --
 ALTER TABLE `student_classes`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `kelas` (`kelas`),
-  ADD KEY `student_classes_user_id_foreign` (`user_id`);
+  ADD UNIQUE KEY `kelas` (`kelas`);
 
 --
 -- Indexes for table `subjects`
@@ -875,6 +911,12 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `graduation_grades`
+--
+ALTER TABLE `graduation_grades`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -902,13 +944,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `report_cards`
 --
 ALTER TABLE `report_cards`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `report_card_subjects`
 --
 ALTER TABLE `report_card_subjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -932,13 +974,13 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `student_classes`
 --
 ALTER TABLE `student_classes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `teachers`
@@ -950,11 +992,17 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `graduation_grades`
+--
+ALTER TABLE `graduation_grades`
+  ADD CONSTRAINT `graduation_grades_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `model_has_permissions`
@@ -996,16 +1044,10 @@ ALTER TABLE `students`
   ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`kelas`) REFERENCES `student_classes` (`kelas`) ON DELETE SET NULL;
 
 --
--- Constraints for table `student_classes`
---
-ALTER TABLE `student_classes`
-  ADD CONSTRAINT `student_classes_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
-
---
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `student_classes` (`kelas`) ON DELETE SET NULL;
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `student_classes` (`kelas`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

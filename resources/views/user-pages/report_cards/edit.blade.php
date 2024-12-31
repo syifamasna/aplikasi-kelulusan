@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Tambah Nilai Rapor {{ $student->nama }} - Aplikasi Kelulusan</title>
+    <title>Edit Nilai Rapor {{ $student->nama }} - Aplikasi Kelulusan</title>
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -16,10 +16,10 @@
 
 <body id="page-top">
     <div id="wrapper">
-        @include('admin-pages.components.sidebar')
+        @include('user-pages.components.sidebar')
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                @include('admin-pages.components.topbar')
+                @include('user-pages.components.topbar')
 
                 @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -41,24 +41,25 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <form action="{{ route('admin.report_cards.store', $student->id) }}" method="POST" style="overflow-x: hidden;">
+                                <form action="{{ route('user.report_cards.update', [$student->id, $reportCard->id]) }}" method="POST" style="overflow-x: hidden;">
                                     @csrf
+                                    @method('PUT')
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="nama" class="control-label"><strong>Nama Peserta Didik</strong></label>
+                                                <label for="nama" class="control-label">Nama Peserta Didik</label>
                                                 <input type="text" name="nama" class="form-control" id="nama" value="{{ $student->nama }}" disabled>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="nis" class="control-label"><strong>NIS</strong></label>
+                                                <label for="nis" class="control-label">NIS</label>
                                                 <input type="text" name="nis" class="form-control" id="nis" value="{{ $student->nis }}" disabled>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="nisn" class="control-label"><strong>NISN</strong></label>
+                                                <label for="nisn" class="control-label">NISN</label>
                                                 <input type="text" name="nisn" class="form-control" id="nisn" value="{{ $student->nisn }}" disabled>
                                             </div>
                                         </div>
@@ -66,7 +67,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="kelas" class="control-label"><strong>Kelas</strong></label>
+                                                <label for="kelas" class="control-label">Kelas</label>
                                                 <select class="form-control" name="kelas" id="kelas" disabled>
                                                     <option value="{{ $student->studentClass->kelas ?? '' }}">
                                                         {{ $student->studentClass->kelas ?? 'Belum diatur' }}
@@ -76,17 +77,19 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="semester" class="control-label"><strong>Semester</strong></label>
-                                                <input type="text" name="semester" class="form-control" id="semester" required>
+                                                <label for="semester" class="control-label">Semester</label>
+                                                <input type="text" name="semester" class="form-control" id="semester" value="{{ old('semester', $reportCard->semester) }}" required>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="tahun_ajar" class="control-label"><strong>Tahun Ajar</strong></label>
+                                                <label for="tahun_ajar" class="control-label">Tahun Ajar</label>
                                                 <select class="form-control" name="tahun_ajar" id="tahun_ajar" required>
                                                     <option value="" selected disabled>Pilih Tahun Ajar</option>
                                                     @foreach($school_years->sortBy('tahun_ajar') as $school_year)
-                                                    <option value="{{ $school_year->tahun_ajar }}">{{ $school_year->tahun_ajar }}</option>
+                                                    <option value="{{ $school_year->tahun_ajar }}" {{ $reportCard->tahun_ajar == $school_year->tahun_ajar ? 'selected' : '' }}>
+                                                        {{ $school_year->tahun_ajar }}
+                                                    </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -101,8 +104,8 @@
                                         @if ($subject->id >= 1 && $subject->id <= 9)
                                             <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                                <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                                <label for="mata_pelajaran[{{ $subject->id }}]">{{ $subject->nama }}</label>
+                                                <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $reportCard->subjects->where('id', $subject->id)->first()->pivot->nilai ?? '') }}" placeholder="Masukkan Nilai..." required>
                                             </div>
                                     </div>
                                     @endif
@@ -118,7 +121,7 @@
                                     <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $nilai[$subject->id] ?? '') }}" placeholder="Masukkan Nilai..." required>
                                     </div>
                             </div>
                             @endif
@@ -129,72 +132,69 @@
                         <div class="row">
                             @foreach ($subjects as $subject)
                             @if ($subject->id >= 12 && $subject->id <= 15)
-                                <!-- ID 12: Nilai, Target Akhir Semester, Capaian Saat Ini -->
+                                <!-- Untuk mata pelajaran dengan id 12 -->
                                 @if ($subject->id == 12)
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $nilai[$subject->id] ?? '') }}" placeholder="Masukkan Nilai..." required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="target[{{ $subject->id }}]">Target Akhir Semester</label>
-                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_12" class="form-control" value="{{ old('target.' . $subject->id) }}" placeholder="Contoh: Lulus Tajwid Jilid 9" required>
+                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_12" class="form-control" value="{{ old('target.' . $subject->id, $pivotData[$subject->id]['target'] ?? '') }}" placeholder="Contoh: Lulus Tajwid Jilid 9" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="capaian[{{ $subject->id }}]">Capaian Saat Ini</label>
-                                        <input type="text" name="capaian[{{ $subject->id }}]" id="capaian_12" class="form-control" value="{{ old('capaian.' . $subject->id) }}" placeholder="Contoh: Jilid 5 Hal 40" required>
+                                        <input type="text" name="capaian[{{ $subject->id }}]" id="capaian_12" class="form-control" value="{{ old('capaian.' . $subject->id, $pivotData[$subject->id]['capaian'] ?? '') }}" placeholder="Contoh: Jilid 5 Hal 40" required>
                                     </div>
                                 </div>
-                                <!-- ID 13: Nilai, Target Akhir Semester, Capaian Saat Ini -->
                                 @elseif ($subject->id == 13)
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $nilai[$subject->id] ?? '') }}" placeholder="Masukkan Nilai..." required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="target[{{ $subject->id }}]">Target Akhir Semester</label>
-                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_13" class="form-control" value="{{ old('target.' . $subject->id) }}" placeholder="Contoh: Q.S Al-Infithar" required>
+                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_13" class="form-control" value="{{ old('target.' . $subject->id, $pivotData[$subject->id]['target'] ?? '') }}" placeholder="Contoh: Q.S Al-Infithar" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="capaian[{{ $subject->id }}]">Capaian Saat Ini</label>
-                                        <input type="text" name="capaian[{{ $subject->id }}]" id="capaian_13" class="form-control" value="{{ old('capaian.' . $subject->id) }}" placeholder="Contoh: Q.S Al-Muthaffifin ayat 1" required>
+                                        <input type="text" name="capaian[{{ $subject->id }}]" id="capaian_13" class="form-control" value="{{ old('capaian.' . $subject->id, $pivotData[$subject->id]['capaian'] ?? '') }}" placeholder="Contoh: Q.S Al-Muthaffifin ayat 1" required>
                                     </div>
                                 </div>
-                                <!-- ID 14: Nilai, Target -->
                                 @elseif ($subject->id == 14)
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $nilai[$subject->id] ?? '') }}" placeholder="Masukkan Nilai..." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="target[{{ $subject->id }}]">Target</label>
-                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_14" class="form-control" value="{{ old('target.' . $subject->id) }}" placeholder="Contoh: Hadis 1 s.d 5" required>
+                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_14" class="form-control" value="{{ old('target.' . $subject->id, $pivotData[$subject->id]['target'] ?? '') }}" placeholder="Contoh: Hadis 1 s.d 5" required>
                                     </div>
                                 </div>
-                                <!-- ID 15: Nilai, Aplikasi/Program -->
                                 @elseif ($subject->id == 15)
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id, $nilai[$subject->id] ?? '') }}" placeholder="Masukkan Nilai..." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="aplikasi[{{ $subject->id }}]">Aplikasi/Program</label>
-                                        <input type="text" name="aplikasi[{{ $subject->id }}]" id="aplikasi_{{ $subject->id }}" class="form-control" value="{{ old('aplikasi.' . $subject->id) }}" placeholder="Contoh: Ms. Office Excel" required>
+                                        <input type="text" name="aplikasi[{{ $subject->id }}]" id="aplikasi_{{ $subject->id }}" class="form-control" value="{{ old('aplikasi.' . $subject->id, $pivotData[$subject->id]['aplikasi'] ?? '') }}" placeholder="Contoh: Ms. Office Excel" required>
                                     </div>
                                 </div>
                                 @endif
@@ -208,20 +208,20 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="sakit"><strong>Sakit</strong></label>
-                                    <input type="number" name="sakit" id="sakit" class="form-control" value="{{ old('sakit') }}" placeholder="Jumlah Hari Sakit">
+                                    <label for="sakit">Sakit</label>
+                                    <input type="number" name="sakit" id="sakit" class="form-control" value="{{ old('sakit', $reportCard->sakit) }}" placeholder="Jumlah Hari Sakit">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="izin"><strong>Izin</strong></label>
-                                    <input type="number" name="izin" id="izin" class="form-control" value="{{ old('izin') }}" placeholder="Jumlah Hari Izin">
+                                    <label for="izin">Izin</label>
+                                    <input type="number" name="izin" id="izin" class="form-control" value="{{ old('izin', $reportCard->izin) }}" placeholder="Jumlah Hari Izin">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="alfa"><strong>Alfa</strong></label>
-                                    <input type="number" name="alfa" id="alfa" class="form-control" value="{{ old('alfa') }}" placeholder="Jumlah Hari Alfa">
+                                    <label for="alfa">Alfa</label>
+                                    <input type="number" name="alfa" id="alfa" class="form-control" value="{{ old('alfa', $reportCard->alfa) }}" placeholder="Jumlah Hari Alfa">
                                 </div>
                             </div>
                         </div>
@@ -229,33 +229,38 @@
                         <!-- Subjudul untuk Prestasi -->
                         <br>
                         <h6 class="m-0 font-weight-bold text-primary text-center">Prestasi</h6><br>
+                        @php
+                        $prestasi = json_decode($reportCard->prestasi, true) ?? [];
+                        $ket_prestasi = json_decode($reportCard->ket_prestasi, true) ?? [];
+                        @endphp
+                        <!-- Prestasi 1 -->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="prestasi"><strong>Jenis Prestasi 1</strong></label>
-                                    <input type="text" name="prestasi[]" id="prestasi" class="form-control" value="{{ old('prestasi.0') }}">
+                                    <label for="prestasi">Jenis Prestasi 1</label>
+                                    <input type="text" name="prestasi[]" id="prestasi" class="form-control" value="{{ old('prestasi.0', $prestasi[0] ?? '') }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="ket_prestasi"><strong>Keterangan</strong></label>
-                                    <input type="text" name="ket_prestasi[]" id="ket_prestasi" class="form-control" value="{{ old('ket_prestasi.0') }}">
+                                    <label for="ket_prestasi">Keterangan</label>
+                                    <input type="text" name="ket_prestasi[]" id="ket_prestasi" class="form-control" value="{{ old('ket_prestasi.0', $ket_prestasi[0] ?? '') }}">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Subjudul untuk Prestasi 2 (Opsional) -->
+                        <!-- Prestasi 2 -->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="prestasi"><strong>Jenis Prestasi 2</strong></label>
-                                    <input type="text" name="prestasi[]" id="prestasi" class="form-control" value="{{ old('prestasi.1') }}">
+                                    <label for="prestasi_2">Jenis Prestasi 2</label>
+                                    <input type="text" name="prestasi[]" id="prestasi_2" class="form-control" value="{{ old('prestasi.1', $prestasi[1] ?? '') }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="ket_prestasi"><strong>Keterangan</strong></label>
-                                    <input type="text" name="ket_prestasi[]" id="ket_prestasi" class="form-control" value="{{ old('ket_prestasi.1') }}">
+                                    <label for="ket_prestasi_2">Keterangan</label>
+                                    <input type="text" name="ket_prestasi[]" id="ket_prestasi_2" class="form-control" value="{{ old('ket_prestasi.1', $ket_prestasi[1] ?? '') }}">
                                 </div>
                             </div>
                         </div>
@@ -263,48 +268,55 @@
                         <!-- Subjudul untuk Ekstrakurikuler -->
                         <br>
                         <h6 class="m-0 font-weight-bold text-primary text-center">Ekstrakurikuler</h6><br>
+                        @php
+                        $ekskul = json_decode($reportCard->ekskul, true) ?? [];
+                        $nilai_ekskul = json_decode($reportCard->nilai_ekskul, true) ?? [];
+                        $ket_ekskul = json_decode($reportCard->ket_ekskul, true) ?? [];
+                        @endphp
+                        <!-- Ekstrakurikuler 1 -->
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="ekskul"><strong>Ekstrakurikuler 1</strong></label>
-                                    <input type="text" name="ekskul[]" id="ekskul" class="form-control" value="{{ old('ekskul.0') }}">
+                                    <label for="ekskul">Ekstrakurikuler 1</label>
+                                    <input type="text" name="ekskul[]" id="ekskul" class="form-control" value="{{ old('ekskul.0', $ekskul[0] ?? '') }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="nilai_ekskul"><strong>Nilai</strong></label>
-                                    <input type="number" name="nilai_ekskul[]" id="nilai_ekskul" class="form-control" value="{{ old('nilai_ekskul.0') }}">
+                                    <label for="nilai_ekskul">Nilai</label>
+                                    <input type="number" name="nilai_ekskul[]" id="nilai_ekskul" class="form-control" value="{{ old('nilai_ekskul.0', $nilai_ekskul[0] ?? '') }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="ket_ekskul"><strong>Keterangan</strong></label>
-                                    <input type="text" name="ket_ekskul[]" id="ket_ekskul" class="form-control" value="{{ old('ket_ekskul.0') }}">
+                                    <label for="ket_ekskul">Keterangan</label>
+                                    <input type="text" name="ket_ekskul[]" id="ket_ekskul" class="form-control" value="{{ old('ket_ekskul.0', $ket_ekskul[0] ?? '') }}">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Baris Ekstrakurikuler 2 (Opsional) -->
+                        <!-- Ekstrakurikuler 2 -->
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="ekskul_2"><strong>Ekstrakurikuler 2</strong></label>
-                                    <input type="text" name="ekskul[]" id="ekskul_2" class="form-control" value="{{ old('ekskul.1') }}">
+                                    <label for="ekskul_2">Ekstrakurikuler 2</label>
+                                    <input type="text" name="ekskul[]" id="ekskul_2" class="form-control" value="{{ old('ekskul.1', $ekskul[1] ?? '') }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="nilai_ekskul_2"><strong>Nilai</strong></label>
-                                    <input type="number" name="nilai_ekskul[]" id="nilai_ekskul_2" class="form-control" value="{{ old('nilai_ekskul.1') }}">
+                                    <label for="nilai_ekskul_2">Nilai</label>
+                                    <input type="number" name="nilai_ekskul[]" id="nilai_ekskul_2" class="form-control" value="{{ old('nilai_ekskul.1', $nilai_ekskul[1] ?? '') }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="ket_ekskul_2"><strong>Keterangan</strong></label>
-                                    <input type="text" name="ket_ekskul[]" id="ket_ekskul_2" class="form-control" value="{{ old('ket_ekskul.1') }}">
+                                    <label for="ket_ekskul_2">Keterangan</label>
+                                    <input type="text" name="ket_ekskul[]" id="ket_ekskul_2" class="form-control" value="{{ old('ket_ekskul.1', $ket_ekskul[1] ?? '') }}">
                                 </div>
                             </div>
                         </div>
+
 
                         <!-- Tombol Submit -->
                         <br>
@@ -318,7 +330,7 @@
             </div>
         </div>
     </div>
-    @include('admin-pages.components.footer')
+    @include('user-pages.components.footer')
     </div>
     </div>
 

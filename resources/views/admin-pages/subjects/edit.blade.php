@@ -76,7 +76,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="guru-mapel" class="control-label">Guru Pengajar</label>
-                                                <input type="text" name="guru_mapel" value="{{ old('guru_mapel', $subject->guru_mapel) }}" class="form-control" id="nama_guru" required>
+                                                <input type="text" name="guru_mapel" value="{{ old('guru_mapel', $subject->guru_mapel) }}" class="form-control" id="nama_guru">
                                             </div>
                                         </div>
                                     </div>

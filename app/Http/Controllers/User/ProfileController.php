@@ -24,13 +24,13 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = User::find(Auth::id());  // Mendapatkan pengguna yang sedang login
+        $user = User::find(Auth::id()); // Mendapatkan pengguna yang sedang login
 
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'password' => 'nullable|string|min:8|confirmed', // Pastikan ada validasi 'confirmed'
+            'password' => 'nullable|string|min:8|confirmed', // Validasi 'confirmed' untuk password baru
         ]);
 
         $user->name = $request->name;
@@ -41,18 +41,25 @@ class ProfileController extends Controller
             $user->password = bcrypt($request->password);
         }
 
-        // Cek apakah ada file gambar yang diunggah
-        if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
-            if ($user->image && Storage::exists('public/images/' . $user->image)) {
-                Storage::delete('public/images/' . $user->image);
+        // Logika penghapusan foto
+        if ($request->has('delete_photo') && $request->delete_photo == '1') {
+            if ($user->image && Storage::exists('public/' . $user->image)) {
+                Storage::delete('public/' . $user->image); // Hapus file dari penyimpanan
+            }
+            $user->image = null; // Reset nilai kolom image ke null
+        } else if ($request->hasFile('image')) { // Jika ada file baru yang diunggah
+            // Hapus foto lama jika ada
+            if ($user->image && Storage::exists('public/' . $user->image)) {
+                Storage::delete('public/' . $user->image);
             }
 
             // Simpan gambar baru
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->storeAs('images', $request->file('image')->getClientOriginalName(), 'public');
-                $user->image = 'images/' . $request->file('image')->getClientOriginalName(); // Menyimpan nama asli file
-            }
+            $imagePath = $request->file('image')->storeAs(
+                'images',
+                $request->file('image')->getClientOriginalName(),
+                'public'
+            );
+            $user->image = 'images/' . $request->file('image')->getClientOriginalName(); // Simpan path ke kolom image
         }
 
         // Simpan perubahan user
@@ -60,5 +67,20 @@ class ProfileController extends Controller
 
         // Redirect dengan pesan sukses
         return redirect()->route('user.profile.index')->with('success', 'Profil berhasil diperbarui');
+    }
+
+    public function destroyImage()
+    {
+        $user = User::find(Auth::id()); // Mendapatkan pengguna yang sedang login
+
+        // Cek apakah pengguna memiliki foto profil
+        if ($user->image && Storage::exists('public/' . $user->image)) {
+            Storage::delete('public/' . $user->image); // Hapus foto dari penyimpanan
+            $user->image = null; // Set kolom image menjadi null
+            $user->save(); // Simpan perubahan
+        }
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('user.profile.edit')->with('success', 'Foto profil berhasil dihapus');
     }
 }
