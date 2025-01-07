@@ -14,10 +14,9 @@ class Subject extends Model
         'guru_mapel',  // Nama guru pengampu
     ];
 
-    // Di model Subject
     public function reportCards()
     {
         return $this->belongsToMany(ReportCard::class, 'report_card_subjects')
-            ->withPivot('nilai', 'details'); // Mengambil nilai dan details dari pivot
+            ->withPivot('nilai', 'details'); // Kolom pada pivot harus sesuai
     }
 }

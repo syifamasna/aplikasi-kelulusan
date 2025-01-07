@@ -77,8 +77,22 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="semester" class="control-label">Semester</label>
-                                                <input type="text" name="semester" class="form-control" id="semester" value="{{ old('semester', $reportCard->semester) }}" required>
+                                                <label for="semester" class="control-label"><strong>Semester</strong></label>
+                                                <select name="semester" class="form-control" id="semester" required>
+                                                    <option value="" disabled>Pilih Semester</option>
+                                                    <option value="Level 1 Semester 1" {{ old('semester', $semester) == 'Level 1 Semester 1' ? 'selected' : '' }}>Level 1 Semester 1</option>
+                                                    <option value="Level 1 Semester 2" {{ old('semester', $semester) == 'Level 1 Semester 2' ? 'selected' : '' }}>Level 1 Semester 2</option>
+                                                    <option value="Level 2 Semester 1" {{ old('semester', $semester) == 'Level 2 Semester 1' ? 'selected' : '' }}>Level 2 Semester 1</option>
+                                                    <option value="Level 2 Semester 2" {{ old('semester', $semester) == 'Level 2 Semester 2' ? 'selected' : '' }}>Level 2 Semester 2</option>
+                                                    <option value="Level 3 Semester 1" {{ old('semester', $semester) == 'Level 3 Semester 1' ? 'selected' : '' }}>Level 3 Semester 1</option>
+                                                    <option value="Level 3 Semester 2" {{ old('semester', $semester) == 'Level 3 Semester 2' ? 'selected' : '' }}>Level 3 Semester 2</option>
+                                                    <option value="Level 4 Semester 1" {{ old('semester', $semester) == 'Level 4 Semester 1' ? 'selected' : '' }}>Level 4 Semester 1</option>
+                                                    <option value="Level 4 Semester 2" {{ old('semester', $semester) == 'Level 4 Semester 2' ? 'selected' : '' }}>Level 4 Semester 2</option>
+                                                    <option value="Level 5 Semester 1" {{ old('semester', $semester) == 'Level 5 Semester 1' ? 'selected' : '' }}>Level 5 Semester 1</option>
+                                                    <option value="Level 5 Semester 2" {{ old('semester', $semester) == 'Level 5 Semester 2' ? 'selected' : '' }}>Level 5 Semester 2</option>
+                                                    <option value="Level 6 Semester 1" {{ old('semester', $semester) == 'Level 6 Semester 1' ? 'selected' : '' }}>Level 6 Semester 1</option>
+                                                    <option value="Level 6 Semester 2" {{ old('semester', $semester) == 'Level 6 Semester 2' ? 'selected' : '' }}>Level 6 Semester 2</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4">

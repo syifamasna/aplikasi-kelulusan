@@ -47,8 +47,6 @@ class ReportCard extends Model
         return $this->belongsTo(SchoolYear::class, 'tahun_ajar', 'tahun_ajar');
     }
 
-    // ReportCard.php
-
     public function subjects()
     {
         return $this->belongsToMany(Subject::class, 'report_card_subjects')
@@ -61,5 +59,11 @@ class ReportCard extends Model
             'nilai' => $nilai,
             'details' => $details,  // Laravel akan menangani json encoding dan decoding secara otomatis
         ]);
+    }
+
+    public function graduationGradeSubjects()
+    {
+        return $this->belongsToMany(Subject::class, 'report_card_subjects', 'report_card_id', 'subject_id')
+            ->withPivot('nilai');  // Ambil nilai dari pivot
     }
 }

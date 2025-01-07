@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\GraduationService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
@@ -12,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Mendaftarkan service agar dapat di-inject
+        $this->app->singleton(GraduationService::class, function ($app) {
+            return new GraduationService();
+        });
     }
 
     /**

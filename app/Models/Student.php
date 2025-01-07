@@ -9,7 +9,7 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $table = 'students'; // Nama tabel di database
+    protected $table = 'students';
 
     protected $fillable = [
         'nama',
@@ -24,9 +24,13 @@ class Student extends Model
         return $this->belongsTo(StudentClass::class, 'kelas', 'kelas');
     }
 
-    // Relasi ke rapor
     public function reportCards()
     {
         return $this->hasMany(ReportCard::class, 'student_id', 'id');
+    }
+
+    public function graduationGrade()
+    {
+        return $this->hasOne(GraduationGrade::class, 'student_id', 'id');
     }
 }

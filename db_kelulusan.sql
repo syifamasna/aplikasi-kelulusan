@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 31, 2024 at 04:41 AM
+-- Generation Time: Jan 07, 2025 at 04:11 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -68,13 +68,24 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `graduation_grades` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `student_id` bigint(20) UNSIGNED NOT NULL,
-  `average_subjects` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`average_subjects`)),
-  `final_average` decimal(5,2) NOT NULL,
+  `report_card_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `average_subjects` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `final_average` decimal(5,2) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `graduation_grades`
+--
+
+INSERT INTO `graduation_grades` (`id`, `student_id`, `report_card_ids`, `average_subjects`, `final_average`, `created_at`, `updated_at`) VALUES
+(2, 134, '', '\"{\\\"1\\\":0,\\\"3\\\":0,\\\"4\\\":0,\\\"5\\\":0,\\\"6\\\":0,\\\"7\\\":0,\\\"8\\\":0,\\\"9\\\":0,\\\"10\\\":0,\\\"11\\\":0}\"', 0.00, '2025-01-04 09:44:45', '2025-01-04 09:44:45'),
+(3, 135, '', '\"{\\\"1\\\":0,\\\"3\\\":0,\\\"4\\\":0,\\\"5\\\":0,\\\"6\\\":0,\\\"7\\\":0,\\\"8\\\":0,\\\"9\\\":0,\\\"10\\\":0,\\\"11\\\":0}\"', 0.00, '2025-01-05 19:05:09', '2025-01-05 19:05:10'),
+(4, 107, '', '\"{\\\"1\\\":0,\\\"3\\\":0,\\\"4\\\":0,\\\"5\\\":0,\\\"6\\\":0,\\\"7\\\":0,\\\"8\\\":0,\\\"9\\\":0,\\\"10\\\":0,\\\"11\\\":0}\"', 0.00, '2025-01-05 19:30:07', '2025-01-05 19:30:07'),
+(9, 221, '\"[33,34,35,36]\"', '\"{\\\"1\\\":89.25,\\\"3\\\":90,\\\"4\\\":88.75,\\\"5\\\":88.25,\\\"6\\\":88,\\\"7\\\":86,\\\"8\\\":87.25,\\\"9\\\":87.25,\\\"10\\\":92.5,\\\"11\\\":95.25}\"', 89.25, '2025-01-06 19:34:03', '2025-01-06 19:34:03');
 
 -- --------------------------------------------------------
 
@@ -248,7 +259,7 @@ CREATE TABLE `personal_access_tokens` (
 CREATE TABLE `report_cards` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `student_id` bigint(20) UNSIGNED NOT NULL,
-  `semester` int(11) NOT NULL,
+  `semester` enum('Level 1 Semester 1','Level 1 Semester 2','Level 2 Semester 1','Level 2 Semester 2','Level 3 Semester 1','Level 3 Semester 2','Level 4 Semester 1','Level 4 Semester 2','Level 5 Semester 1','Level 5 Semester 2','Level 6 Semester 1','Level 6 Semester 2') NOT NULL,
   `tahun_ajar` varchar(255) NOT NULL,
   `sakit` int(11) DEFAULT NULL,
   `izin` int(11) DEFAULT NULL,
@@ -267,14 +278,20 @@ CREATE TABLE `report_cards` (
 --
 
 INSERT INTO `report_cards` (`id`, `student_id`, `semester`, `tahun_ajar`, `sakit`, `izin`, `alfa`, `prestasi`, `ket_prestasi`, `ekskul`, `nilai_ekskul`, `ket_ekskul`, `created_at`, `updated_at`) VALUES
-(24, 107, 9, '2024/2025', 2, 3, NULL, '[\"Juara 2 Cerdas Cermat\",null]', '[null,null]', '\"[\\\"Pramuka\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Sangat Baik\\\",null]\"', '2024-12-13 00:21:30', '2024-12-23 21:06:27'),
-(25, 107, 7, '2022/2023', NULL, 2, 3, NULL, '', '\"[\\\"Pramuka\\\",\\\"Silat\\\"]\"', '\"[\\\"90\\\",\\\"70\\\"]\"', '\"[\\\"Sangat Baik\\\",\\\"Kurang Baik\\\"]\"', '2024-12-16 02:28:40', '2024-12-16 03:24:27'),
-(31, 221, 7, '2021/2022', NULL, NULL, NULL, NULL, '', '\"[\\\"Japanese Club\\\",null]\"', '\"[\\\"7\\\",null]\"', '\"[\\\"Kurang Baik\\\",null]\"', '2024-12-17 20:06:51', '2024-12-17 20:06:51'),
-(32, 221, 8, '2023/2024', 3, 2, 1, NULL, '', '\"[\\\"Badminton\\\",\\\"B. Inggris\\\"]\"', '\"[\\\"95\\\",\\\"80\\\"]\"', '\"[\\\"Sangat Baik\\\",\\\"Baik\\\"]\"', '2024-12-19 22:58:23', '2024-12-19 23:01:20'),
-(33, 221, 9, '2024/2025', 2, 2, 1, NULL, '', '\"[\\\"Badminton\\\",null]\"', '\"[\\\"80\\\",null]\"', '\"[\\\"Baik\\\",null]\"', '2024-12-19 23:03:29', '2024-12-19 23:03:54'),
-(34, 221, 10, '2024/2025', 1, 1, 1, '[\"Juara 2 Lomba Story Telling\",null]', '[null,null]', '\"[\\\"English Club\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Baik\\\",null]\"', '2024-12-23 19:13:24', '2024-12-23 19:21:49'),
-(35, 221, 11, '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2024-12-24 23:50:18', '2024-12-24 23:50:18'),
-(36, 221, 12, '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2024-12-30 19:29:53', '2024-12-30 19:29:53');
+(24, 107, 'Level 5 Semester 2', '2024/2025', 2, 3, NULL, '[\"Juara 2 Cerdas Cermat\",null]', '[null,null]', '\"[\\\"Pramuka\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Sangat Baik\\\",null]\"', '2024-12-13 00:21:30', '2025-01-05 19:29:10'),
+(25, 107, 'Level 4 Semester 1', '2022/2023', NULL, 2, 3, NULL, '', '\"[\\\"Pramuka\\\",\\\"Silat\\\"]\"', '\"[\\\"90\\\",\\\"70\\\"]\"', '\"[\\\"Sangat Baik\\\",\\\"Kurang Baik\\\"]\"', '2024-12-16 02:28:40', '2024-12-16 03:24:27'),
+(31, 221, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, NULL, '', '\"[\\\"Japanese Club\\\",null]\"', '\"[\\\"7\\\",null]\"', '\"[\\\"Kurang Baik\\\",null]\"', '2024-12-17 20:06:51', '2024-12-17 20:06:51'),
+(32, 221, 'Level 4 Semester 2', '2023/2024', 3, 2, 1, NULL, '', '\"[\\\"Badminton\\\",\\\"B. Inggris\\\"]\"', '\"[\\\"95\\\",\\\"80\\\"]\"', '\"[\\\"Sangat Baik\\\",\\\"Baik\\\"]\"', '2024-12-19 22:58:23', '2024-12-19 23:01:20'),
+(33, 221, 'Level 5 Semester 1', '2024/2025', 2, 2, 1, NULL, '', '\"[\\\"Badminton\\\",null]\"', '\"[\\\"80\\\",null]\"', '\"[\\\"Baik\\\",null]\"', '2024-12-19 23:03:29', '2024-12-19 23:03:54'),
+(34, 221, 'Level 5 Semester 2', '2024/2025', 1, 1, 1, '[\"Juara 2 Lomba Story Telling\",null]', '[null,null]', '\"[\\\"English Club\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Baik\\\",null]\"', '2024-12-23 19:13:24', '2024-12-23 19:21:49'),
+(35, 221, 'Level 6 Semester 1', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2024-12-24 23:50:18', '2024-12-24 23:50:18'),
+(36, 221, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2024-12-30 19:29:53', '2024-12-30 19:29:53'),
+(37, 134, 'Level 6 Semester 1', '2023/2024', 2, 3, 1, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 21:23:59', '2025-01-02 21:23:59'),
+(38, 221, 'Level 2 Semester 1', '2021/2022', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 22:47:57', '2025-01-02 22:59:04'),
+(39, 107, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:02:10', '2025-01-05 19:32:05'),
+(42, 107, 'Level 6 Semester 1', '2021/2022', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:21:53', '2025-01-05 19:31:29'),
+(43, 107, 'Level 5 Semester 1', '2022/2023', 3, 2, 1, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:41:45', '2025-01-02 23:41:45'),
+(44, 134, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 20:07:21', '2025-01-06 20:07:21');
 
 -- --------------------------------------------------------
 
@@ -406,7 +423,91 @@ INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai
 (179, 36, 12, 91, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":null}'),
 (180, 36, 13, 85, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.S Al-Asr ayat 3\",\"aplikasi\":null}'),
 (181, 36, 14, 88, '{\"target\":\"Hadis 10 sd. 20\",\"capaian\":null,\"aplikasi\":null}'),
-(182, 36, 15, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office word\"}');
+(182, 36, 15, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office word\"}'),
+(183, 37, 1, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(184, 37, 3, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(185, 37, 4, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(186, 37, 5, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(187, 37, 6, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(188, 37, 7, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(189, 37, 8, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(190, 37, 9, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(191, 37, 10, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(192, 37, 11, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(193, 37, 12, 90, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":null}'),
+(194, 37, 13, 85, '{\"target\":\"Q.S An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\",\"aplikasi\":null}'),
+(195, 37, 14, 86, '{\"target\":\"Hadis 1 sd. 5\",\"capaian\":null,\"aplikasi\":null}'),
+(196, 37, 15, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office Excel\"}'),
+(197, 38, 1, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(198, 38, 3, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(199, 38, 4, 11, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(200, 38, 5, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(201, 38, 6, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(202, 38, 7, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(203, 38, 8, 11, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(204, 38, 9, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(205, 38, 10, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(206, 38, 11, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(207, 38, 12, 1, '{\"target\":\"1\",\"capaian\":\"1\",\"aplikasi\":\"\"}'),
+(208, 38, 13, 1, '{\"target\":\"1\",\"capaian\":\"1\",\"aplikasi\":\"\"}'),
+(209, 38, 14, 1, '{\"target\":\"1\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(210, 38, 15, 11, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"1\"}'),
+(211, 39, 1, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(212, 39, 3, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(213, 39, 4, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(214, 39, 5, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(215, 39, 6, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(216, 39, 7, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(217, 39, 8, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(218, 39, 9, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(219, 39, 10, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(220, 39, 11, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(221, 39, 12, 1, '{\"target\":\"1\",\"capaian\":\"1\",\"aplikasi\":\"\"}'),
+(222, 39, 13, 1, '{\"target\":\"1\",\"capaian\":\"1\",\"aplikasi\":\"\"}'),
+(223, 39, 14, 1, '{\"target\":\"1\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(224, 39, 15, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"1\"}'),
+(253, 42, 1, 2, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(254, 42, 3, 22, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(255, 42, 4, 2, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(256, 42, 5, 2, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(257, 42, 6, 2, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(258, 42, 7, 2, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(259, 42, 8, 2, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(260, 42, 9, 2, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(261, 42, 10, 2, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(262, 42, 11, 2, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(263, 42, 12, 2, '{\"target\":\"2\",\"capaian\":\"2\",\"aplikasi\":\"\"}'),
+(264, 42, 13, 2, '{\"target\":\"2\",\"capaian\":\"2\",\"aplikasi\":\"\"}'),
+(265, 42, 14, 2, '{\"target\":\"2\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(266, 42, 15, 2, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"2\"}'),
+(267, 43, 1, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(268, 43, 3, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(269, 43, 4, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(270, 43, 5, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(271, 43, 6, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(272, 43, 7, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(273, 43, 8, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(274, 43, 9, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(275, 43, 10, 92, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(276, 43, 11, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(277, 43, 12, 88, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":null}'),
+(278, 43, 13, 87, '{\"target\":\"Q.S An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\",\"aplikasi\":null}'),
+(279, 43, 14, 88, '{\"target\":\"Hadis 1 sd. 5\",\"capaian\":null,\"aplikasi\":null}'),
+(280, 43, 15, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office Excel\"}'),
+(281, 44, 1, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(282, 44, 3, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(283, 44, 4, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(284, 44, 5, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(285, 44, 6, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(286, 44, 7, 99, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(287, 44, 8, 84, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(288, 44, 9, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(289, 44, 10, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(290, 44, 11, 78, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(291, 44, 12, 90, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":null}'),
+(292, 44, 13, 88, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.s Ad-Duha ayat 10\",\"aplikasi\":null}'),
+(293, 44, 14, 98, '{\"target\":\"Hadis 10 sd. 20\",\"capaian\":null,\"aplikasi\":null}'),
+(294, 44, 15, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office Power Point\"}');
 
 -- --------------------------------------------------------
 
@@ -484,7 +585,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('MM6YZYO6KAzKJZTxRvLY9kHKgVhDQYALpZMbPpBx', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQmhsWDdoQzk3UFRKY0s5NnA1aEtveDF4a2JEZHJqeWV3aGtISEhIUCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9ncmFkdWF0aW9uX2dyYWRlcyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjU7fQ==', 1735616334);
+('XRUMsfZ19Pq4Ybbwo86jHC7UQbuj7CnWSuwarGBd', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiTW9YQVNOOGxndGpjN2xtWWo5cDJpZTk0OWpDbzk5QmtSbVRlMnBORyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9ncmFkdWF0aW9uX2dyYWRlcyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjU7fQ==', 1736219254);
 
 -- --------------------------------------------------------
 
@@ -728,7 +829,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `updated_at`, `image`, `class_id`) VALUES
 (3, 'Wali Kelas 6B', 'walas6b@aliya.com', '$2y$12$PvfqVg8u4EwgZDVCzQdE4OvigzN6iU7t6jijp2HjNVAcBYHGuc8AG', 'user', '2024-11-27 20:35:42', '2024-12-01 20:24:25', NULL, '6B'),
 (4, 'Wali Kelas 6A', 'walas6a@aliya.com', '$2y$12$MvWYPcMgJFjEsSz9.QoIN.LETkgwnSgRluRw6sbTz0zab/efYPtmi', 'user', '2024-11-27 20:51:38', '2024-12-27 01:36:24', NULL, '6A'),
-(5, 'Admin', 'admin@aliya.com', '$2y$12$h0PrOiGr9DgCdQqYXdtm/.F8P1QkByI.8KxukvD5zzHkhS./6CUSi', 'admin', '2024-11-28 21:19:28', '2024-12-27 01:58:27', 'images/logo.png', NULL),
+(5, 'Admin', 'admin@aliya.com', '$2y$12$h0PrOiGr9DgCdQqYXdtm/.F8P1QkByI.8KxukvD5zzHkhS./6CUSi', 'admin', '2024-11-28 21:19:28', '2025-01-06 19:55:03', NULL, NULL),
 (6, 'Wali Kelas 6C', 'walas6c@aliya.com', '$2y$12$oUHM9cKP/T9ZZYWaeKRKHu5eLaV3wQg/PmmI9h1MOREpysBGcyA3.', 'user', '2024-11-28 21:22:50', '2024-11-28 21:41:26', NULL, '6C'),
 (7, 'Wali Kelas 6D', 'walas6d@aliya.com', '$2y$12$Lf4SZeE/RodUsAr068Hpp.diZxzS/3O/7eOcmFO4bbenM1J9rVYku', 'user', '2024-11-28 21:23:11', '2024-11-28 21:23:11', NULL, '6D'),
 (16, 'Wali Kelas 5A', 'walas5a@aliya.com', '$2y$12$IN6J0AwH9Ej8dKzb009LU.h4QcwRLYJLu3HE3HcbLJPyFyRPNtA9a', 'user', '2024-12-24 00:43:03', '2024-12-27 03:07:18', NULL, '5A'),
@@ -914,7 +1015,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `graduation_grades`
 --
 ALTER TABLE `graduation_grades`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -944,13 +1045,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `report_cards`
 --
 ALTER TABLE `report_cards`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `report_card_subjects`
 --
 ALTER TABLE `report_card_subjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=295;
 
 --
 -- AUTO_INCREMENT for table `roles`

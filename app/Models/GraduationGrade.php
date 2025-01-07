@@ -9,38 +9,29 @@ class GraduationGrade extends Model
 {
     use HasFactory;
 
-    // Tabel yang digunakan
     protected $table = 'graduation_grades';
 
-    // Kolom yang boleh diisi (fillable)
     protected $fillable = [
         'student_id',
+        'report_card_ids', // Menyimpan referensi ID report card terkait
         'average_subjects',
         'final_average',
     ];
 
-    // Kolom yang menggunakan tipe data JSON
     protected $casts = [
-        'average_subjects' => 'array',  // Menyimpan nilai rata-rata setiap mata pelajaran
-        'final_average' => 'decimal:2',  // Nilai rata-rata akhir siswa
+        'report_card_ids' => 'array', // Untuk menyimpan array ID report cards
+        'average_subjects' => 'array', // Untuk menyimpan nilai rata-rata setiap mata pelajaran
+        'final_average' => 'decimal:2', // Nilai rata-rata akhir
     ];
 
-    // Relasi dengan tabel siswa (students)
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class, 'student_id', 'id');
     }
 
-    // Relasi dengan tabel report_cards (relasi one-to-many)
     public function reportCards()
     {
-        return $this->hasMany(ReportCard::class, 'student_id', 'student_id');
-    }
-
-    // Relasi dengan tabel report_card_subjects (relasi many-to-many)
-    public function reportCardSubjects()
-    {
-        return $this->belongsToMany(ReportCardSubject::class, 'report_card_subjects', 'report_card_id', 'subject_id')
-            ->withPivot('nilai');
+        return $this->hasMany(ReportCard::class, 'student_id', 'student_id')
+            ->whereIn('id', $this->report_card_ids ?? []);
     }
 }

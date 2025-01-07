@@ -91,6 +91,13 @@
         table.dataTable tfoot th {
             background-color: #f8f9fc;
         }
+
+        /* Styling untuk tabel responsif hanya pada layar kecil */
+        @media (max-width: 991px) {
+            .table-responsive {
+                overflow-x: auto;
+            }
+        }
     </style>
 </head>
 
@@ -130,7 +137,7 @@
 
                     @if (session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ session('error') }}
+                        {!! session('error') !!}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -184,7 +191,7 @@
                                             <td>{{ $student->nisn }}</td>
                                             <td>
                                                 <!-- Tombol Input Nilai, Arahkan ke halaman student_report terlebih dahulu -->
-                                                <a href="#" class="btn btn-warning btn-sm">Lihat Ijazah</a>
+                                                <a href="{{ route('admin.graduation_grades.show', ['studentId' => $student->id]) }}" class="btn btn-warning btn-sm">Lihat Ijazah</a>
                                             </td>
                                         </tr>
                                         @endforeach

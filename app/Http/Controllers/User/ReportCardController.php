@@ -60,7 +60,7 @@ class ReportCardController extends Controller
     {
         // Validasi data yang diterima
         $validatedData = $request->validate([
-            'semester' => 'required|numeric|min:0',
+            'semester' => 'required|in:Level 1 Semester 1,Level 1 Semester 2,Level 2 Semester 1,Level 2 Semester 2,Level 3 Semester 1,Level 3 Semester 2,Level 4 Semester 1,Level 4 Semester 2,Level 5 Semester 1,Level 5 Semester 2,Level 6 Semester 1,Level 6 Semester 2',
             'tahun_ajar' => 'required|string|max:20',
             'mata_pelajaran' => 'required|array',
             'mata_pelajaran.*' => 'nullable|numeric|min:0|max:100',
@@ -89,7 +89,7 @@ class ReportCardController extends Controller
             // Simpan data rapor
             $reportCard = ReportCard::create([
                 'student_id' => $studentId,
-                'semester' => $validatedData['semester'],
+                'semester' => $validatedData['semester'], // Pastikan semester adalah salah satu nilai ENUM yang valid
                 'tahun_ajar' => $validatedData['tahun_ajar'],
                 'sakit' => $validatedData['sakit'],
                 'izin' => $validatedData['izin'],
@@ -148,6 +148,7 @@ class ReportCardController extends Controller
 
     public function edit($id)
     {
+        // Mengambil data report card dengan relasi subjects
         $reportCard = ReportCard::with(['subjects' => function ($query) {
             $query->select('subjects.id', 'subjects.nama'); // Pilih kolom yang diperlukan dari subjects
         }])->findOrFail($id);
@@ -174,9 +175,10 @@ class ReportCardController extends Controller
         $student = $reportCard->student;
         $subjects = Subject::all();
         $school_years = SchoolYear::all();
+        $semester = $reportCard->semester; // Pastikan semester juga ada
 
         // Mengirimkan data ke view
-        return view('user-pages.report_cards.edit', compact('reportCard', 'student', 'subjects', 'school_years', 'pivotData', 'nilai'));
+        return view('user-pages.report_cards.edit', compact('reportCard', 'student', 'subjects', 'school_years', 'pivotData', 'nilai', 'semester'));
     }
 
     public function update(Request $request, $student_id, $report_card_id)
@@ -186,7 +188,7 @@ class ReportCardController extends Controller
 
         // Validasi data yang diterima
         $validatedData = $request->validate([
-            'semester' => 'required|integer',
+            'semester' => 'required|in:Level 1 Semester 1,Level 1 Semester 2,Level 2 Semester 1,Level 2 Semester 2,Level 3 Semester 1,Level 3 Semester 2,Level 4 Semester 1,Level 4 Semester 2,Level 5 Semester 1,Level 5 Semester 2,Level 6 Semester 1,Level 6 Semester 2',
             'tahun_ajar' => 'required|string',
             'mata_pelajaran' => 'array|required',
             'sakit' => 'nullable|integer',

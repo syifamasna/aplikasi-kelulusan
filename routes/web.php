@@ -72,10 +72,12 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::delete('report_cards/{id}', [AdminReportCardController::class, 'destroy'])->name('admin.report_cards.destroy');
 
         Route::get('graduation_grades', [AdminGraduationGradeController::class, 'index'])->name('admin.graduation_grades.index');
+        // Route untuk menampilkan detail nilai raport per siswa
+        Route::get('graduation_grades/{studentId}', [AdminGraduationGradeController::class, 'show'])->name('admin.graduation_grades.show');
 
         // Import & Export routes Admin
         Route::post('students/import', [AdminStudentController::class, 'import'])->name('admin.students.import');
-        Route::get('students/export', [AdminStudentController::class, 'export'])->name('admin.students.export');
+        Route::get('students/export-pdf', [AdminStudentController::class, 'exportPdf'])->name('admin.students.exportPdf');
     });
 });
 

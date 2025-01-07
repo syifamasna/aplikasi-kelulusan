@@ -89,6 +89,13 @@
         table.dataTable tfoot th {
             background-color: #f8f9fc;
         }
+
+        /* Styling untuk tabel responsif hanya pada layar kecil */
+        @media (max-width: 991px) {
+            .table-responsive {
+                overflow-x: auto;
+            }
+        }
     </style>
 
 </head>

@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\StudentClass;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class StudentController extends Controller
 {
@@ -143,22 +144,18 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'Data siswa berhasil diimpor');
     }
 
-    public function export()
+    public function exportPdf()
     {
+        // Ambil semua data siswa
         $students = Student::all();
 
-        // Menambahkan BOM untuk mendukung karakter UTF-8
-        $csvData = "\xEF\xBB\xBF";
-        $csvData .= "No.,Nama,Kelas,Jenis Kelamin,NIS,NISN\n"; // Header CSV
+        // Load view untuk PDF dengan data siswa
+        $pdf = Pdf::loadView('admin-pages.students.pdf', compact('students'));
 
-        $no = 1;
-        foreach ($students as $student) {
-            $csvData .= "{$no},{$student->nama},{$student->kelas},{$student->jk},{$student->nis},{$student->nisn}\n";
-            $no++;
-        }
+        // Set orientasi landscape atau portrait sesuai kebutuhan
+        $pdf->setPaper('A4', 'landscape');
 
-        return response($csvData)
-            ->header('Content-Type', 'text/csv')
-            ->header('Content-Disposition', 'attachment; filename="students.csv"');
+        // Unduh file PDF
+        return $pdf->download('students.pdf');
     }
 }

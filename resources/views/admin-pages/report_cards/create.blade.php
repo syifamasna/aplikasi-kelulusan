@@ -77,7 +77,21 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="semester" class="control-label"><strong>Semester</strong></label>
-                                                <input type="text" name="semester" class="form-control" id="semester" required>
+                                                <select name="semester" class="form-control" id="semester" required>
+                                                    <option value="" disabled selected>Pilih Semester</option>
+                                                    <option value="Level 1 Semester 1">Level 1 Semester 1</option>
+                                                    <option value="Level 1 Semester 2">Level 1 Semester 2</option>
+                                                    <option value="Level 2 Semester 1">Level 2 Semester 1</option>
+                                                    <option value="Level 2 Semester 2">Level 2 Semester 2</option>
+                                                    <option value="Level 3 Semester 1">Level 3 Semester 1</option>
+                                                    <option value="Level 3 Semester 2">Level 3 Semester 2</option>
+                                                    <option value="Level 4 Semester 1">Level 4 Semester 1</option>
+                                                    <option value="Level 4 Semester 2">Level 4 Semester 2</option>
+                                                    <option value="Level 5 Semester 1">Level 5 Semester 1</option>
+                                                    <option value="Level 5 Semester 2">Level 5 Semester 2</option>
+                                                    <option value="Level 6 Semester 1">Level 6 Semester 1</option>
+                                                    <option value="Level 6 Semester 2">Level 6 Semester 2</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4">

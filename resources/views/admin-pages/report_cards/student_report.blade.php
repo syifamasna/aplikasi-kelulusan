@@ -87,6 +87,13 @@
         table.dataTable tfoot th {
             background-color: #f8f9fc;
         }
+
+        /* Styling untuk tabel responsif hanya pada layar kecil */
+        @media (max-width: 991px) {
+            .table-responsive {
+                overflow-x: auto;
+            }
+        }
     </style>
 </head>
 
@@ -157,7 +164,7 @@
                                         @foreach($reportCards as $index => $data)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>Semester {{ $data->semester }}</td>
+                                            <td>{{ $data->semester }}</td>
                                             <td>{{ $data->tahun_ajar }}</td>
                                             <td>
                                                 <a href="{{ route('admin.report_cards.show', [$student->id, $data->id]) }}" class="btn btn-info btn-sm">Detail</a>

@@ -87,6 +87,13 @@
         table.dataTable tfoot th {
             background-color: #f8f9fc;
         }
+
+        /* Styling untuk tabel responsif hanya pada layar kecil */
+        @media (max-width: 991px) {
+            .table-responsive {
+                overflow-x: auto;
+            }
+        }
     </style>
 </head>
 
@@ -154,6 +161,7 @@
                             <div class="tombol">
                                 <a href="{{ route('admin.students.create')}}" class="btn btn-primary ml-2 mb-2">Tambah Data Siswa</a>
                                 <a type="button" class="btn btn-success ml-2 mb-2" data-toggle="modal" data-target="#importStudentModal">Import Excel</a>
+                                <a href="{{ route('admin.students.exportPdf')}}" class="btn btn-secondary ml-2 mb-2">Export Excel</a>
                             </div>
                         </div>
 
