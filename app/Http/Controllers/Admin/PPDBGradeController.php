@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
-use App\Models\GraduationGrade;
+use App\Models\PPDBGrade;
 use App\Models\ReportCard;
 use App\Models\Subject;
 use App\Models\StudentClass;
@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
 
-class GraduationGradeController extends Controller
+class PPDBGradecontroller extends Controller
 {
     // Method untuk menampilkan daftar ijazah
     public function index(Request $request)
@@ -36,7 +36,7 @@ class GraduationGradeController extends Controller
             ->orderBy('nama', 'asc')
             ->get();
 
-        return view('admin-pages.graduation_grades.index', compact('students', 'classes', 'kelasFilter', 'keyword'));
+        return view('admin-pages.ppdb_grades.index', compact('students', 'classes', 'kelasFilter', 'keyword'));
     }
 
     public function show($studentId)
@@ -44,7 +44,7 @@ class GraduationGradeController extends Controller
         // Ambil data siswa berdasarkan student_id
         $student = Student::findOrFail($studentId);
 
-        $relevantSemesters = ['Level 5 Semester 1', 'Level 5 Semester 2', 'Level 6 Semester 1', 'Level 6 Semester 2'];
+        $relevantSemesters = ['Level 4 Semester 1', 'Level 4 Semester 2', 'Level 5 Semester 1', 'Level 5 Semester 2', 'Level 6 Semester 1'];
 
         // Ambil semua ReportCard untuk student_id dan semester yang relevan
         $reportCards = ReportCard::where('student_id', $studentId)
@@ -66,11 +66,11 @@ class GraduationGradeController extends Controller
         $reportCard = $reportCards->first();  // Menambahkan ini untuk mendefinisikan $reportCard
 
         // Ambil atau buat data GraduationGrade
-        $graduationGrade = GraduationGrade::firstOrCreate(['student_id' => $studentId]);
+        $ppdbGrade = PPDBGrade::firstOrCreate(['student_id' => $studentId]);
 
         // Ambil ID reportCards yang relevan dan simpan dalam field report_card_ids sebagai JSON
         $reportCardIds = $reportCards->pluck('id')->toArray();
-        $graduationGrade->update(['report_card_ids' => json_encode($reportCardIds)]);
+        $ppdbGrade->update(['report_card_ids' => json_encode($reportCardIds)]);
 
         // Tentukan daftar subject yang relevan
         $subjectIds = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11];
@@ -106,14 +106,14 @@ class GraduationGradeController extends Controller
             : 0;
 
         // Update graduation grade dengan nilai rata-rata
-        $graduationGrade->update([
+        $ppdbGrade->update([
             'average_subjects' => json_encode($averageSubjects),
             'final_average' => $finalAverage,
         ]);
 
         // Tampilkan tampilan graduation_grade
-        return view('admin-pages.graduation_grades.show', compact(
-            'graduationGrade',
+        return view('admin-pages.ppdb_grades.show', compact(
+            'ppdbGrade',
             'averageSubjects',
             'finalAverage',
             'student',
@@ -123,32 +123,47 @@ class GraduationGradeController extends Controller
         ));
     }
 
+    // Method untuk export PDF
     public function exportPdf($studentId)
     {
         // Ambil data siswa berdasarkan student_id
         $student = Student::findOrFail($studentId);
 
+        $relevantSemesters = ['Level 4 Semester 1', 'Level 4 Semester 2', 'Level 5 Semester 1', 'Level 5 Semester 2', 'Level 6 Semester 1'];
+
         // Ambil semua ReportCard untuk student_id dan semester yang relevan
-        $relevantSemesters = ['Level 5 Semester 1', 'Level 5 Semester 2', 'Level 6 Semester 1', 'Level 6 Semester 2'];
         $reportCards = ReportCard::where('student_id', $studentId)
             ->whereIn('semester', $relevantSemesters)
             ->get();
 
-        // Cek jika ada report card
-        if ($reportCards->isEmpty()) {
-            return redirect()->back()->with('error', 'Data rapor siswa tidak ditemukan.');
+        // Cek apakah ada report card untuk semua semester yang relevan
+        foreach ($relevantSemesters as $semester) {
+            if (!$reportCards->contains('semester', $semester)) {
+                return redirect()->back()->with(
+                    'error',
+                    "Data rapor {$semester} belum lengkap. Harap lengkapi data rapor terlebih dahulu. " .
+                        "<a href='" . route('admin.report_cards.student_report', ['student' => $studentId]) . "'><br><b>Klik di sini</b></a> untuk menuju halaman rapor."
+                );
+            }
         }
 
         // Ambil report card pertama
-        $reportCard = $reportCards->first();  // Pastikan reportCard didefinisikan di sini
+        $reportCard = $reportCards->first();
+
+        // Ambil atau buat data GraduationGrade
+        $ppdbGrade = PPDBGrade::firstOrCreate(['student_id' => $studentId]);
+
+        // Ambil ID reportCards yang relevan dan simpan dalam field report_card_ids sebagai JSON
+        $reportCardIds = $reportCards->pluck('id')->toArray();
+        $ppdbGrade->update(['report_card_ids' => json_encode($reportCardIds)]);
 
         // Tentukan daftar subject yang relevan
         $subjectIds = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11];
         $subjects = Subject::whereIn('id', $subjectIds)->get();
 
-        // Perhitungan rata-rata nilai per mata pelajaran
         $averageSubjects = [];
 
+        // Loop untuk menghitung rata-rata nilai per mata pelajaran
         foreach ($subjectIds as $subjectId) {
             $totalScore = 0;
             $semesterCount = 0;
@@ -158,7 +173,6 @@ class GraduationGradeController extends Controller
                 $subject = $reportCardItem->subjects->firstWhere('id', $subjectId);
 
                 if ($subject) {
-                    // Ambil nilai dari pivot table 'report_card_subjects'
                     $nilai = $subject->pivot->nilai ?? 0;
                     $totalScore += $nilai;
                     $semesterCount++;
@@ -168,32 +182,28 @@ class GraduationGradeController extends Controller
             $averageSubjects[$subjectId] = $semesterCount > 0 ? round($totalScore / $semesterCount, 2) : 0;
         }
 
-        // Menghitung rata-rata akhir
         $finalAverage = count($averageSubjects) > 0
             ? round(array_sum($averageSubjects) / count($averageSubjects), 2)
             : 0;
 
-        // Ambil atau buat data GraduationGrade
-        $graduationGrade = GraduationGrade::firstOrCreate(['student_id' => $studentId]);
-
         // Update graduation grade dengan nilai rata-rata
-        $graduationGrade->update([
+        $ppdbGrade->update([
             'average_subjects' => json_encode($averageSubjects),
             'final_average' => $finalAverage,
         ]);
 
-        // Render view ke PDF
-        $pdf = PDF::loadView('admin-pages.graduation_grades.show-pdf', compact(
-            'student',
-            'graduationGrade',
+        // Buat file PDF menggunakan view 'admin-pages.ppdb_grades.pdf'
+        $pdf = Pdf::loadView('admin-pages.ppdb_grades.show-pdf', compact(
+            'ppdbGrade',
             'averageSubjects',
-            'finalAverage',  // Pastikan $finalAverage digunakan
+            'finalAverage',
+            'student',
             'reportCards',
-            'reportCard',   // Pastikan reportCard juga ditambahkan ke compact
+            'reportCard',
             'subjects'
         ));
 
-        // Return PDF
-        return $pdf->stream('Ijazah_' . $student->nama . '.pdf');
+        // Unduh file PDF
+        return $pdf->stream('Ijazah_PPDB_' . $student->nama . '.pdf');
     }
 }

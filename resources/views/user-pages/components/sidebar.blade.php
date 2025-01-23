@@ -63,8 +63,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Data Kelulusan:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Ijazah</a>
-                        <a class="collapse-item" href="utilities-border.html">PPDB</a>
+                        <a class="collapse-item" href="{{ route('user.graduation_grades.index') }}">Ijazah</a>
+                        <a class="collapse-item" href="{{ route('user.ppdb_grades.index') }}">PPDB</a>
                     </div>
                 </div>
             </li>

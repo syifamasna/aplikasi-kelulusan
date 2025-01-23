@@ -116,7 +116,7 @@
                                             <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                                <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                                <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." min="0" max="100" required>
                                             </div>
                                     </div>
                                     @endif
@@ -132,7 +132,7 @@
                                     <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." min="0" max="100" required>
                                     </div>
                             </div>
                             @endif
@@ -148,19 +148,19 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." min="0" max="100">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="target[{{ $subject->id }}]">Target Akhir Semester</label>
-                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_12" class="form-control" value="{{ old('target.' . $subject->id) }}" placeholder="Contoh: Lulus Tajwid Jilid 9" required>
+                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_12" class="form-control" value="{{ old('target.' . $subject->id) }}" placeholder="Contoh: Lulus Tajwid Jilid 9">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="capaian[{{ $subject->id }}]">Capaian Saat Ini</label>
-                                        <input type="text" name="capaian[{{ $subject->id }}]" id="capaian_12" class="form-control" value="{{ old('capaian.' . $subject->id) }}" placeholder="Contoh: Jilid 5 Hal 40" required>
+                                        <input type="text" name="capaian[{{ $subject->id }}]" id="capaian_12" class="form-control" value="{{ old('capaian.' . $subject->id) }}" placeholder="Contoh: Jilid 5 Hal 40">
                                     </div>
                                 </div>
                                 <!-- ID 13: Nilai, Target Akhir Semester, Capaian Saat Ini -->
@@ -168,19 +168,19 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." min="0" max="100">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="target[{{ $subject->id }}]">Target Akhir Semester</label>
-                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_13" class="form-control" value="{{ old('target.' . $subject->id) }}" placeholder="Contoh: Q.S Al-Infithar" required>
+                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_13" class="form-control" value="{{ old('target.' . $subject->id) }}" placeholder="Contoh: Q.S Al-Infithar">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="capaian[{{ $subject->id }}]">Capaian Saat Ini</label>
-                                        <input type="text" name="capaian[{{ $subject->id }}]" id="capaian_13" class="form-control" value="{{ old('capaian.' . $subject->id) }}" placeholder="Contoh: Q.S Al-Muthaffifin ayat 1" required>
+                                        <input type="text" name="capaian[{{ $subject->id }}]" id="capaian_13" class="form-control" value="{{ old('capaian.' . $subject->id) }}" placeholder="Contoh: Q.S Al-Muthaffifin ayat 1">
                                     </div>
                                 </div>
                                 <!-- ID 14: Nilai, Target -->
@@ -188,13 +188,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." min="0" max="100">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="target[{{ $subject->id }}]">Target</label>
-                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_14" class="form-control" value="{{ old('target.' . $subject->id) }}" placeholder="Contoh: Hadis 1 s.d 5" required>
+                                        <input type="text" name="target[{{ $subject->id }}]" id="target_akhir_14" class="form-control" value="{{ old('target.' . $subject->id) }}" placeholder="Contoh: Hadis 1 s.d 5">
                                     </div>
                                 </div>
                                 <!-- ID 15: Nilai, Aplikasi/Program -->
@@ -202,13 +202,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="mata_pelajaran[{{ $subject->id }}]"><strong>{{ $subject->nama }}</strong></label>
-                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." required>
+                                        <input type="number" class="form-control" name="mata_pelajaran[{{ $subject->id }}]" value="{{ old('mata_pelajaran.' . $subject->id) }}" placeholder="Masukkan Nilai..." min="0" max="100">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="aplikasi[{{ $subject->id }}]">Aplikasi/Program</label>
-                                        <input type="text" name="aplikasi[{{ $subject->id }}]" id="aplikasi_{{ $subject->id }}" class="form-control" value="{{ old('aplikasi.' . $subject->id) }}" placeholder="Contoh: Ms. Office Excel" required>
+                                        <input type="text" name="aplikasi[{{ $subject->id }}]" id="aplikasi_{{ $subject->id }}" class="form-control" value="{{ old('aplikasi.' . $subject->id) }}" placeholder="Contoh: Ms. Office Excel">
                                     </div>
                                 </div>
                                 @endif
@@ -243,79 +243,67 @@
                         <!-- Subjudul untuk Prestasi -->
                         <br>
                         <h6 class="m-0 font-weight-bold text-primary text-center">Prestasi</h6><br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="prestasi"><strong>Jenis Prestasi 1</strong></label>
-                                    <input type="text" name="prestasi[]" id="prestasi" class="form-control" value="{{ old('prestasi.0') }}">
+
+                        <!-- Tombol Tambah Prestasi -->
+                        <div class="text-right mb-3">
+                            <button type="button" id="add-prestasi" class="btn btn-sm btn-primary">
+                                <i class="fas fa-plus"></i> Tambah Prestasi
+                            </button>
+                        </div>
+
+                        <!-- Container untuk Prestasi -->
+                        <div id="prestasi-container">
+                            <div class="row prestasi-item align-items-center">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="prestasi_0"><strong>Jenis Prestasi 1</strong></label>
+                                        <input type="text" name="prestasi[]" id="prestasi_0" class="form-control" value="{{ old('prestasi.0') }}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="ket_prestasi"><strong>Keterangan</strong></label>
-                                    <input type="text" name="ket_prestasi[]" id="ket_prestasi" class="form-control" value="{{ old('ket_prestasi.0') }}">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="ket_prestasi_0"><strong>Keterangan</strong></label>
+                                        <input type="text" name="ket_prestasi[]" id="ket_prestasi_0" class="form-control" value="{{ old('ket_prestasi.0') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <button type="button" class="btn btn-danger btn-sm remove-prestasi">
+                                        <i class="fas fa-trash-alt"></i> Hapus Prestasi
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Subjudul untuk Prestasi 2 (Opsional) -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="prestasi"><strong>Jenis Prestasi 2</strong></label>
-                                    <input type="text" name="prestasi[]" id="prestasi" class="form-control" value="{{ old('prestasi.1') }}">
+                        <!-- Template untuk Prestasi Baru (Disembunyikan) -->
+                        <div id="prestasi-template" class="d-none">
+                            <div class="row prestasi-item align-items-center">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label><strong>Jenis Prestasi {index}</strong></label>
+                                        <input type="text" name="prestasi[]" class="form-control">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="ket_prestasi"><strong>Keterangan</strong></label>
-                                    <input type="text" name="ket_prestasi[]" id="ket_prestasi" class="form-control" value="{{ old('ket_prestasi.1') }}">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label><strong>Keterangan</strong></label>
+                                        <input type="text" name="ket_prestasi[]" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <button type="button" class="btn btn-danger btn-sm remove-prestasi">
+                                        <i class="fas fa-trash-alt"></i> Hapus Prestasi
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Subjudul untuk Ekstrakurikuler -->
+                        <!-- Catatan Guru -->
                         <br>
-                        <h6 class="m-0 font-weight-bold text-primary text-center">Ekstrakurikuler</h6><br>
+                        <h6 class="m-0 font-weight-bold text-primary text-center">Catatan Guru</h6><br>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="ekskul"><strong>Ekstrakurikuler 1</strong></label>
-                                    <input type="text" name="ekskul[]" id="ekskul" class="form-control" value="{{ old('ekskul.0') }}">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="nilai_ekskul"><strong>Nilai</strong></label>
-                                    <input type="number" name="nilai_ekskul[]" id="nilai_ekskul" class="form-control" value="{{ old('nilai_ekskul.0') }}">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="ket_ekskul"><strong>Keterangan</strong></label>
-                                    <input type="text" name="ket_ekskul[]" id="ket_ekskul" class="form-control" value="{{ old('ket_ekskul.0') }}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Baris Ekstrakurikuler 2 (Opsional) -->
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="ekskul_2"><strong>Ekstrakurikuler 2</strong></label>
-                                    <input type="text" name="ekskul[]" id="ekskul_2" class="form-control" value="{{ old('ekskul.1') }}">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="nilai_ekskul_2"><strong>Nilai</strong></label>
-                                    <input type="number" name="nilai_ekskul[]" id="nilai_ekskul_2" class="form-control" value="{{ old('nilai_ekskul.1') }}">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="ket_ekskul_2"><strong>Keterangan</strong></label>
-                                    <input type="text" name="ket_ekskul[]" id="ket_ekskul_2" class="form-control" value="{{ old('ket_ekskul.1') }}">
+                                    <textarea name="catatan" id="catatan" class="form-control" rows="4" placeholder="Masukkan catatan guru...">{{ old('catatan') }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -335,6 +323,47 @@
     @include('admin-pages.components.footer')
     </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('prestasi-container');
+            const template = document.getElementById('prestasi-template').innerHTML;
+            const addButton = document.getElementById('add-prestasi');
+
+            // Fungsi untuk memperbarui label indeks
+            function updateLabels() {
+                const items = container.querySelectorAll('.prestasi-item');
+                items.forEach((item, index) => {
+                    const label = item.querySelector('label[for^="prestasi_"]');
+                    if (label) label.textContent = `Jenis Prestasi ${index + 1}`;
+                });
+            }
+
+            // Fungsi untuk menambah prestasi baru
+            addButton.addEventListener('click', function() {
+                const newElement = document.createElement('div');
+                const newIndex = container.querySelectorAll('.prestasi-item').length + 1;
+                newElement.innerHTML = template.replace('{index}', newIndex);
+                container.appendChild(newElement);
+
+                // Tambahkan event listener pada tombol hapus di elemen baru
+                newElement.querySelector('.remove-prestasi').addEventListener('click', function() {
+                    newElement.remove();
+                    updateLabels(); // Perbarui label setelah elemen dihapus
+                });
+
+                updateLabels(); // Perbarui label setelah elemen ditambahkan
+            });
+
+            // Event listener tombol hapus pada elemen default
+            container.addEventListener('click', function(event) {
+                if (event.target.classList.contains('remove-prestasi') || event.target.closest('.remove-prestasi')) {
+                    event.target.closest('.prestasi-item').remove();
+                    updateLabels(); // Perbarui label setelah elemen dihapus
+                }
+            });
+        });
+    </script>
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">

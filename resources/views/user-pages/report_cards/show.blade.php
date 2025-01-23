@@ -16,6 +16,24 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+
+    <style>
+        /* Gaya untuk baris ganjil dan genap */
+        .odd-row {
+            background-color: #fcfcfc;
+        }
+
+        .even-row {
+            background-color: #F1F4F9;
+        }
+
+        /* Gaya untuk header tabel */
+        thead {
+            background-color: #343a40;
+            /* Warna abu-abu gelap untuk header */
+            color: white;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -86,6 +104,13 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($reportCard->subjects as $subject)
+                                        @php
+                                        // Cek apakah subject ini termasuk ID 12 hingga 15 dan nilai tidak diisi
+                                        $nilai = $reportCard->subjects->firstWhere('id', $subject->id)->pivot->nilai ?? null;
+                                        $is_optional_subject = in_array($subject->id, [12, 13, 14, 15]);
+                                        @endphp
+
+                                        @if (!$is_optional_subject || ($is_optional_subject && $nilai !== null)) <!-- Hanya tampilkan jika nilai ada -->
                                         <tr class="{{ $loop->odd ? 'odd-row' : 'even-row' }}">
                                             <td style="text-align: center; vertical-align: middle;">{{ $loop->iteration }}</td>
                                             <td>
@@ -118,53 +143,13 @@
 
                                             <!-- Kolom Nilai -->
                                             <td style="text-align: center; vertical-align: middle;">
-                                                @php
-                                                $nilai = $reportCard->subjects->firstWhere('id', $subject->id)->pivot->nilai ?? 'Belum diisi';
-                                                @endphp
-                                                {{ $nilai }}
+                                                {{ $nilai ?? 'Belum diisi' }}
                                             </td>
                                         </tr>
+                                        @endif
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <style>
-                        /* Gaya untuk baris ganjil dan genap */
-                        .odd-row {
-                            background-color: #fcfcfc;
-                        }
-
-                        .even-row {
-                            background-color: #F1F4F9;
-                        }
-
-                        /* Gaya untuk header tabel */
-                        thead {
-                            background-color: #343a40;
-                            /* Warna abu-abu gelap untuk header */
-                            color: white;
-                        }
-                    </style>
-
-                    <!-- Ketidakhadiran -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3" style="background-color: #4e73df; color: white;">
-                            <h6 class="m-0 font-weight-bold text-center">Absensi</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <p><strong>Sakit:</strong> {{ $reportCard->sakit ?? '-' }}</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p><strong>Izin:</strong> {{ $reportCard->izin ?? '-' }}</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p><strong>Alfa:</strong> {{ $reportCard->alfa ?? '-' }}</p>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -175,75 +160,90 @@
                             <h6 class="m-0 font-weight-bold text-center">Prestasi</h6>
                         </div>
                         <div class="card-body">
-                            @php
-                            $prestasi = json_decode($reportCard->prestasi, true) ?? [];
-                            $ket_prestasi = json_decode($reportCard->ket_prestasi, true) ?? [];
-                            @endphp
+                            <div class="table-responsive">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+                                    <thead style="background-color: #343a40; color: white; text-align: center;">
+                                        <tr>
+                                            <th style="text-align: center; vertical-align: middle; width: 10%;">No</th>
+                                            <th style="text-align: left; width: 30%;">Jenis Prestasi</th>
+                                            <th style="text-align: center; vertical-align: middle; width: 60%;">Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                        $prestasi = json_decode($reportCard->prestasi, true) ?? [];
+                                        $ket_prestasi = json_decode($reportCard->ket_prestasi, true) ?? [];
+                                        @endphp
 
-                            <!-- Jika tidak ada data prestasi, tetap tampilkan form dengan nilai default -->
-                            @if (count($prestasi) > 0)
-                            @foreach ($prestasi as $index => $prestasiItem)
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><strong>Prestasi {{ $index + 1 }}:</strong> {{ $prestasiItem ?? '-' }}</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><strong>Keterangan:</strong> {{ $ket_prestasi[$index] ?? '-' }}</p>
-                                </div>
+                                        @if (count($prestasi) > 0)
+                                        @foreach ($prestasi as $index => $prestasiItem)
+                                        <tr class="{{ $loop->odd ? 'odd-row' : 'even-row' }}">
+                                            <td style="text-align: center; vertical-align: middle;">{{ $index + 1 }}</td>
+                                            <td>{{ $prestasiItem ?? '-' }}</td>
+                                            <td style="text-align: center; vertical-align: middle;">{{ $ket_prestasi[$index] ?? '-' }}</td>
+                                        </tr>
+                                        @endforeach
+                                        @else
+                                        <!-- Jika tidak ada data prestasi, tampilkan baris kosong dengan nilai default -->
+                                        <tr>
+                                            <td style="text-align: center; vertical-align: middle;">1</td>
+                                            <td style="text-align: center; vertical-align: middle;">-</td>
+                                            <td style="text-align: center; vertical-align: middle;">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center; vertical-align: middle;">2</td>
+                                            <td style="text-align: center; vertical-align: middle;">-</td>
+                                            <td style="text-align: center; vertical-align: middle;">-</td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
-                            @endforeach
-                            @else
-                            <!-- Menampilkan form dengan nilai default "-" jika tidak ada prestasi -->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><strong>Jenis Prestasi 1:</strong> -</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><strong>Keterangan:</strong> -</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><strong>Jenis Prestasi 2:</strong> -</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><strong>Keterangan:</strong> -</p>
-                                </div>
-                            </div>
-                            @endif
                         </div>
                     </div>
 
-                    <!-- Ekstrakurikuler -->
+                    <!-- Catatan Guru -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3" style="background-color: #4e73df; color: white;">
-                            <h6 class="m-0 font-weight-bold text-center">Ekstrakurikuler</h6>
+                            <h6 class="m-0 font-weight-bold text-center">Catatan Guru</h6>
                         </div>
                         <div class="card-body">
-                            @php
-                            $ekskul = json_decode($reportCard->ekskul);
-                            $nilai_ekskul = json_decode($reportCard->nilai_ekskul);
-                            $ket_ekskul = json_decode($reportCard->ket_ekskul);
-                            @endphp
-                            @foreach ($ekskul as $index => $ekskulItem)
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <p><strong>Ekstrakurikuler {{ $index + 1 }}:</strong> {{ $ekskulItem ?? '-' }}</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p><strong>Nilai:</strong> {{ $nilai_ekskul[$index] ?? '-' }}</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p><strong>Keterangan:</strong> {{ $ket_ekskul[$index] ?? '-' }}</p>
-                                </div>
+                            <p>{{ $reportCard->catatan ?? 'Tidak ada catatan dari guru.' }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Ketidakhadiran -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3" style="background-color: #4e73df; color: white;">
+                            <h6 class="m-0 font-weight-bold text-center">Absensi</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align: left; width: 50%;">Sakit</td>
+                                            <td style="text-align: center; width: 50%;">{{ $reportCard->sakit ?? '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left;">Izin</td>
+                                            <td style="text-align: center;">{{ $reportCard->izin ?? '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left;">Tanpa Keterangan</td>
+                                            <td style="text-align: center;">{{ $reportCard->alfa ?? '-' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            @endforeach
                         </div>
                     </div>
 
                     <!-- Tombol Kembali -->
                     <div class="form-group text-center">
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
+                        <a href="{{ route('user.report_cards.export-pdf', ['student' => $student->id, 'reportCard' => $reportCard->id]) }}" class="btn btn-success">
+                            <i class="fas fa-print"></i> Cetak Rapor</a>
                     </div>
 
                 </div>

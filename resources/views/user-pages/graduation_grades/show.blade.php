@@ -22,7 +22,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        @include('admin-pages.components.sidebar')
+        @include('user-pages.components.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -30,7 +30,7 @@
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                @include('admin-pages.components.topbar')
+                @include('user-pages.components.topbar')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -203,7 +203,7 @@
                     <!-- Tombol Kembali -->
                     <div class="form-group text-center">
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
-                        <a href="{{ route('admin.graduation_grades.export-pdf', ['studentId' => $student->id]) }}" class="btn btn-success">
+                        <a href="{{ route('user.graduation_grades.export-pdf', ['studentId' => $student->id]) }}" class="btn btn-success">
                             <i class="fas fa-print"></i> Cetak Ijazah</a>
                     </div>
 
@@ -213,7 +213,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('admin-pages.components.footer')
+            @include('user-pages.components.footer')
             <!-- End of Footer -->
 
         </div>

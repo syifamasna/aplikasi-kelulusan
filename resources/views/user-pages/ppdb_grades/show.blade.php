@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Detail Ijazah {{ $student->nama }} - Aplikasi Kelulusan</title>
+    <title>Detail Ijazah PPDB {{ $student->nama }} - Aplikasi Kelulusan</title>
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
     <!-- Custom fonts for this template-->
@@ -22,7 +22,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        @include('admin-pages.components.sidebar')
+        @include('user-pages.components.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -30,13 +30,13 @@
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                @include('admin-pages.components.topbar')
+                @include('user-pages.components.topbar')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800 text-center">Detail Ijazah - {{ $student->nama }}</h1>
+                    <h1 class="h3 mb-4 text-gray-800 text-center">Detail Ijazah PPDB - {{ $student->nama }}</h1>
 
                     <!-- Data Ijazah -->
                     <div class="card shadow mb-4">
@@ -203,7 +203,7 @@
                     <!-- Tombol Kembali -->
                     <div class="form-group text-center">
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
-                        <a href="{{ route('admin.graduation_grades.export-pdf', ['studentId' => $student->id]) }}" class="btn btn-success">
+                        <a href="{{ route('user.ppdb_grades.export-pdf', ['studentId' => $student->id]) }}" class="btn btn-success">
                             <i class="fas fa-print"></i> Cetak Ijazah</a>
                     </div>
 
@@ -213,7 +213,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('admin-pages.components.footer')
+            @include('user-pages.components.footer')
             <!-- End of Footer -->
 
         </div>

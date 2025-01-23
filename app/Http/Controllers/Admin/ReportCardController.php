@@ -9,6 +9,7 @@ use App\Models\SchoolYear;
 use App\Models\ReportCard;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 
 class ReportCardController extends Controller
@@ -75,15 +76,13 @@ class ReportCardController extends Controller
             'alfa' => 'nullable|numeric|min:0',
             'prestasi' => 'nullable|array',
             'ket_prestasi' => 'nullable|array',
-            'ekskul' => 'nullable|array',
-            'nilai_ekskul' => 'nullable|array',
-            'ket_ekskul' => 'nullable|array',
-            'target' => 'required|array',
-            'target.*' => 'required|string|max:255',
-            'capaian' => 'required|array',
-            'capaian.*' => 'required|string|max:255',
-            'aplikasi' => 'required|array',
-            'aplikasi.*' => 'required|string|max:255',
+            'catatan' => 'nullable|string',
+            'target' => 'nullable|array',
+            'target.*' => 'nullable|string|max:255',
+            'capaian' => 'nullable|array',
+            'capaian.*' => 'nullable|string|max:255',
+            'aplikasi' => 'nullable|array',
+            'aplikasi.*' => 'nullable|string|max:255',
         ]);
 
         DB::beginTransaction();
@@ -100,28 +99,28 @@ class ReportCardController extends Controller
                 'sakit' => $validatedData['sakit'],
                 'izin' => $validatedData['izin'],
                 'alfa' => $validatedData['alfa'],
-                'prestasi' => json_encode($validatedData['prestasi']),
-                'ket_prestasi' => json_encode($validatedData['ket_prestasi']),
-                'ekskul' => json_encode($validatedData['ekskul']),
-                'nilai_ekskul' => json_encode($validatedData['nilai_ekskul']),
-                'ket_ekskul' => json_encode($validatedData['ket_ekskul']),
+                'prestasi' => !empty($validatedData['prestasi']) ? json_encode(array_filter($validatedData['prestasi'])) : null,
+                'ket_prestasi' => !empty($validatedData['ket_prestasi']) ? json_encode(array_filter($validatedData['ket_prestasi'])) : null,
+                'catatan' => $validatedData['catatan']
             ]);
 
             // Simpan nilai mata pelajaran ke tabel pivot
-            foreach ($validatedData['mata_pelajaran'] as $subjectId => $nilai) {
-                if (!is_null($nilai)) {
-                    // Siapkan data 'details' dalam bentuk array untuk setiap mata pelajaran
-                    $details = [
-                        'target' => $validatedData['target'][$subjectId] ?? null,
-                        'capaian' => $validatedData['capaian'][$subjectId] ?? null,
-                        'aplikasi' => $validatedData['aplikasi'][$subjectId] ?? null,
-                    ];
+            if (!empty($validatedData['mata_pelajaran'])) {
+                foreach ($validatedData['mata_pelajaran'] as $subjectId => $nilai) {
+                    if (!is_null($nilai)) {
+                        // Siapkan data 'details' dalam bentuk array untuk setiap mata pelajaran
+                        $details = [
+                            'target' => $validatedData['target'][$subjectId] ?? null,
+                            'capaian' => $validatedData['capaian'][$subjectId] ?? null,
+                            'aplikasi' => $validatedData['aplikasi'][$subjectId] ?? null,
+                        ];
 
-                    // Simpan ke pivot tabel dengan nilai dan details (JSON)
-                    $reportCard->subjects()->attach($subjectId, [
-                        'nilai' => $nilai,
-                        'details' => json_encode($details),  // Simpan sebagai JSON
-                    ]);
+                        // Simpan ke pivot tabel dengan nilai dan details (JSON)
+                        $reportCard->subjects()->attach($subjectId, [
+                            'nilai' => $nilai,
+                            'details' => json_encode($details), // Simpan sebagai JSON
+                        ]);
+                    }
                 }
             }
 
@@ -187,68 +186,72 @@ class ReportCardController extends Controller
         return view('admin-pages.report_cards.edit', compact('reportCard', 'student', 'subjects', 'school_years', 'pivotData', 'nilai', 'semester'));
     }
 
-    public function update(Request $request, $student_id, $report_card_id)
+    public function update(Request $request, $studentId, $reportCardId)
     {
-        // Mencari ReportCard berdasarkan ID
-        $reportCard = ReportCard::findOrFail($report_card_id);
-
         // Validasi data yang diterima
         $validatedData = $request->validate([
             'semester' => 'required|in:Level 1 Semester 1,Level 1 Semester 2,Level 2 Semester 1,Level 2 Semester 2,Level 3 Semester 1,Level 3 Semester 2,Level 4 Semester 1,Level 4 Semester 2,Level 5 Semester 1,Level 5 Semester 2,Level 6 Semester 1,Level 6 Semester 2',
-            'tahun_ajar' => 'required|string',
-            'mata_pelajaran' => 'array|required',
-            'sakit' => 'nullable|integer',
-            'izin' => 'nullable|integer',
-            'alfa' => 'nullable|integer',
+            'tahun_ajar' => 'required|string|max:20',
+            'mata_pelajaran' => 'required|array',
+            'mata_pelajaran.*' => 'nullable|numeric|min:0|max:100',
+            'sakit' => 'nullable|numeric|min:0',
+            'izin' => 'nullable|numeric|min:0',
+            'alfa' => 'nullable|numeric|min:0',
             'prestasi' => 'nullable|array',
             'ket_prestasi' => 'nullable|array',
-            'ekskul' => 'nullable|array',
-            'nilai_ekskul' => 'nullable|array',
-            'ket_ekskul' => 'nullable|array'
+            'catatan' => 'nullable|string',
+            'target' => 'nullable|array',
+            'target.*' => 'nullable|string|max:255',
+            'capaian' => 'nullable|array',
+            'capaian.*' => 'nullable|string|max:255',
+            'aplikasi' => 'nullable|array',
+            'aplikasi.*' => 'nullable|string|max:255',
         ]);
 
-        // Menyimpan atau memperbarui nilai untuk setiap mata pelajaran
-        foreach ($validatedData['mata_pelajaran'] as $subject_id => $nilai) {
-            // Mengupdate nilai di pivot table dan menambahkan data pivot untuk target, capaian, aplikasi (jika ada)
-            $target = $request->input('target.' . $subject_id, '');
-            $capaian = $request->input('capaian.' . $subject_id, '');
-            $aplikasi = $request->input('aplikasi.' . $subject_id, '');
+        DB::beginTransaction();
 
-            $details = json_encode([
-                'target' => $target,
-                'capaian' => $capaian,
-                'aplikasi' => $aplikasi
+        try {
+            // Ambil data rapor berdasarkan ID
+            $reportCard = ReportCard::findOrFail($reportCardId);
+
+            // Update data rapor utama
+            $reportCard->update([
+                'semester' => $validatedData['semester'],
+                'tahun_ajar' => $validatedData['tahun_ajar'],
+                'sakit' => $validatedData['sakit'],
+                'izin' => $validatedData['izin'],
+                'alfa' => $validatedData['alfa'],
+                'prestasi' => !empty($validatedData['prestasi']) ? json_encode(array_filter($validatedData['prestasi'])) : null,
+                'ket_prestasi' => !empty($validatedData['ket_prestasi']) ? json_encode(array_filter($validatedData['ket_prestasi'])) : null,
+                'catatan' => $validatedData['catatan'],
             ]);
 
-            // Update pivot table untuk mata pelajaran tertentu
-            $reportCard->subjects()->updateExistingPivot($subject_id, [
-                'nilai' => $nilai,
-                'details' => $details
-            ]);
+            if (!empty($validatedData['mata_pelajaran'])) {
+                $syncData = [];
+                foreach ($validatedData['mata_pelajaran'] as $subjectId => $nilai) {
+                    if (!is_null($nilai)) {
+                        $syncData[$subjectId] = [
+                            'nilai' => $nilai,
+                            'details' => json_encode(array_filter([
+                                'target' => $validatedData['target'][$subjectId] ?? null,
+                                'capaian' => $validatedData['capaian'][$subjectId] ?? null,
+                                'aplikasi' => $validatedData['aplikasi'][$subjectId] ?? null,
+                            ])),
+                        ];
+                    }
+                }
+                $reportCard->subjects()->sync($syncData);
+            }
+
+            DB::commit();
+
+            return redirect()->route('admin.report_cards.student_report', ['student' => $studentId])
+                ->with('success', 'Data rapor berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return back()->withErrors('Terjadi kesalahan: ' . $e->getMessage());
         }
-
-        // Ambil data 'sakit', 'izin', 'alfa' dengan nilai default null jika tidak ada
-        $sakit = $validatedData['sakit'] ?? null;
-        $izin = $validatedData['izin'] ?? null;
-        $alfa = $validatedData['alfa'] ?? null;
-
-        // Update data lainnya seperti semester, tahun ajar, sakit, izin, alfa, dan ekstrakurikuler
-        $reportCard->update([
-            'semester' => $validatedData['semester'],
-            'tahun_ajar' => $validatedData['tahun_ajar'],
-            'sakit' => $validatedData['sakit'],
-            'izin' => $validatedData['izin'],
-            'alfa' => $validatedData['alfa'],
-            'prestasi' => json_encode($validatedData['prestasi']),
-            'ket_prestasi' => json_encode($validatedData['ket_prestasi']),
-            'ekskul' => $validatedData['ekskul'] ? json_encode($validatedData['ekskul']) : null,
-            'nilai_ekskul' => $validatedData['nilai_ekskul'] ? json_encode($validatedData['nilai_ekskul']) : null,
-            'ket_ekskul' => $validatedData['ket_ekskul'] ? json_encode($validatedData['ket_ekskul']) : null
-        ]);
-
-        // Redirect kembali ke halaman rapor dengan pesan sukses
-        return redirect()->route('admin.report_cards.student_report', [$student_id])
-            ->with('success', 'Data rapor berhasil diperbarui.');
     }
 
     public function destroy($id)
@@ -268,5 +271,32 @@ class ReportCardController extends Controller
         } catch (\Exception $e) {
             return back()->withErrors('Terjadi kesalahan: ' . $e->getMessage());
         }
+    }
+
+    public function exportPdf($student_id, $reportCard_id)
+    {
+        // Ambil data siswa berdasarkan student_id
+        $student = Student::find($student_id);
+
+        // Pastikan data siswa ditemukan
+        if (!$student) {
+            abort(404, 'Siswa tidak ditemukan.');
+        }
+
+        // Ambil data rapor berdasarkan student_id dan reportCard_id
+        $reportCard = ReportCard::where('student_id', $student_id)
+            ->where('id', $reportCard_id)
+            ->first();
+
+        // Pastikan data rapor ditemukan
+        if (!$reportCard) {
+            abort(404, 'Rapor tidak ditemukan.');
+        }
+
+        // Logic untuk generate PDF
+        $pdf = Pdf::loadView('admin-pages.report_cards.show-pdf', compact('student', 'reportCard'));
+
+        // Render PDF untuk preview di browser
+        return $pdf->stream('Detail Rapor ' . $student->nama . ' - ' . $reportCard->semester . '.pdf');
     }
 }

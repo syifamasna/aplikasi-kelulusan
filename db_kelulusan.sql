@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 07, 2025 at 04:11 AM
+-- Generation Time: Jan 23, 2025 at 07:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -82,10 +82,10 @@ CREATE TABLE `graduation_grades` (
 --
 
 INSERT INTO `graduation_grades` (`id`, `student_id`, `report_card_ids`, `average_subjects`, `final_average`, `created_at`, `updated_at`) VALUES
-(2, 134, '', '\"{\\\"1\\\":0,\\\"3\\\":0,\\\"4\\\":0,\\\"5\\\":0,\\\"6\\\":0,\\\"7\\\":0,\\\"8\\\":0,\\\"9\\\":0,\\\"10\\\":0,\\\"11\\\":0}\"', 0.00, '2025-01-04 09:44:45', '2025-01-04 09:44:45'),
-(3, 135, '', '\"{\\\"1\\\":0,\\\"3\\\":0,\\\"4\\\":0,\\\"5\\\":0,\\\"6\\\":0,\\\"7\\\":0,\\\"8\\\":0,\\\"9\\\":0,\\\"10\\\":0,\\\"11\\\":0}\"', 0.00, '2025-01-05 19:05:09', '2025-01-05 19:05:10'),
-(4, 107, '', '\"{\\\"1\\\":0,\\\"3\\\":0,\\\"4\\\":0,\\\"5\\\":0,\\\"6\\\":0,\\\"7\\\":0,\\\"8\\\":0,\\\"9\\\":0,\\\"10\\\":0,\\\"11\\\":0}\"', 0.00, '2025-01-05 19:30:07', '2025-01-05 19:30:07'),
-(9, 221, '\"[33,34,35,36]\"', '\"{\\\"1\\\":89.25,\\\"3\\\":90,\\\"4\\\":88.75,\\\"5\\\":88.25,\\\"6\\\":88,\\\"7\\\":86,\\\"8\\\":87.25,\\\"9\\\":87.25,\\\"10\\\":92.5,\\\"11\\\":95.25}\"', 89.25, '2025-01-06 19:34:03', '2025-01-06 19:34:03');
+(2, 134, '\"[37,44,45,46]\"', '\"{\\\"1\\\":84.25,\\\"3\\\":86.75,\\\"4\\\":87.75,\\\"5\\\":89.25,\\\"6\\\":88.5,\\\"7\\\":88.75,\\\"8\\\":83.75,\\\"9\\\":83.75,\\\"10\\\":84.25,\\\"11\\\":83}\"', 86.00, '2025-01-04 09:44:45', '2025-01-06 23:02:18'),
+(3, 135, '\"[55,56,57,63]\"', '\"{\\\"1\\\":86.5,\\\"3\\\":87.5,\\\"4\\\":88,\\\"5\\\":86.75,\\\"6\\\":87.75,\\\"7\\\":87.5,\\\"8\\\":87.75,\\\"9\\\":91.75,\\\"10\\\":91.75,\\\"11\\\":91.5}\"', 88.68, '2025-01-05 19:05:09', '2025-01-22 22:04:10'),
+(4, 107, '\"[24,39,42,43]\"', '\"{\\\"1\\\":43.5,\\\"3\\\":48.75,\\\"4\\\":45.5,\\\"5\\\":48,\\\"6\\\":45.5,\\\"7\\\":43.5,\\\"8\\\":43.5,\\\"9\\\":45.25,\\\"10\\\":43.75,\\\"11\\\":45.75}\"', 45.30, '2025-01-05 19:30:07', '2025-01-06 20:27:31'),
+(10, 136, '\"[47,48,49,50]\"', '\"{\\\"1\\\":84.75,\\\"3\\\":86,\\\"4\\\":86.5,\\\"5\\\":86.75,\\\"6\\\":90.5,\\\"7\\\":85.75,\\\"8\\\":85.25,\\\"9\\\":87.75,\\\"10\\\":86.5,\\\"11\\\":86.75}\"', 86.65, '2025-01-06 23:59:14', '2025-01-06 23:59:14');
 
 -- --------------------------------------------------------
 
@@ -253,6 +253,30 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ppdb_grades`
+--
+
+CREATE TABLE `ppdb_grades` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `student_id` bigint(20) UNSIGNED NOT NULL,
+  `report_card_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`report_card_ids`)),
+  `average_subjects` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`average_subjects`)),
+  `final_average` decimal(5,2) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ppdb_grades`
+--
+
+INSERT INTO `ppdb_grades` (`id`, `student_id`, `report_card_ids`, `average_subjects`, `final_average`, `created_at`, `updated_at`) VALUES
+(2, 136, '\"[47,48,49,61,62]\"', '\"{\\\"1\\\":86.2,\\\"3\\\":87.8,\\\"4\\\":87.8,\\\"5\\\":87.4,\\\"6\\\":87.2,\\\"7\\\":86,\\\"8\\\":86.6,\\\"9\\\":89.8,\\\"10\\\":88.2,\\\"11\\\":88.4}\"', 87.54, '2025-01-21 01:10:40', '2025-01-21 01:10:41'),
+(3, 135, '\"[56,57,59,60,63]\"', '\"{\\\"1\\\":85.6,\\\"3\\\":87.6,\\\"4\\\":88.2,\\\"5\\\":85.6,\\\"6\\\":85.2,\\\"7\\\":86.8,\\\"8\\\":87.2,\\\"9\\\":91.4,\\\"10\\\":92.4,\\\"11\\\":89.4}\"', 87.94, '2025-01-21 01:20:04', '2025-01-22 23:56:38');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `report_cards`
 --
 
@@ -266,9 +290,10 @@ CREATE TABLE `report_cards` (
   `alfa` int(11) DEFAULT NULL,
   `prestasi` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`prestasi`)),
   `ket_prestasi` text DEFAULT NULL,
-  `ekskul` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`ekskul`)),
-  `nilai_ekskul` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`nilai_ekskul`)),
-  `ket_ekskul` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`ket_ekskul`)),
+  `catatan` text DEFAULT NULL,
+  `ekskul` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `nilai_ekskul` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `ket_ekskul` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -277,21 +302,30 @@ CREATE TABLE `report_cards` (
 -- Dumping data for table `report_cards`
 --
 
-INSERT INTO `report_cards` (`id`, `student_id`, `semester`, `tahun_ajar`, `sakit`, `izin`, `alfa`, `prestasi`, `ket_prestasi`, `ekskul`, `nilai_ekskul`, `ket_ekskul`, `created_at`, `updated_at`) VALUES
-(24, 107, 'Level 5 Semester 2', '2024/2025', 2, 3, NULL, '[\"Juara 2 Cerdas Cermat\",null]', '[null,null]', '\"[\\\"Pramuka\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Sangat Baik\\\",null]\"', '2024-12-13 00:21:30', '2025-01-05 19:29:10'),
-(25, 107, 'Level 4 Semester 1', '2022/2023', NULL, 2, 3, NULL, '', '\"[\\\"Pramuka\\\",\\\"Silat\\\"]\"', '\"[\\\"90\\\",\\\"70\\\"]\"', '\"[\\\"Sangat Baik\\\",\\\"Kurang Baik\\\"]\"', '2024-12-16 02:28:40', '2024-12-16 03:24:27'),
-(31, 221, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, NULL, '', '\"[\\\"Japanese Club\\\",null]\"', '\"[\\\"7\\\",null]\"', '\"[\\\"Kurang Baik\\\",null]\"', '2024-12-17 20:06:51', '2024-12-17 20:06:51'),
-(32, 221, 'Level 4 Semester 2', '2023/2024', 3, 2, 1, NULL, '', '\"[\\\"Badminton\\\",\\\"B. Inggris\\\"]\"', '\"[\\\"95\\\",\\\"80\\\"]\"', '\"[\\\"Sangat Baik\\\",\\\"Baik\\\"]\"', '2024-12-19 22:58:23', '2024-12-19 23:01:20'),
-(33, 221, 'Level 5 Semester 1', '2024/2025', 2, 2, 1, NULL, '', '\"[\\\"Badminton\\\",null]\"', '\"[\\\"80\\\",null]\"', '\"[\\\"Baik\\\",null]\"', '2024-12-19 23:03:29', '2024-12-19 23:03:54'),
-(34, 221, 'Level 5 Semester 2', '2024/2025', 1, 1, 1, '[\"Juara 2 Lomba Story Telling\",null]', '[null,null]', '\"[\\\"English Club\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Baik\\\",null]\"', '2024-12-23 19:13:24', '2024-12-23 19:21:49'),
-(35, 221, 'Level 6 Semester 1', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2024-12-24 23:50:18', '2024-12-24 23:50:18'),
-(36, 221, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2024-12-30 19:29:53', '2024-12-30 19:29:53'),
-(37, 134, 'Level 6 Semester 1', '2023/2024', 2, 3, 1, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 21:23:59', '2025-01-02 21:23:59'),
-(38, 221, 'Level 2 Semester 1', '2021/2022', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 22:47:57', '2025-01-02 22:59:04'),
-(39, 107, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:02:10', '2025-01-05 19:32:05'),
-(42, 107, 'Level 6 Semester 1', '2021/2022', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:21:53', '2025-01-05 19:31:29'),
-(43, 107, 'Level 5 Semester 1', '2022/2023', 3, 2, 1, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:41:45', '2025-01-02 23:41:45'),
-(44, 134, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 20:07:21', '2025-01-06 20:07:21');
+INSERT INTO `report_cards` (`id`, `student_id`, `semester`, `tahun_ajar`, `sakit`, `izin`, `alfa`, `prestasi`, `ket_prestasi`, `catatan`, `ekskul`, `nilai_ekskul`, `ket_ekskul`, `created_at`, `updated_at`) VALUES
+(24, 107, 'Level 5 Semester 2', '2024/2025', 2, 3, NULL, '[\"Juara 2 Cerdas Cermat\",null]', '[null,null]', NULL, '\"[\\\"Pramuka\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Sangat Baik\\\",null]\"', '2024-12-13 00:21:30', '2025-01-05 19:29:10'),
+(25, 107, 'Level 4 Semester 1', '2022/2023', NULL, 2, 3, NULL, '', NULL, '\"[\\\"Pramuka\\\",\\\"Silat\\\"]\"', '\"[\\\"90\\\",\\\"70\\\"]\"', '\"[\\\"Sangat Baik\\\",\\\"Kurang Baik\\\"]\"', '2024-12-16 02:28:40', '2024-12-16 03:24:27'),
+(37, 134, 'Level 6 Semester 1', '2023/2024', 2, 3, 1, '[]', '[]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 21:23:59', '2025-01-21 02:44:38'),
+(39, 107, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:02:10', '2025-01-05 19:32:05'),
+(42, 107, 'Level 6 Semester 1', '2021/2022', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:21:53', '2025-01-05 19:31:29'),
+(43, 107, 'Level 5 Semester 1', '2022/2023', 3, 2, 1, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:41:45', '2025-01-02 23:41:45'),
+(44, 134, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[]', '[]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 20:07:21', '2025-01-21 02:43:35'),
+(45, 134, 'Level 5 Semester 1', '2022/2023', 2, 2, NULL, '[\"Juara 3 Kompetisi Silat\"]', '[]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:00:40', '2025-01-12 23:53:25'),
+(46, 134, 'Level 5 Semester 2', '2023/2024', NULL, NULL, NULL, '[]', '[]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:01:49', '2025-01-12 23:55:03'),
+(47, 136, 'Level 5 Semester 1', '2023/2024', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:52:20', '2025-01-06 23:52:20'),
+(48, 136, 'Level 5 Semester 2', '2023/2024', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:54:14', '2025-01-06 23:54:14'),
+(49, 136, 'Level 6 Semester 1', '2023/2024', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:58:12', '2025-01-06 23:58:12'),
+(50, 136, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:58:58', '2025-01-06 23:58:58'),
+(55, 135, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[\"Juara 1 Lomba Story Telling\",\"Juara 2 Cerdas Cermat\",\"Juara 3 Karate\"]', '[\"Kece badai\",\"lanjutkan!!\"]', NULL, NULL, NULL, NULL, '2025-01-12 03:31:34', '2025-01-21 01:33:14'),
+(56, 135, 'Level 6 Semester 1', '2023/2024', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-12 03:53:35', '2025-01-12 03:53:35'),
+(57, 135, 'Level 5 Semester 2', '2023/2024', NULL, NULL, NULL, '[\"Juara 1 Cerdas Cermat\",\"Juara 2 Lomba Story Telling\",\"Juara 3 Karate\"]', '[]', NULL, NULL, NULL, NULL, '2025-01-12 03:54:39', '2025-01-21 01:34:01'),
+(59, 135, 'Level 4 Semester 2', '2022/2023', NULL, NULL, NULL, '[\"Juara 1 Lomba MTQ\",\"Juara 2 Lomba Story Telling\",\"Juara 1 Cerdas Cermat\"]', '[\"Tingkat provinsi\"]', NULL, NULL, NULL, NULL, '2025-01-12 20:08:04', '2025-01-12 20:14:54'),
+(60, 135, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, '[\"Juara 1 Lomba Story Telling\",\"Juara 3 Karate\"]', '[]', NULL, NULL, NULL, NULL, '2025-01-12 20:15:53', '2025-01-12 20:16:21'),
+(61, 136, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-21 00:54:08', '2025-01-21 00:54:08'),
+(62, 136, 'Level 4 Semester 2', '2022/2023', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-21 01:10:14', '2025-01-21 01:10:14'),
+(63, 135, 'Level 5 Semester 1', '2022/2023', 1, 1, 1, '[\"Juara 1 Kompetisi Matematika\"]', '[]', 'Perkembangan anak sangat baik', NULL, NULL, NULL, '2025-01-21 01:30:46', '2025-01-21 01:32:02'),
+(64, 165, 'Level 4 Semester 1', '2021/2022', 2, 1, NULL, '[\"Juara 1 Lomba MTQ\"]', '[]', NULL, NULL, NULL, NULL, '2025-01-21 01:43:38', '2025-01-21 01:43:38'),
+(65, 197, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-21 02:47:42', '2025-01-21 02:47:42');
 
 -- --------------------------------------------------------
 
@@ -340,118 +374,20 @@ INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai
 (54, 25, 13, 79, ''),
 (55, 25, 14, 90, ''),
 (56, 25, 15, 85, ''),
-(99, 31, 1, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(100, 31, 3, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(101, 31, 4, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(102, 31, 5, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(103, 31, 6, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(104, 31, 7, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(105, 31, 8, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(106, 31, 9, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(107, 31, 10, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(108, 31, 11, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(109, 31, 12, 77, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":\"\"}'),
-(110, 31, 13, 7, '{\"target\":\"Q.S An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\",\"aplikasi\":\"\"}'),
-(111, 31, 14, 7, '{\"target\":\"Hadis 1 s.d 10\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(112, 31, 15, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office word\"}'),
-(113, 32, 1, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(114, 32, 3, 2, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(115, 32, 4, 3, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(116, 32, 5, 4, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(117, 32, 6, 5, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(118, 32, 7, 6, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(119, 32, 8, 7, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(120, 32, 9, 8, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(121, 32, 10, 9, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(122, 32, 11, 10, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(123, 32, 12, 11, '{\"target\":\"Lulus\",\"capaian\":\"Jilid 4\",\"aplikasi\":\"\"}'),
-(124, 32, 13, 12, '{\"target\":\"Q.S Al-Alaq\",\"capaian\":\"Q.s Ad-Duha ayat 10\",\"aplikasi\":\"\"}'),
-(125, 32, 14, 13, '{\"target\":\"Hadis 10 sd. 20\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(126, 32, 15, 14, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office Power Point\"}'),
-(127, 33, 1, 100, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(128, 33, 3, 99, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(129, 33, 4, 98, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(130, 33, 5, 98, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(131, 33, 6, 95, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(132, 33, 7, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(133, 33, 8, 92, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(134, 33, 9, 94, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(135, 33, 10, 95, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(136, 33, 11, 99, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(137, 33, 12, 90, '{\"target\":\"Lulus\",\"capaian\":\"Jilid 6\",\"aplikasi\":\"\"}'),
-(138, 33, 13, 98, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.S Al-Asr ayat 3\",\"aplikasi\":\"\"}'),
-(139, 33, 14, 89, '{\"target\":\"Hadis 1 sd. 5\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(140, 33, 15, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office Excel\"}'),
-(141, 34, 1, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(142, 34, 3, 95, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(143, 34, 4, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(144, 34, 5, 80, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(145, 34, 6, 78, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(146, 34, 7, 81, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(147, 34, 8, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(148, 34, 9, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(149, 34, 10, 95, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(150, 34, 11, 92, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(151, 34, 12, 88, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 4 Hal 40\",\"aplikasi\":\"\"}'),
-(152, 34, 13, 89, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.S Al-Asr ayat 3\",\"aplikasi\":\"\"}'),
-(153, 34, 14, 84, '{\"target\":\"Hadis 1 s.d 10\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(154, 34, 15, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office Power Point\"}'),
-(155, 35, 1, 82, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(156, 35, 3, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(157, 35, 4, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(158, 35, 5, 92, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(159, 35, 6, 95, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(160, 35, 7, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(161, 35, 8, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(162, 35, 9, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(163, 35, 10, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(164, 35, 11, 91, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(165, 35, 12, 90, '{\"target\":\"9\",\"capaian\":\"9\",\"aplikasi\":\"\"}'),
-(166, 35, 13, 85, '{\"target\":\"9\",\"capaian\":\"9\",\"aplikasi\":\"\"}'),
-(167, 35, 14, 91, '{\"target\":\"9\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(168, 35, 15, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"9\"}'),
-(169, 36, 1, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(170, 36, 3, 81, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(171, 36, 4, 82, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(172, 36, 5, 83, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(173, 36, 6, 84, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(174, 36, 7, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(175, 36, 8, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(176, 36, 9, 80, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(177, 36, 10, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(178, 36, 11, 99, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(179, 36, 12, 91, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":null}'),
-(180, 36, 13, 85, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.S Al-Asr ayat 3\",\"aplikasi\":null}'),
-(181, 36, 14, 88, '{\"target\":\"Hadis 10 sd. 20\",\"capaian\":null,\"aplikasi\":null}'),
-(182, 36, 15, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office word\"}'),
-(183, 37, 1, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(184, 37, 3, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(185, 37, 4, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(186, 37, 5, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(187, 37, 6, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(188, 37, 7, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(189, 37, 8, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(190, 37, 9, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(191, 37, 10, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(192, 37, 11, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(193, 37, 12, 90, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":null}'),
-(194, 37, 13, 85, '{\"target\":\"Q.S An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\",\"aplikasi\":null}'),
-(195, 37, 14, 86, '{\"target\":\"Hadis 1 sd. 5\",\"capaian\":null,\"aplikasi\":null}'),
-(196, 37, 15, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office Excel\"}'),
-(197, 38, 1, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(198, 38, 3, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(199, 38, 4, 11, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(200, 38, 5, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(201, 38, 6, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(202, 38, 7, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(203, 38, 8, 11, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(204, 38, 9, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(205, 38, 10, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(206, 38, 11, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(207, 38, 12, 1, '{\"target\":\"1\",\"capaian\":\"1\",\"aplikasi\":\"\"}'),
-(208, 38, 13, 1, '{\"target\":\"1\",\"capaian\":\"1\",\"aplikasi\":\"\"}'),
-(209, 38, 14, 1, '{\"target\":\"1\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
-(210, 38, 15, 11, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"1\"}'),
+(183, 37, 1, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(184, 37, 3, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(185, 37, 4, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(186, 37, 5, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(187, 37, 6, 89, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(188, 37, 7, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(189, 37, 8, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(190, 37, 9, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(191, 37, 10, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(192, 37, 11, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(193, 37, 12, 90, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":\"\"}'),
+(194, 37, 13, 85, '{\"target\":\"Q.S An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\",\"aplikasi\":\"\"}'),
+(195, 37, 14, 86, '{\"target\":\"Hadis 1 sd. 5\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(196, 37, 15, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office Excel\"}'),
 (211, 39, 1, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
 (212, 39, 3, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
 (213, 39, 4, 1, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
@@ -494,20 +430,216 @@ INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai
 (278, 43, 13, 87, '{\"target\":\"Q.S An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\",\"aplikasi\":null}'),
 (279, 43, 14, 88, '{\"target\":\"Hadis 1 sd. 5\",\"capaian\":null,\"aplikasi\":null}'),
 (280, 43, 15, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office Excel\"}'),
-(281, 44, 1, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(282, 44, 3, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(283, 44, 4, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(284, 44, 5, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(285, 44, 6, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(286, 44, 7, 99, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(287, 44, 8, 84, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(288, 44, 9, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(289, 44, 10, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(290, 44, 11, 78, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
-(291, 44, 12, 90, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":null}'),
-(292, 44, 13, 88, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.s Ad-Duha ayat 10\",\"aplikasi\":null}'),
-(293, 44, 14, 98, '{\"target\":\"Hadis 10 sd. 20\",\"capaian\":null,\"aplikasi\":null}'),
-(294, 44, 15, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office Power Point\"}');
+(281, 44, 1, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(282, 44, 3, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(283, 44, 4, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(284, 44, 5, 89, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(285, 44, 6, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(286, 44, 7, 99, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(287, 44, 8, 84, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(288, 44, 9, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(289, 44, 10, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(290, 44, 11, 78, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(291, 44, 12, 90, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":\"\"}'),
+(292, 44, 13, 88, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.s Ad-Duha ayat 10\",\"aplikasi\":\"\"}'),
+(293, 44, 14, 98, '{\"target\":\"Hadis 10 sd. 20\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(294, 44, 15, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office Power Point\"}'),
+(295, 45, 1, 80, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(296, 45, 3, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(297, 45, 4, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(298, 45, 5, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(299, 45, 6, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(300, 45, 7, 84, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(301, 45, 8, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(302, 45, 9, 80, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(303, 45, 10, 81, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(304, 45, 11, 82, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(305, 45, 12, 83, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 4 Hal 40\",\"aplikasi\":\"\"}'),
+(306, 45, 13, 86, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.S Al-Asr ayat 3\",\"aplikasi\":\"\"}'),
+(307, 45, 14, 92, '{\"target\":\"Hadis 1 s.d 10\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(308, 45, 15, 94, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office Excel\"}'),
+(309, 46, 1, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(310, 46, 3, 89, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(311, 46, 4, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(312, 46, 5, 92, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(313, 46, 6, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(314, 46, 7, 82, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(315, 46, 8, 80, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(316, 46, 9, 83, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(317, 46, 10, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(318, 46, 11, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(319, 46, 12, 89, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":\"\"}'),
+(320, 46, 13, 87, '{\"target\":\"Q.S Al-Alaq\",\"capaian\":\"Q.S An-Naziat ayat 28\",\"aplikasi\":\"\"}'),
+(321, 46, 14, 85, '{\"target\":\"Hadis 10 sd. 20\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(322, 46, 15, 89, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office word\"}'),
+(323, 47, 1, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(324, 47, 3, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(325, 47, 4, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(326, 47, 5, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(327, 47, 6, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(328, 47, 7, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(329, 47, 8, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(330, 47, 9, 80, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(331, 47, 10, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(332, 47, 11, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(333, 47, 12, 87, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":null}'),
+(334, 47, 13, 86, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.S Al-Asr ayat 3\",\"aplikasi\":null}'),
+(335, 47, 14, 85, '{\"target\":\"Hadis 1 s.d 10\",\"capaian\":null,\"aplikasi\":null}'),
+(336, 47, 15, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office Excel\"}'),
+(337, 48, 1, 80, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(338, 48, 3, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(339, 48, 4, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(340, 48, 5, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(341, 48, 6, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(342, 48, 7, 83, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(343, 48, 8, 84, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(344, 48, 9, 100, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(345, 48, 10, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(346, 48, 11, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(347, 48, 12, 87, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":\"\"}'),
+(348, 48, 13, 89, '{\"target\":\"Q.S An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\",\"aplikasi\":\"\"}'),
+(349, 48, 14, 90, '{\"target\":\"Hadis 1 s.d 10\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(350, 48, 15, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"Ms. Office Power Point\"}'),
+(351, 49, 1, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(352, 49, 3, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(353, 49, 4, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(354, 49, 5, 80, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(355, 49, 6, 83, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(356, 49, 7, 82, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(357, 49, 8, 84, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(358, 49, 9, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(359, 49, 10, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(360, 49, 11, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(361, 49, 12, 87, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":null}'),
+(362, 49, 13, 87, '{\"target\":\"Q.S Al-Insyirah\",\"capaian\":\"Q.S Al-Asr ayat 3\",\"aplikasi\":null}'),
+(363, 49, 14, 85, '{\"target\":\"Hadis 10 sd. 20\",\"capaian\":null,\"aplikasi\":null}'),
+(364, 49, 15, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office word\"}'),
+(365, 50, 1, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(366, 50, 3, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(367, 50, 4, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(368, 50, 5, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(369, 50, 6, 99, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(370, 50, 7, 91, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(371, 50, 8, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(372, 50, 9, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(373, 50, 10, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(374, 50, 11, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(375, 50, 12, 89, '{\"target\":\"-\",\"capaian\":\"-\",\"aplikasi\":null}'),
+(376, 50, 13, 86, '{\"target\":\"-\",\"capaian\":\"-\",\"aplikasi\":null}'),
+(377, 50, 14, 85, '{\"target\":\"-\",\"capaian\":null,\"aplikasi\":null}'),
+(378, 50, 15, 86, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"-\"}'),
+(420, 55, 1, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(421, 55, 3, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(422, 55, 4, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(423, 55, 5, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(424, 55, 6, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(425, 55, 7, 84, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(426, 55, 8, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(427, 55, 9, 89, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(428, 55, 10, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(429, 55, 11, 89, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(430, 56, 1, 87, '[]'),
+(431, 56, 3, 88, '[]'),
+(432, 56, 4, 89, '[]'),
+(433, 56, 5, 90, '[]'),
+(434, 56, 6, 88, '[]'),
+(435, 56, 7, 90, '[]'),
+(436, 56, 8, 92, '[]'),
+(437, 56, 9, 95, '[]'),
+(438, 56, 10, 90, '[]'),
+(439, 56, 11, 93, '[]'),
+(440, 57, 1, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(441, 57, 3, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(442, 57, 4, 89, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(443, 57, 5, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(444, 57, 6, 84, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(445, 57, 7, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(446, 57, 8, 80, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(447, 57, 9, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(448, 57, 10, 92, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(449, 57, 11, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(460, 59, 1, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(461, 59, 3, 89, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(462, 59, 4, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(463, 59, 5, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(464, 59, 6, 84, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(465, 59, 7, 88, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(466, 59, 8, 87, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(467, 59, 9, 90, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(468, 59, 10, 92, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(469, 59, 11, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(470, 60, 1, 80, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(471, 60, 3, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(472, 60, 4, 84, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(473, 60, 5, 83, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(474, 60, 6, 81, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(475, 60, 7, 80, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(476, 60, 8, 86, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(477, 60, 9, 89, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(478, 60, 10, 93, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(479, 60, 11, 85, '{\"target\":\"\",\"capaian\":\"\",\"aplikasi\":\"\"}'),
+(480, 61, 1, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(481, 61, 3, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(482, 61, 4, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(483, 61, 5, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(484, 61, 6, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(485, 61, 7, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(486, 61, 8, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(487, 61, 9, 92, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(488, 61, 10, 83, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(489, 61, 11, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(490, 62, 1, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(491, 62, 3, 95, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(492, 62, 4, 92, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(493, 62, 5, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(494, 62, 6, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(495, 62, 7, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(496, 62, 8, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(497, 62, 9, 92, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(498, 62, 10, 99, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(499, 62, 11, 95, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(500, 63, 1, 87, '[]'),
+(501, 63, 3, 88, '[]'),
+(502, 63, 4, 89, '[]'),
+(503, 63, 5, 85, '[]'),
+(504, 63, 6, 89, '[]'),
+(505, 63, 7, 90, '[]'),
+(506, 63, 8, 91, '[]'),
+(507, 63, 9, 93, '[]'),
+(508, 63, 10, 95, '[]'),
+(509, 63, 11, 96, '[]'),
+(510, 64, 1, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(511, 64, 3, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(512, 64, 4, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(513, 64, 5, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(514, 64, 6, 84, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(515, 64, 7, 83, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(516, 64, 8, 80, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(517, 64, 9, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(518, 64, 10, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(519, 64, 11, 92, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(520, 64, 12, 95, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\",\"aplikasi\":null}'),
+(521, 64, 13, 96, '{\"target\":\"Q.S An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\",\"aplikasi\":null}'),
+(522, 64, 14, 93, '{\"target\":\"Hadis 1 s.d 10\",\"capaian\":null,\"aplikasi\":null}'),
+(523, 64, 15, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":\"Ms. Office Excel\"}'),
+(524, 63, 12, 95, '{\"target\":\"Lulus Tajwid Jilid 8\",\"capaian\":\"Jilid 6 Hal 35\"}'),
+(525, 63, 13, 90, '{\"target\":\"An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\"}'),
+(526, 63, 14, 92, '{\"target\":\"Hadis 1 s.d 10\"}'),
+(527, 63, 15, 91, '{\"aplikasi\":\"Ms. Office Excel\"}'),
+(528, 65, 1, 89, '[]'),
+(529, 65, 3, 88, '[]'),
+(530, 65, 4, 90, '[]'),
+(531, 65, 5, 87, '[]'),
+(532, 65, 6, 85, '[]'),
+(533, 65, 7, 89, '[]'),
+(534, 65, 8, 92, '[]'),
+(535, 65, 9, 88, '[]'),
+(536, 65, 10, 89, '[]'),
+(537, 65, 11, 90, '[]'),
+(538, 65, 12, 91, '{\"target\":\"Lulus Tajwid Jilid 7\",\"capaian\":\"Jilid 6 Hal 40\"}'),
+(539, 65, 13, 95, '{\"target\":\"An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\"}'),
+(540, 65, 14, 89, '{\"target\":\"Hadis 1 s.d 10\"}'),
+(541, 65, 15, 93, '{\"aplikasi\":\"Ms. Office Power Point\"}');
 
 -- --------------------------------------------------------
 
@@ -585,7 +717,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('XRUMsfZ19Pq4Ybbwo86jHC7UQbuj7CnWSuwarGBd', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiTW9YQVNOOGxndGpjN2xtWWo5cDJpZTk0OWpDbzk5QmtSbVRlMnBORyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9ncmFkdWF0aW9uX2dyYWRlcyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjU7fQ==', 1736219254);
+('63IMyq19ZNf8BQ86K9LtMvNRtPio4EObiM59wlIN', 4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoibTU1QzFYOVRvOFlXYnJ0YkFlbmZweW5hZWhjbFd1Z292NXFzQjFvZSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL3BwZGJfZ3JhZGVzLzEzNSI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ7fQ==', 1737615485);
 
 -- --------------------------------------------------------
 
@@ -716,8 +848,7 @@ INSERT INTO `students` (`id`, `nis`, `nisn`, `nama`, `kelas`, `jk`, `created_at`
 (212, '192001090', '0139938654', 'Pranajarafa Dzakwan Fadhlurrohman', '6D', 'Laki-laki', '2024-11-15 01:10:20', '2024-11-15 01:10:20'),
 (213, '192001092', '0138164866', 'Rachel Sabita Humaira', '6D', 'Perempuan', '2024-11-15 01:10:20', '2024-11-15 01:10:20'),
 (218, '192001110', '0121425793', 'Zahran Ibrahim Hernanda', '6D', 'Laki-laki', '2024-12-04 20:51:04', '2024-12-04 20:51:04'),
-(219, '192001005', '0137060260', 'Aila Syifa Raihana Sihombing', '6D', 'Perempuan', '2024-12-04 20:53:37', '2024-12-04 20:53:37'),
-(221, '1', '0076633459', 'Syifa Khairunisa Masna', '5A', 'Perempuan', '2024-12-16 19:07:32', '2024-12-23 19:38:11');
+(219, '192001005', '0137060260', 'Aila Syifa Raihana Sihombing', '6D', 'Perempuan', '2024-12-04 20:53:37', '2024-12-04 20:53:37');
 
 -- --------------------------------------------------------
 
@@ -741,10 +872,7 @@ INSERT INTO `student_classes` (`id`, `kelas`, `nama_guru`, `created_at`, `update
 (1, '6A', '', NULL, '2024-11-14 22:23:34'),
 (2, '6B', '', NULL, NULL),
 (3, '6C', '', NULL, NULL),
-(4, '6D', '', NULL, NULL),
-(13, '5A', NULL, '2024-12-16 19:07:18', '2024-12-27 03:13:28'),
-(14, '5B', NULL, '2024-12-24 00:47:05', '2024-12-27 03:13:38'),
-(15, '5C', NULL, '2024-12-27 03:13:03', '2024-12-27 03:13:03');
+(4, '6D', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -829,11 +957,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `updated_at`, `image`, `class_id`) VALUES
 (3, 'Wali Kelas 6B', 'walas6b@aliya.com', '$2y$12$PvfqVg8u4EwgZDVCzQdE4OvigzN6iU7t6jijp2HjNVAcBYHGuc8AG', 'user', '2024-11-27 20:35:42', '2024-12-01 20:24:25', NULL, '6B'),
 (4, 'Wali Kelas 6A', 'walas6a@aliya.com', '$2y$12$MvWYPcMgJFjEsSz9.QoIN.LETkgwnSgRluRw6sbTz0zab/efYPtmi', 'user', '2024-11-27 20:51:38', '2024-12-27 01:36:24', NULL, '6A'),
-(5, 'Admin', 'admin@aliya.com', '$2y$12$h0PrOiGr9DgCdQqYXdtm/.F8P1QkByI.8KxukvD5zzHkhS./6CUSi', 'admin', '2024-11-28 21:19:28', '2025-01-06 19:55:03', NULL, NULL),
+(5, 'Admin', 'admin@aliya.com', '$2y$12$h0PrOiGr9DgCdQqYXdtm/.F8P1QkByI.8KxukvD5zzHkhS./6CUSi', 'admin', '2024-11-28 21:19:28', '2025-01-21 01:12:59', 'images/logo.png', NULL),
 (6, 'Wali Kelas 6C', 'walas6c@aliya.com', '$2y$12$oUHM9cKP/T9ZZYWaeKRKHu5eLaV3wQg/PmmI9h1MOREpysBGcyA3.', 'user', '2024-11-28 21:22:50', '2024-11-28 21:41:26', NULL, '6C'),
-(7, 'Wali Kelas 6D', 'walas6d@aliya.com', '$2y$12$Lf4SZeE/RodUsAr068Hpp.diZxzS/3O/7eOcmFO4bbenM1J9rVYku', 'user', '2024-11-28 21:23:11', '2024-11-28 21:23:11', NULL, '6D'),
-(16, 'Wali Kelas 5A', 'walas5a@aliya.com', '$2y$12$IN6J0AwH9Ej8dKzb009LU.h4QcwRLYJLu3HE3HcbLJPyFyRPNtA9a', 'user', '2024-12-24 00:43:03', '2024-12-27 03:07:18', NULL, '5A'),
-(24, 'Wali Kelas 5B', 'walas5b@aliya.com', '$2y$12$/tsskAzszU621MmYVrrhseOlKleo6GymWyCdyn7GVLq9XjbyMump2', 'user', '2024-12-27 03:00:52', '2024-12-27 03:00:52', NULL, '5B');
+(7, 'Wali Kelas 6D', 'walas6d@aliya.com', '$2y$12$Lf4SZeE/RodUsAr068Hpp.diZxzS/3O/7eOcmFO4bbenM1J9rVYku', 'user', '2024-11-28 21:23:11', '2024-11-28 21:23:11', NULL, '6D');
 
 --
 -- Indexes for dumped tables
@@ -918,6 +1044,13 @@ ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indexes for table `ppdb_grades`
+--
+ALTER TABLE `ppdb_grades`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `report_cards`
@@ -1015,7 +1148,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `graduation_grades`
 --
 ALTER TABLE `graduation_grades`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -1042,16 +1175,22 @@ ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `ppdb_grades`
+--
+ALTER TABLE `ppdb_grades`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `report_cards`
 --
 ALTER TABLE `report_cards`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `report_card_subjects`
 --
 ALTER TABLE `report_card_subjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=295;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=542;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1063,7 +1202,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `school_years`
 --
 ALTER TABLE `school_years`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -1093,7 +1232,7 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Constraints for dumped tables
@@ -1116,6 +1255,12 @@ ALTER TABLE `model_has_permissions`
 --
 ALTER TABLE `model_has_roles`
   ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `ppdb_grades`
+--
+ALTER TABLE `ppdb_grades`
+  ADD CONSTRAINT `ppdb_grades_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `report_cards`

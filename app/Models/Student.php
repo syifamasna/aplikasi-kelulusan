@@ -24,12 +24,22 @@ class Student extends Model
         return $this->belongsTo(StudentClass::class, 'kelas', 'kelas');
     }
 
+    public function reportCard()
+    {
+        return $this->hasOne(ReportCard::class, 'student_id', 'id');
+    }
+
     public function reportCards()
     {
         return $this->hasMany(ReportCard::class, 'student_id', 'id');
     }
 
     public function graduationGrade()
+    {
+        return $this->hasOne(GraduationGrade::class, 'student_id', 'id');
+    }
+
+    public function ppdbGrade()
     {
         return $this->hasOne(GraduationGrade::class, 'student_id', 'id');
     }

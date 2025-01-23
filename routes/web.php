@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\StudentClassController as AdminStudentClassContro
 use App\Http\Controllers\Admin\SchoolYearController as AdminSchoolYearController;
 use App\Http\Controllers\Admin\ReportCardController as AdminReportCardController;
 use App\Http\Controllers\Admin\GraduationGradeController as AdminGraduationGradeController;
+use App\Http\Controllers\Admin\PPDBGradeController as AdminPPDBGradeController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\ProfileController as UserProfileController;
@@ -17,6 +18,8 @@ use App\Http\Controllers\User\StudentController as UserStudentController;
 use App\Http\Controllers\User\SubjectController as UserSubjectController;
 use App\Http\Controllers\User\SchoolYearController as UserSchoolYearController;
 use App\Http\Controllers\User\ReportCardController as UserReportCardController;
+use App\Http\Controllers\User\GraduationGradeController as UserGraduationGradeController;
+use App\Http\Controllers\User\PPDBGradeController as UserPPDBGradeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -70,10 +73,23 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::put('/report_cards/{student_id}/{report_card_id}', [AdminReportCardController::class, 'update'])->name('admin.report_cards.update');
         // Rute untuk menghapus nilai rapor siswa
         Route::delete('report_cards/{id}', [AdminReportCardController::class, 'destroy'])->name('admin.report_cards.destroy');
+        // Rute untuk mencetak nilai rapor siswa sesuai dengan ID rapor
+        Route::get('report_cards/{student}/show/{reportCard}/export-pdf', [AdminReportCardController::class, 'exportPdf'])->name('admin.report_cards.export-pdf');
+
 
         Route::get('graduation_grades', [AdminGraduationGradeController::class, 'index'])->name('admin.graduation_grades.index');
         // Route untuk menampilkan detail nilai raport per siswa
         Route::get('graduation_grades/{studentId}', [AdminGraduationGradeController::class, 'show'])->name('admin.graduation_grades.show');
+        // Route untuk mencetak nilai ijazah sesuai dengan ID siswa
+        Route::get('graduation_grades/{studentId}/export-pdf', [AdminGraduationGradeController::class, 'exportPdf'])->name('admin.graduation_grades.export-pdf');
+
+
+        Route::get('ppdb_grades', [AdminPPDBGradeController::class, 'index'])->name('admin.ppdb_grades.index');
+        // Route untuk menampilkan detail nilai raport per siswa
+        Route::get('ppdb_grades/{studentId}', [AdminPPDBGradeController::class, 'show'])->name('admin.ppdb_grades.show');
+        // Route untuk mencetak ijazah ppdb sesuai dengan ID siswa
+        Route::get('ppdb_grades/{studentId}/export-pdf', [AdminPPDBGradeController::class, 'exportPdf'])->name('admin.ppdb_grades.export-pdf');
+
 
         // Import & Export routes Admin
         Route::post('students/import', [AdminStudentController::class, 'import'])->name('admin.students.import');
@@ -119,6 +135,20 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
         Route::put('/report_cards/{student_id}/{report_card_id}', [UserReportCardController::class, 'update'])->name('user.report_cards.update');
         // Rute untuk menghapus nilai rapor siswa
         Route::delete('report_cards/{id}', [UserReportCardController::class, 'destroy'])->name('user.report_cards.destroy');
+        // Rute untuk mencetak nilai rapor siswa sesuai dengan ID rapor
+        Route::get('report_cards/{student}/show/{reportCard}/export-pdf', [UserReportCardController::class, 'exportPdf'])->name('user.report_cards.export-pdf');
+
+        Route::get('graduation_grades', [UserGraduationGradeController::class, 'index'])->name('user.graduation_grades.index');
+        // Route untuk menampilkan detail nilai raport per siswa
+        Route::get('graduation_grades/{studentId}', [UserGraduationGradeController::class, 'show'])->name('user.graduation_grades.show');
+        // Route untuk mencetak nilai ijazah sesuai dengan ID siswa
+        Route::get('graduation_grades/{studentId}/export-pdf', [UserGraduationGradeController::class, 'exportPdf'])->name('user.graduation_grades.export-pdf');
+
+        Route::get('ppdb_grades', [UserPPDBGradeController::class, 'index'])->name('user.ppdb_grades.index');
+        // Route untuk menampilkan detail nilai raport per siswa
+        Route::get('ppdb_grades/{studentId}', [UserPPDBGradeController::class, 'show'])->name('user.ppdb_grades.show');
+        // Route untuk mencetak ijazah ppdb sesuai dengan ID siswa
+        Route::get('ppdb_grades/{studentId}/export-pdf', [UserPPDBGradeController::class, 'exportPdf'])->name('user.ppdb_grades.export-pdf');
 
         // Import & Export routes User
         Route::post('students/import', [UserStudentController::class, 'import'])->name('user.students.import');

@@ -22,6 +22,7 @@ class ReportCard extends Model
         'alfa',
         'prestasi',
         'ket_prestasi',
+        'catatan',
         'ekskul',
         'nilai_ekskul',
         'ket_ekskul',
@@ -62,6 +63,12 @@ class ReportCard extends Model
     }
 
     public function graduationGradeSubjects()
+    {
+        return $this->belongsToMany(Subject::class, 'report_card_subjects', 'report_card_id', 'subject_id')
+            ->withPivot('nilai');  // Ambil nilai dari pivot
+    }
+
+    public function ppdbGradeSubjects()
     {
         return $this->belongsToMany(Subject::class, 'report_card_subjects', 'report_card_id', 'subject_id')
             ->withPivot('nilai');  // Ambil nilai dari pivot

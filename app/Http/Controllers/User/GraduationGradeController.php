@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\GraduationGrade;
 use App\Models\ReportCard;
 use App\Models\Subject;
-use App\Models\StudentClass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
 
@@ -17,26 +17,23 @@ class GraduationGradeController extends Controller
     // Method untuk menampilkan daftar ijazah
     public function index(Request $request)
     {
-        // Fungsi index tetap seperti aslinya
-        $classes = StudentClass::all();
-        $kelasFilter = $request->kelas;
-        $keyword = $request->keyword;
+        // Ambil keyword dari request
+        $keyword = $request->input('keyword');
 
-        $students = Student::where(function ($query) use ($kelasFilter, $keyword) {
-            if ($kelasFilter) {
-                $query->where('kelas', $kelasFilter);
-            }
-            if ($keyword) {
-                $query->where('nama', 'like', "%$keyword%")
-                    ->orWhere('nis', 'like', "%$keyword%")
-                    ->orWhere('nisn', 'like', "%$keyword%")
-                    ->orWhere('kelas', 'like', "%$keyword%");
-            }
-        })->orderBy('kelas', 'asc')
+        // Ambil class_id dari user yang sedang login (wali kelas)
+        $classId = Auth::user()->class_id;  // Mengambil class_id dari user yang login
+
+        // Filter siswa berdasarkan kelas dan keyword
+        $students = Student::where('kelas', $classId)  // Pastikan 'kelas' adalah field di tabel students
+            ->when($keyword, function ($query, $keyword) {
+                $query->where('nama', 'like', "%{$keyword}%")
+                    ->orWhere('nis', 'like', "%{$keyword}%")
+                    ->orWhere('nisn', 'like', "%{$keyword}%");
+            })
             ->orderBy('nama', 'asc')
             ->get();
 
-        return view('admin-pages.graduation_grades.index', compact('students', 'classes', 'kelasFilter', 'keyword'));
+        return view('user-pages.graduation_grades.index', compact('students', 'keyword'));
     }
 
     public function show($studentId)
@@ -57,7 +54,7 @@ class GraduationGradeController extends Controller
                 return redirect()->back()->with(
                     'error',
                     "Data rapor {$semester} belum lengkap. Harap lengkapi data rapor terlebih dahulu. " .
-                        "<a href='" . route('admin.report_cards.student_report', ['student' => $studentId]) . "'><br><b>Klik di sini</b></a> untuk menuju halaman rapor."
+                        "<a href='" . route('user.report_cards.student_report', ['student' => $studentId]) . "'><br><b>Klik di sini</b></a> untuk menuju halaman rapor."
                 );
             }
         }
@@ -112,7 +109,7 @@ class GraduationGradeController extends Controller
         ]);
 
         // Tampilkan tampilan graduation_grade
-        return view('admin-pages.graduation_grades.show', compact(
+        return view('user-pages.graduation_grades.show', compact(
             'graduationGrade',
             'averageSubjects',
             'finalAverage',
@@ -183,7 +180,7 @@ class GraduationGradeController extends Controller
         ]);
 
         // Render view ke PDF
-        $pdf = PDF::loadView('admin-pages.graduation_grades.show-pdf', compact(
+        $pdf = PDF::loadView('user-pages.graduation_grades.show-pdf', compact(
             'student',
             'graduationGrade',
             'averageSubjects',
