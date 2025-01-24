@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Data Siswa - Aplikasi Kelulusan</title>
+    <title>Data Siswa {{ Auth::user()->class_id }} - Aplikasi Kelulusan</title>
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
     <!-- Custom fonts for this template-->
@@ -115,7 +115,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Daftar Siswa Kelas 6 SIT Aliya</h1><br>
+                    <h1 class="h3 mb-2 text-gray-800">Daftar Siswa Kelas {{ Auth::user()->class_id }} SIT Aliya</h1><br>
 
                     @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -138,11 +138,10 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa Kelas {{ Auth::user()->class_id }}</h6>
                             <div class="tombol">
                                 <a href="{{ route('user.students.create')}}" class="btn btn-primary ml-2 mb-2">Tambah Data Siswa</a>
                                 <a type="button" class="btn btn-success ml-2 mb-2" data-toggle="modal" data-target="#importStudentModal">Import Excel</a>
-                                <a href="{{ route('user.students.export')}}" class="btn btn-secondary ml-2 mb-2">Export Excel</a>
                             </div>
                         </div>
 
@@ -214,7 +213,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Import</button>
+                        <button type="submit" class="btn btn-success">Import</button>
                     </div>
                 </form>
             </div>

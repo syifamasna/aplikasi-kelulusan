@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard - Aplikasi Kelulusan</title>
+    <title>Dashboard {{ Auth::user()->name }} - Aplikasi Kelulusan</title>
 
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 

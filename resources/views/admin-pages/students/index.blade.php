@@ -157,11 +157,10 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa Kelas 6</h6>
                             <div class="tombol">
                                 <a href="{{ route('admin.students.create')}}" class="btn btn-primary ml-2 mb-2">Tambah Data Siswa</a>
                                 <a type="button" class="btn btn-success ml-2 mb-2" data-toggle="modal" data-target="#importStudentModal">Import Excel</a>
-                                <a href="{{ route('admin.students.exportPdf')}}" class="btn btn-secondary ml-2 mb-2">Export Excel</a>
                             </div>
                         </div>
 
@@ -240,7 +239,7 @@
     </div>
     @endforeach
 
-    <!-- Modal Import -->
+    <!-- Modal Impor -->
     <div class="modal fade" id="importStudentModal" tabindex="-1" role="dialog" aria-labelledby="importStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -250,16 +249,19 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="{{ route('admin.students.import') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
+                <form action="{{ route('user.students.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
                         <div class="form-group">
-                            <label for="file">Pilih File Excel</label>
-                            <input type="file" name="file" class="form-control" id="file" accept=".xlsx, .xls, .csv" required>
+                            <label for="file">Pilih File Excel:</label>
+                            <input type="file" name="file" id="file" class="form-control" accept=".xlsx,.xls" required>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-success">Import</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Ijazah PPDB - Aplikasi Kelulusan</title>
+    <title>Ijazah PPDB {{ Auth::user()->class_id }} - Aplikasi Kelulusan</title>
 
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
@@ -124,7 +124,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Daftar Ijazah PPDB Kelas 6 SIT Aliya</h1><br>
+                    <h1 class="h3 mb-2 text-gray-800">Daftar Ijazah PPDB Kelas {{ Auth::user()->class_id }} SIT Aliya</h1><br>
 
                     @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -147,7 +147,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa Kelas 6</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa Kelas {{ Auth::user()->class_id }}</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

@@ -88,7 +88,7 @@
             <tr>
                 <td style="width: 33%; vertical-align: top;">
                     <p><strong>Nama:</strong> {{ $student->nama }}</p>
-                    <p><strong>NIS/NISN:</strong> {{ $student->nis }}/{{ $student->nisn }}</p>
+                    <p><strong>NIS/NISN:</strong> {{ $student->nis }} / {{ $student->nisn }}</p>
                     <p><strong>Kelas:</strong> {{ $student->studentClass->kelas ?? 'Belum diatur' }}</p>
                 </td>
                 <td style="width: 17%; vertical-align: top;">
