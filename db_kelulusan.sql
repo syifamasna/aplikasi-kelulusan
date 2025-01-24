@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 23, 2025 at 07:59 AM
+-- Generation Time: Jan 24, 2025 at 08:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -85,7 +85,8 @@ INSERT INTO `graduation_grades` (`id`, `student_id`, `report_card_ids`, `average
 (2, 134, '\"[37,44,45,46]\"', '\"{\\\"1\\\":84.25,\\\"3\\\":86.75,\\\"4\\\":87.75,\\\"5\\\":89.25,\\\"6\\\":88.5,\\\"7\\\":88.75,\\\"8\\\":83.75,\\\"9\\\":83.75,\\\"10\\\":84.25,\\\"11\\\":83}\"', 86.00, '2025-01-04 09:44:45', '2025-01-06 23:02:18'),
 (3, 135, '\"[55,56,57,63]\"', '\"{\\\"1\\\":86.5,\\\"3\\\":87.5,\\\"4\\\":88,\\\"5\\\":86.75,\\\"6\\\":87.75,\\\"7\\\":87.5,\\\"8\\\":87.75,\\\"9\\\":91.75,\\\"10\\\":91.75,\\\"11\\\":91.5}\"', 88.68, '2025-01-05 19:05:09', '2025-01-22 22:04:10'),
 (4, 107, '\"[24,39,42,43]\"', '\"{\\\"1\\\":43.5,\\\"3\\\":48.75,\\\"4\\\":45.5,\\\"5\\\":48,\\\"6\\\":45.5,\\\"7\\\":43.5,\\\"8\\\":43.5,\\\"9\\\":45.25,\\\"10\\\":43.75,\\\"11\\\":45.75}\"', 45.30, '2025-01-05 19:30:07', '2025-01-06 20:27:31'),
-(10, 136, '\"[47,48,49,50]\"', '\"{\\\"1\\\":84.75,\\\"3\\\":86,\\\"4\\\":86.5,\\\"5\\\":86.75,\\\"6\\\":90.5,\\\"7\\\":85.75,\\\"8\\\":85.25,\\\"9\\\":87.75,\\\"10\\\":86.5,\\\"11\\\":86.75}\"', 86.65, '2025-01-06 23:59:14', '2025-01-06 23:59:14');
+(10, 136, '\"[47,48,49,50]\"', '\"{\\\"1\\\":84.75,\\\"3\\\":86,\\\"4\\\":86.5,\\\"5\\\":86.75,\\\"6\\\":90.5,\\\"7\\\":85.75,\\\"8\\\":85.25,\\\"9\\\":87.75,\\\"10\\\":86.5,\\\"11\\\":86.75}\"', 86.65, '2025-01-06 23:59:14', '2025-01-06 23:59:14'),
+(12, 197, '\"[67,68,69,70]\"', '\"{\\\"1\\\":95.25,\\\"3\\\":92.5,\\\"4\\\":89,\\\"5\\\":89.75,\\\"6\\\":91.75,\\\"7\\\":89,\\\"8\\\":89.5,\\\"9\\\":94.75,\\\"10\\\":91,\\\"11\\\":93.75}\"', 91.63, '2025-01-23 20:03:48', '2025-01-23 20:03:48');
 
 -- --------------------------------------------------------
 
@@ -272,7 +273,8 @@ CREATE TABLE `ppdb_grades` (
 
 INSERT INTO `ppdb_grades` (`id`, `student_id`, `report_card_ids`, `average_subjects`, `final_average`, `created_at`, `updated_at`) VALUES
 (2, 136, '\"[47,48,49,61,62]\"', '\"{\\\"1\\\":86.2,\\\"3\\\":87.8,\\\"4\\\":87.8,\\\"5\\\":87.4,\\\"6\\\":87.2,\\\"7\\\":86,\\\"8\\\":86.6,\\\"9\\\":89.8,\\\"10\\\":88.2,\\\"11\\\":88.4}\"', 87.54, '2025-01-21 01:10:40', '2025-01-21 01:10:41'),
-(3, 135, '\"[56,57,59,60,63]\"', '\"{\\\"1\\\":85.6,\\\"3\\\":87.6,\\\"4\\\":88.2,\\\"5\\\":85.6,\\\"6\\\":85.2,\\\"7\\\":86.8,\\\"8\\\":87.2,\\\"9\\\":91.4,\\\"10\\\":92.4,\\\"11\\\":89.4}\"', 87.94, '2025-01-21 01:20:04', '2025-01-22 23:56:38');
+(3, 135, '\"[56,57,59,60,63]\"', '\"{\\\"1\\\":85.6,\\\"3\\\":87.6,\\\"4\\\":88.2,\\\"5\\\":85.6,\\\"6\\\":85.2,\\\"7\\\":86.8,\\\"8\\\":87.2,\\\"9\\\":91.4,\\\"10\\\":92.4,\\\"11\\\":89.4}\"', 87.94, '2025-01-21 01:20:04', '2025-01-22 23:56:38'),
+(4, 197, '\"[65,66,67,68,69]\"', '\"{\\\"1\\\":92,\\\"3\\\":90.4,\\\"4\\\":88.6,\\\"5\\\":88,\\\"6\\\":90,\\\"7\\\":89.8,\\\"8\\\":90,\\\"9\\\":93.6,\\\"10\\\":91.8,\\\"11\\\":90.8}\"', 90.50, '2025-01-23 20:04:19', '2025-01-23 20:04:19');
 
 -- --------------------------------------------------------
 
@@ -325,7 +327,12 @@ INSERT INTO `report_cards` (`id`, `student_id`, `semester`, `tahun_ajar`, `sakit
 (62, 136, 'Level 4 Semester 2', '2022/2023', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-21 01:10:14', '2025-01-21 01:10:14'),
 (63, 135, 'Level 5 Semester 1', '2022/2023', 1, 1, 1, '[\"Juara 1 Kompetisi Matematika\"]', '[]', 'Perkembangan anak sangat baik', NULL, NULL, NULL, '2025-01-21 01:30:46', '2025-01-21 01:32:02'),
 (64, 165, 'Level 4 Semester 1', '2021/2022', 2, 1, NULL, '[\"Juara 1 Lomba MTQ\"]', '[]', NULL, NULL, NULL, NULL, '2025-01-21 01:43:38', '2025-01-21 01:43:38'),
-(65, 197, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-21 02:47:42', '2025-01-21 02:47:42');
+(65, 197, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-21 02:47:42', '2025-01-21 02:47:42'),
+(66, 197, 'Level 4 Semester 2', '2022/2023', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-23 19:58:36', '2025-01-23 19:58:36'),
+(67, 197, 'Level 5 Semester 1', '2022/2023', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-23 20:01:07', '2025-01-23 20:01:07'),
+(68, 197, 'Level 5 Semester 2', '2023/2024', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-23 20:02:07', '2025-01-23 20:02:07'),
+(69, 197, 'Level 6 Semester 1', '2023/2024', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-23 20:02:54', '2025-01-23 20:02:54'),
+(70, 197, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-23 20:03:36', '2025-01-23 20:03:36');
 
 -- --------------------------------------------------------
 
@@ -639,7 +646,57 @@ INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai
 (538, 65, 12, 91, '{\"target\":\"Lulus Tajwid Jilid 7\",\"capaian\":\"Jilid 6 Hal 40\"}'),
 (539, 65, 13, 95, '{\"target\":\"An-Naba\",\"capaian\":\"Q.S An-Naziat ayat 28\"}'),
 (540, 65, 14, 89, '{\"target\":\"Hadis 1 s.d 10\"}'),
-(541, 65, 15, 93, '{\"aplikasi\":\"Ms. Office Power Point\"}');
+(541, 65, 15, 93, '{\"aplikasi\":\"Ms. Office Power Point\"}'),
+(542, 66, 1, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(543, 66, 3, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(544, 66, 4, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(545, 66, 5, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(546, 66, 6, 91, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(547, 66, 7, 95, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(548, 66, 8, 93, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(549, 66, 9, 99, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(550, 66, 10, 98, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(551, 66, 11, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(552, 67, 1, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(553, 67, 3, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(554, 67, 4, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(555, 67, 5, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(556, 67, 6, 92, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(557, 67, 7, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(558, 67, 8, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(559, 67, 9, 95, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(560, 67, 10, 91, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(561, 67, 11, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(562, 68, 1, 95, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(563, 68, 3, 94, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(564, 68, 4, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(565, 68, 5, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(566, 68, 6, 97, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(567, 68, 7, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(568, 68, 8, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(569, 68, 9, 94, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(570, 68, 10, 92, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(571, 68, 11, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(572, 69, 1, 98, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(573, 69, 3, 95, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(574, 69, 4, 88, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(575, 69, 5, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(576, 69, 6, 85, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(577, 69, 7, 87, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(578, 69, 8, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(579, 69, 9, 92, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(580, 69, 10, 89, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(581, 69, 11, 95, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(582, 70, 1, 99, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(583, 70, 3, 94, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(584, 70, 4, 90, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(585, 70, 5, 96, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(586, 70, 6, 93, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(587, 70, 7, 91, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(588, 70, 8, 93, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(589, 70, 9, 98, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(590, 70, 10, 92, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}'),
+(591, 70, 11, 100, '{\"target\":null,\"capaian\":null,\"aplikasi\":null}');
 
 -- --------------------------------------------------------
 
@@ -717,7 +774,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('63IMyq19ZNf8BQ86K9LtMvNRtPio4EObiM59wlIN', 4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoibTU1QzFYOVRvOFlXYnJ0YkFlbmZweW5hZWhjbFd1Z292NXFzQjFvZSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL3BwZGJfZ3JhZGVzLzEzNSI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ7fQ==', 1737615485);
+('L0yOP8tO31l5IjjoG070Ncz4bYKbV1Kwb3ZX6ZBs', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoibjN1Tk0zeXRsM2t3MEs3QW9mZk8zWlIxMzBNMzhab2htdVFDT2FXWiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9zdHVkZW50cyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjU7fQ==', 1737689995),
+('OMXHFgpNKzuUIho3QXbu20yLJuUIGSmVI0EjDNpE', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiYkFEb25XaFRaYmVyTjZ5eWVnMk8zUllJNjQ2eURBRWNyVkZ6eHJyQyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL2dyYWR1YXRpb25fZ3JhZGVzIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Njt9', 1737700899);
 
 -- --------------------------------------------------------
 
@@ -929,8 +987,7 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `nama`, `nip`, `jk_guru`, `guru_status`, `created_at`, `updated_at`) VALUES
-(2, 'Raka Al Isya', '123456789', 'Laki-laki', 'Wali Kelas', '2024-11-12 20:10:05', '2024-11-12 20:26:18'),
-(4, 'Aditya', '123', 'Laki-laki', 'Wali Kelas', '2024-11-13 20:46:06', '2024-11-13 20:46:06');
+(2, 'Raka Al Isya', '123456789', 'Laki-laki', 'Wali Kelas', '2024-11-12 20:10:05', '2024-11-12 20:26:18');
 
 -- --------------------------------------------------------
 
@@ -1148,7 +1205,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `graduation_grades`
 --
 ALTER TABLE `graduation_grades`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -1178,19 +1235,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `ppdb_grades`
 --
 ALTER TABLE `ppdb_grades`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `report_cards`
 --
 ALTER TABLE `report_cards`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `report_card_subjects`
 --
 ALTER TABLE `report_card_subjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=542;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=592;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1208,7 +1265,7 @@ ALTER TABLE `school_years`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=223;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=224;
 
 --
 -- AUTO_INCREMENT for table `student_classes`
