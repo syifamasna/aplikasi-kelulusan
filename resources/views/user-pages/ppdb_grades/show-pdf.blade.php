@@ -10,32 +10,32 @@
         body {
             font-family: 'Nunito', sans-serif;
             font-size: 14px;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
             width: 100%;
             margin: 0 auto;
-            padding: 20px;
+            padding: 5px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 10px;
-            /* Mengurangi jarak bawah header */
+            margin-bottom: 5px;
         }
 
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
-            /* Mengurangi jarak di atas tabel */
-            margin-bottom: 20px;
+            margin-top: 5px;
+            margin-bottom: 15px;
         }
 
         .table th,
         .table td {
             border: 1px solid #ddd;
-            padding: 10px;
+            padding: 8px;
         }
 
         .table th {
@@ -65,15 +65,47 @@
         }
 
         hr {
-            margin: 20px 0;
+            margin: 15px 0;
+            /* Mengurangi jarak horisontal */
         }
 
         .details p {
-            margin: 5px 0;
+            margin: 3px 0;
+            /* Mengurangi margin antara paragraf */
         }
 
         .details p strong {
             font-weight: bold;
+        }
+
+        .signature {
+            width: 100%;
+            margin-top: 30px;
+            /* Mengurangi jarak atas signature */
+            text-align: right;
+        }
+
+        .signature-content {
+            display: inline-block;
+            text-align: left;
+        }
+
+        .stamp {
+            opacity: 0.6;
+            width: 75px;
+            height: 87px;
+            object-fit: cover;
+            margin-left: -35px;
+        }
+
+        .signature p {
+            margin: 3px 0;
+        }
+
+        .underline {
+            text-decoration: underline;
+            display: inline-block;
+            font-size: 15px;
         }
     </style>
 </head>
@@ -81,15 +113,16 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2>DAFTAR NILAI<br>SEKOLAH DASAR<br>TAHUN AJARAN 2024/2025</h2>
+            <h2>DAFTAR NILAI<br>SEKOLAH DASAR<br>TAHUN AJARAN {{ date('Y')-1 }}/{{ date('Y') }}</h2>
         </div>
 
         <table style="width: 100%; border-spacing: 10px;">
             <tr>
                 <td style="width: 33%; vertical-align: top;">
-                    <p><strong>Nama:</strong> {{ $student->nama }}</p>
-                    <p><strong>Nomor Induk Siswa :</strong> {{ $student->nis }}</p>
-                    <p><strong>Nomor Induk Siswa Nasional :</strong> {{ $student->nisn }}</p>
+                    <p><strong>Nama</strong><span style="display: inline-block; width: 169px;"></span>: {{ $student->nama }}</p>
+                    <p><strong>Tempat dan Tanggal Lahir</strong><span style="display: inline-block; width: 32px;"></span>: </p>
+                    <p><strong>Nomor Induk Siswa</strong><span style="display: inline-block; width: 76px;"></span>: {{ $student->nis }}</p>
+                    <p><strong>Nomor Induk Siswa Nasional</strong><span style="display: inline-block; width: 15px;"></span>: {{ $student->nisn }}</p>
                 </td>
             </tr>
         </table>
@@ -177,6 +210,16 @@
                 </tr>
             </tbody>
         </table>
+
+        <div class="signature">
+            <div class="signature-content">
+                <p>..............................,..............................{{ date('Y') }}</p>
+                <p>Kepala,</p>
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo.png'))) }}" alt="stamp" class="stamp"><br>
+                <p class="underline">Luluk Dianarini, S.TP, M.Pd.</p>
+                <p>NIP...............................................................</p>
+            </div>
+        </div>
     </div>
 
     </div>

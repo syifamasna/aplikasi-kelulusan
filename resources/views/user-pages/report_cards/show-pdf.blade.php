@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: 'Nunito', sans-serif;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         .container {
@@ -81,19 +81,19 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2>LAPORAN HASIL BELAJAR (RAPOR) PESERTA DIDIK<br>SEKOLAH DASAR ISLAM TERPADU ALIYA KOTA BOGOR</h2>
+            <h3>LAPORAN HASIL BELAJAR (RAPOR) PESERTA DIDIK<br>SEKOLAH DASAR ISLAM TERPADU ALIYA KOTA BOGOR</h3>
         </div>
 
-        <table style="width: 100%; border-spacing: 10px;">
+        <table style="width: 100%; border-spacing: 5px;">
             <tr>
                 <td style="width: 33%; vertical-align: top;">
-                    <p><strong>Nama:</strong> {{ $student->nama }}</p>
-                    <p><strong>NIS/NISN:</strong> {{ $student->nis }} / {{ $student->nisn }}</p>
-                    <p><strong>Kelas:</strong> {{ $student->studentClass->kelas ?? 'Belum diatur' }}</p>
+                    <p><strong>Nama Peserta Didik</strong><span style="display: inline-block; width: 20px;"></span>: {{ $student->nama }}</p>
+                    <p><strong>NIS / NISN</strong><span style="display: inline-block; width: 82px;"></span>: {{ $student->nis }} / {{ $student->nisn }}</p>
+                    <p><strong>Kelas</strong><span style="display: inline-block; width: 113px;"></span>: {{ $student->studentClass->kelas ?? 'Belum diatur' }}</p>
                 </td>
                 <td style="width: 17%; vertical-align: top;">
-                    <p><strong>Semester:</strong> {{ $reportCard->semester }}</p>
-                    <p><strong>Tahun Ajar:</strong> {{ $reportCard->tahun_ajar }}</p>
+                    <p><strong>Semester</strong><span style="display: inline-block; width: 30px;"></span>: {{ $reportCard->semester }}</p>
+                    <p><strong>Tahun Ajar</strong><span style="display: inline-block; width: 20px;"></span>: {{ $reportCard->tahun_ajar }}</p>
                 </td>
             </tr>
         </table>

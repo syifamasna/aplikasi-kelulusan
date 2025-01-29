@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     @if ($reportCard)
-                                    <p><strong>Tahun Ajar:</strong> 2024/2025</p>
+                                    <p><strong>Tahun Ajar:</strong> {{ date('Y')-1 }}/{{ date('Y') }}</p>
                                     @else
                                     <p><strong>Tahun Ajar:</strong> Data tidak tersedia</p>
                                     @endif
