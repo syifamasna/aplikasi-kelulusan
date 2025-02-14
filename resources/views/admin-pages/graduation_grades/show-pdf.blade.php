@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cetak Ijazah Sekolah {{ $student->nama }} - PDF</title>
+    <title>Cetak Daftar Nilai Hasil Ujian Sekolah {{ $student->nama }} - PDF</title>
     <style>
         body {
             font-family: 'Nunito', sans-serif;
             font-size: 14px;
-            margin: 0;
+            margin: 10px;
             padding: 0;
         }
 
@@ -22,34 +22,27 @@
 
         .header {
             text-align: center;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
 
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 5px;
-            margin-bottom: 15px;
+            margin-top: 2px;
+            margin-bottom: 5px;
+            page-break-inside: avoid;
+            /* Cegah pemisahan halaman */
         }
 
         .table th,
         .table td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            border: 1px solid black;
+            padding: 4px;
+            /* Kurangi padding */
         }
 
         .table th {
-            background-color: #343a40;
-            color: white;
             text-align: center;
-        }
-
-        .table tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .table tr:hover {
-            background-color: #ddd;
         }
 
         .text-center {
@@ -69,18 +62,9 @@
             /* Mengurangi jarak horisontal */
         }
 
-        .details p {
-            margin: 3px 0;
-            /* Mengurangi margin antara paragraf */
-        }
-
-        .details p strong {
-            font-weight: bold;
-        }
-
         .signature {
             width: 100%;
-            margin-top: 30px;
+            margin-top: 25px;
             /* Mengurangi jarak atas signature */
             text-align: right;
         }
@@ -92,20 +76,23 @@
 
         .stamp {
             opacity: 0.6;
-            width: 75px;
-            height: 87px;
+            width: 60px;
+            height: 72px;
             object-fit: cover;
             margin-left: -35px;
         }
 
         .signature p {
-            margin: 3px 0;
+            margin: 2px 0;
+            /* Kurangi margin bawah pada paragraf */
+            line-height: 1.2;
+            /* Kurangi tinggi baris */
         }
 
         .underline {
             text-decoration: underline;
             display: inline-block;
-            font-size: 15px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -113,16 +100,25 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2>DAFTAR NILAI<br>SEKOLAH DASAR<br>TAHUN AJARAN {{ date('Y')-1 }}/{{ date('Y') }}</h2>
+            <div style="text-align: center;">
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo.png'))) }}"
+                    alt="Logo Sekolah"
+                    style="width: 70px; height: auto; display: block; margin: 0 auto;">
+                <h1 style="color: #03A3ED; font-size: 30px; margin-bottom: 0;">SEKOLAH ISLAM TERPADU ALIYA</h1>
+                <h2 style="color: #039B50; font-size: 26px; margin-top: -5px;">KBIT - TKIT - SDIT</h2>
+                <hr>
+                <h2 style="text-decoration: underline; margin-bottom: 0px;">DAFTAR NILAI HASIL UJIAN SEKOLAH</h2>
+                <p style="font-size: 16px; text-align: center; margin-top: 0px; margin-bottom: 0px;">Tahun Pelajaran {{ date('Y') - 1 }}/{{ date('Y') }}</p>
+            </div>
         </div>
 
-        <table style="width: 100%; border-spacing: 10px;">
+        <table style="width: 100%; margin-top: 0px; border-spacing: 10px;">
             <tr>
                 <td style="width: 33%; vertical-align: top;">
-                    <p><strong>Nama</strong><span style="display: inline-block; width: 169px;"></span>: {{ $student->nama }}</p>
-                    <p><strong>Tempat dan Tanggal Lahir</strong><span style="display: inline-block; width: 32px;"></span>: </p>
-                    <p><strong>Nomor Induk Siswa</strong><span style="display: inline-block; width: 76px;"></span>: {{ $student->nis }}</p>
-                    <p><strong>Nomor Induk Siswa Nasional</strong><span style="display: inline-block; width: 15px;"></span>: {{ $student->nisn }}</p>
+                    <p>Nama<span style="display: inline-block; width: 180px;"></span>: <strong>{{ $student->nama }}</strong></p>
+                    <p>Tempat dan Tanggal Lahir<span style="display: inline-block; width: 52px;"></span>: <strong>{{ $student->ttl }}</strong></p>
+                    <p>Nomor Induk Siswa Nasional<span style="display: inline-block; width: 37px;"></span>: <strong>{{ $student->nisn }}</strong></p>
+                    <p>Nomor Pokok Sekolah Nasional<span style="display: inline-block; width: 20px;"></span>: <strong>{{ $schoolProfile->npsn }}</strong></p>
                 </td>
             </tr>
         </table>
@@ -132,7 +128,7 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Mata Pelajaran</th>
+                    <th>Muatan Pelajaran (Kurikulum Merdeka)</th>
                     <th>Nilai</th>
                 </tr>
             </thead>
@@ -213,11 +209,11 @@
 
         <div class="signature">
             <div class="signature-content">
-                <p>..............................,..............................{{ date('Y') }}</p>
+                <p>Bogor, {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y') }}</p>
                 <p>Kepala,</p>
                 <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo.png'))) }}" alt="stamp" class="stamp"><br>
-                <p class="underline">Luluk Dianarini, S.TP, M.Pd.</p>
-                <p>NIP...............................................................</p>
+                <p class="underline">{{ $schoolProfile->kepsek }}</p>
+                <p>NIP...........................................</p>
             </div>
         </div>
     </div>

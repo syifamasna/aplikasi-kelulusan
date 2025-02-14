@@ -80,6 +80,10 @@
                                             <td>NISN</td>
                                             <td>{{ $student->nisn }}</td>
                                         </tr>
+                                        <tr>
+                                            <td>Tempat dan Tanggal Lahir</td>
+                                            <td>{{ $student->ttl }}</td>
+                                        </tr>
                                         </tbody>
                                 </table>
                             </div>

@@ -51,6 +51,7 @@ class StudentController extends Controller
             'nisn' => 'required',
             'nama' => 'required',
             'jk' => 'required|in:Laki-laki,Perempuan', // Validasi jk
+            'ttl' => 'nullable'
         ]);
 
         // Simpan data siswa dengan class_id yang sesuai dengan wali kelas yang login
@@ -60,6 +61,7 @@ class StudentController extends Controller
         $student->nama = $request->nama;
         $student->kelas = Auth::user()->class_id; // Gunakan class_id wali kelas yang login
         $student->jk = $request->jk; // Simpan jk
+        $student->ttl = $request->ttl;
         $student->save();
 
         return redirect()->route('user.students.index')->with('success', 'Data siswa berhasil ditambahkan');
@@ -92,6 +94,7 @@ class StudentController extends Controller
             'nisn' => 'required',
             'nama' => 'required',
             // Tidak perlu validasi lagi untuk jk, karena akan diambil dari data yang sudah ada
+            'ttl' => 'nullable'
         ]);
 
         $student = Student::findOrFail($id);
@@ -99,6 +102,7 @@ class StudentController extends Controller
         $student->nisn = $request->nisn;
         $student->nama = $request->nama;
         $student->jk = $request->jk ?? $student->jk; // Jika tidak ada input, tetap pakai data lama
+        $student->ttl = $request->ttl;
         $student->save();
 
         return redirect()->route('user.students.index')->with('success', 'Data siswa berhasil diperbarui');
@@ -137,6 +141,7 @@ class StudentController extends Controller
                     'jk' => $jk,
                     'nis' => $row['D'],
                     'nisn' => $row['E'],
+                    'ttl' => $row['F'],  // Kolom F untuk TTL
                     'class_id' => $classId, // Pastikan siswa terhubung dengan kelas wali kelas yang login
                 ]);
             } catch (\Exception $e) {
@@ -151,26 +156,7 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'Data siswa berhasil diimpor!');
     }
 
-
-    public function export()
-    {
-        // Ambil siswa yang memiliki class_id sesuai dengan kelas wali kelas yang login
-        $students = Student::where('class_id', Auth::user()->class_id)->get();
-
-        $csvData = "\xEF\xBB\xBFNo.,Nama,Kelas,Jenis Kelamin,NIS,NISN\n";
-
-        $no = 1;
-        foreach ($students as $student) {
-            $csvData .= "{$no},{$student->nama},{$student->kelas},{$student->jk},{$student->nis},{$student->nisn}\n";
-            $no++;
-        }
-
-        return response($csvData)
-            ->header('Content-Type', 'text/csv')
-            ->header('Content-Disposition', 'attachment; filename="students.csv"');
-    }
-
-    // Menghapus tahun ajar
+    // Menghapus siswa
     public function destroy($id)
     {
         $students = Student::findOrFail($id);

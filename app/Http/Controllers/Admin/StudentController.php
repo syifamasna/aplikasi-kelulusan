@@ -7,7 +7,6 @@ use App\Models\Student;
 use App\Models\StudentClass;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class StudentController extends Controller
 {
@@ -47,6 +46,7 @@ class StudentController extends Controller
             'nama' => 'required',
             'kelas' => 'required',
             'jk' => 'required|in:Laki-laki,Perempuan', // Validasi jk
+            'ttl' => 'nullable',
         ]);
 
         $student = new Student();
@@ -55,6 +55,7 @@ class StudentController extends Controller
         $student->nama = $request->nama;
         $student->kelas = $request->kelas;
         $student->jk = $request->jk; // Simpan jk
+        $student->ttl = $request->ttl;
         $student->save();
 
         return redirect()->route('admin.students.index')->with('success', 'Data siswa berhasil ditambahkan');
@@ -80,6 +81,7 @@ class StudentController extends Controller
             'nisn' => 'required',
             'nama' => 'required',
             'kelas' => 'required',
+            'ttl' => 'nullable'
         ]);
 
         $student = Student::findOrFail($id);
@@ -88,6 +90,7 @@ class StudentController extends Controller
         $student->nama = $request->nama;
         $student->kelas = $request->kelas;
         $student->jk = $request->jk ?? $student->jk; // Jika tidak ada input, tetap pakai data lama
+        $student->ttl = $request->ttl;
         $student->save();
 
         return redirect()->route('admin.students.index')->with('success', 'Data siswa berhasil diperbarui');
@@ -138,24 +141,10 @@ class StudentController extends Controller
                 'jk' => $jk,          // Simpan jenis kelamin yang sudah diproses
                 'nis' => $row['D'],   // Kolom D untuk NIS
                 'nisn' => $row['E'],  // Kolom E untuk NISN
+                'ttl' => $row['F']    // Kolom F untuk TTL
             ]);
         }
 
         return redirect()->back()->with('success', 'Data siswa berhasil diimpor');
-    }
-
-    public function exportPdf()
-    {
-        // Ambil semua data siswa
-        $students = Student::all();
-
-        // Load view untuk PDF dengan data siswa
-        $pdf = Pdf::loadView('admin-pages.students.pdf', compact('students'));
-
-        // Set orientasi landscape atau portrait sesuai kebutuhan
-        $pdf->setPaper('A4', 'landscape');
-
-        // Unduh file PDF
-        return $pdf->download('students.pdf');
     }
 }

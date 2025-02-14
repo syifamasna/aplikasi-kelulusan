@@ -17,6 +17,7 @@ class Student extends Model
         'jk',
         'nis',
         'nisn',
+        'ttl'
     ];
 
     public function studentClass()

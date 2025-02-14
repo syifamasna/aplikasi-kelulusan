@@ -82,114 +82,117 @@
                 <!-- Topbar -->
                 @include('admin-pages.components.topbar')
                 <!-- End of Topbar -->
-                
-                <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">Profil Pengguna</h1>
-                @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                @endif
 
-                @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                @endif
-                
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Profile Header -->
-                    <div class="profile-header d-flex align-items-center mb-4">
-                        <div class="profile-img mr-4">
-                            @if ($user->image)
-                            <img src="{{ asset('storage/' . $user->image) }}" alt="Foto Profil" class="img-fluid profile-img">
-                            @else
-                            <i class="fas fa-user-circle fa-5x"></i>
-                            @endif
-                        </div>
-                        <div class="profile-info">
-                            <h2>{{ $user->name }}</h2>
-                            <p class="role">Role: {{ ucfirst($user->role) }}</p>
-                        </div>
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">Profil Pengguna</h1>
+                    @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
+                    @endif
 
-                    <!-- Profile Details Card -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Detail Profil</h6>
-                            <!-- Edit Profile Button -->
-                            <a href="{{ route('admin.profile.edit', Auth::user()->id) }}" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> Edit Profil
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th>Nama</th>
-                                        <td>{{ $user->name }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Email</th>
-                                        <td>{{ $user->email }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Password</th>
-                                        <td>********</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Foto Profil</th>
-                                        <td>
-                                            @if ($user->image)
-                                            <img src="{{ asset('storage/' . $user->image) }}" alt="Foto Profil" class="img-fluid" width="100">
-                                            @else
-                                            <i class="fas fa-user-circle fa-3x"></i>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                </table>
+                    @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+
+                        <!-- Profile Header -->
+                        <div class="profile-header d-flex align-items-center mb-4">
+                            <div class="profile-img mr-4">
+                                @if ($user->image)
+                                <img src="{{ asset('storage/' . $user->image) }}" alt="Foto Profil" class="img-fluid profile-img">
+                                @else
+                                <i class="fas fa-user-circle fa-5x"></i>
+                                @endif
+                            </div>
+                            <div class="profile-info">
+                                <h2>{{ $user->name }}</h2>
+                                <p class="role">Role: {{ ucfirst($user->role) }}</p>
                             </div>
                         </div>
+
+                        <!-- Profile Details Card -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold text-primary">Detail Profil</h6>
+                                <!-- Edit Profile Button -->
+                                <a href="{{ route('admin.profile.edit', Auth::user()->id) }}" class="btn btn-warning">
+                                    <i class="fas fa-edit"></i> Edit Profil
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Nama</th>
+                                            <td>{{ $user->name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Email</th>
+                                            <td>{{ $user->email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Password</th>
+                                            <td>********</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Foto Profil</th>
+                                            <td>
+                                                @if ($user->image)
+                                                <img src="{{ asset('storage/' . $user->image) }}" alt="Foto Profil" class="img-fluid" width="100">
+                                                @else
+                                                <i class="fas fa-user-circle fa-3x"></i>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+                    <!-- /.container-fluid -->
 
                 </div>
-                <!-- /.container-fluid -->
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                @include('admin-pages.components.footer')
+                <!-- End of Footer -->
 
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            @include('admin-pages.components.footer')
-            <!-- End of Footer -->
+            <!-- End of Content Wrapper -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Page Wrapper -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+        <!-- Bootstrap core JavaScript-->
+        <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
 </body>
 

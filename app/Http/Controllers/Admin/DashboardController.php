@@ -29,16 +29,6 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
 
-        // Ambil 10 siswa dengan nilai rata-rata tertinggi pada tabel ppdb_grades
-        $topPPDBScores = Student::with(['ppdbGrade' => function ($query) {
-            $query->select('student_id', 'final_average');
-        }])
-            ->join('ppdb_grades', 'students.id', '=', 'ppdb_grades.student_id')
-            ->orderBy('ppdb_grades.final_average', 'desc')
-            ->select('students.id', 'students.nama', 'students.kelas', 'ppdb_grades.final_average')
-            ->limit(10)
-            ->get();
-
         // Kirim data ke view dashboard
         return view('admin-pages.dashboard.index', [
             'totalStudents' => $totalStudents,
@@ -46,7 +36,6 @@ class DashboardController extends Controller
             'totalSubjects' => $totalSubjects,
             'totalUsers' => $totalUsers,
             'topGraduationScores' => $topGraduationScores,
-            'topPPDBScores' => $topPPDBScores,
         ]);
     }
 }

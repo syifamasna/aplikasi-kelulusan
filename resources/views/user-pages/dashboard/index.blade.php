@@ -110,6 +110,19 @@
         table.dataTable tfoot th {
             background-color: #f8f9fc;
         }
+
+        @media (max-width: 991px) {
+            .table-responsive {
+                overflow-x: auto;
+                display: block;
+                width: 100%;
+            }
+
+            .table-responsive table {
+                min-width: 800px;
+                /* Pastikan tabel bisa di-scroll horizontal */
+            }
+        }
     </style>
 </head>
 
@@ -181,17 +194,17 @@
 
                     <div class="row">
                         <!-- Tabel Siswa dengan Nilai Ijazah Tertinggi -->
-                        <div class="col-md-6 mb-3 px-md-3">
+                        <div class="col-md-12 mb-3 px-md-3">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa dengan Nilai Ijazah Tertinggi</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa dengan Nilai Ujian Tertinggi</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive" style="overflow-x: hidden;">
                                         <table class="table table-bordered" id="dataTableIjazah" width="100%" cellspacing="0">
                                             <colgroup>
-                                                <col style="width: 20%;"> <!-- Lebar kolom No -->
-                                                <col style="width: 50%;"> <!-- Lebar kolom Nama Siswa -->
+                                                <col style="width: 10%;"> <!-- Lebar kolom No -->
+                                                <col style="width: 60%;"> <!-- Lebar kolom Nama Siswa -->
                                                 <col style="width: 30%;"> <!-- Lebar kolom Rata-rata -->
                                             </colgroup>
                                             <thead>
@@ -203,42 +216,6 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($topGraduationScores as $index => $student)
-                                                <tr>
-                                                    <td>{{ $index + 1 }}</td>
-                                                    <td>{{ $student->nama }}</td>
-                                                    <td>{{ number_format($student->final_average, 2) }}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tabel Siswa dengan Nilai PPDB Tertinggi -->
-                        <div class="col-md-6 mb-3 px-md-3">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa dengan Nilai PPDB Tertinggi</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive" style="overflow-x: hidden;">
-                                        <table class="table table-bordered" id="dataTablePPDB" width="100%" cellspacing="0">
-                                            <colgroup>
-                                                <col style="width: 20%;"> <!-- Lebar kolom No -->
-                                                <col style="width: 50%;"> <!-- Lebar kolom Nama Siswa -->
-                                                <col style="width: 30%;"> <!-- Lebar kolom Rata-rata -->
-                                            </colgroup>
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Nama Siswa</th>
-                                                    <th>Rata-rata</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($topPPDBScores as $index => $student)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $student->nama }}</td>

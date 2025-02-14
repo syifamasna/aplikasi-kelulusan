@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Detail Ijazah {{ $student->nama }} - Aplikasi Kelulusan</title>
+    <title>Nilai Hasil Ujian Sekolah {{ $student->nama }} - Aplikasi Kelulusan</title>
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
     <!-- Custom fonts for this template-->
@@ -36,34 +36,28 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800 text-center">Detail Ijazah - {{ $student->nama }}</h1>
+                    <h1 class="h3 mb-4 text-gray-800 text-center">Nilai Hasil Ujian Sekolah - {{ $student->nama }}</h1>
 
-                    <!-- Data Ijazah -->
+                    <!-- Data Nilai Hasil Ujian Sekolah -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3" style="background-color: #4e73df; color: white;">
-                            <h6 class="m-0 font-weight-bold text-center">Identitas Ijazah</h6>
+                            <h6 class="m-0 font-weight-bold text-center">Identitas Siswa</h6>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <!-- Baris pertama: Nama dan NIS -->
                                 <div class="col-md-6">
                                     <p><strong>Nama:</strong> {{ $student->nama }}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p><strong>NIS:</strong> {{ $student->nis }}</p>
+                                    <p><strong>Nomor Induk Siswa Nasional:</strong> {{ $student->nisn }}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <!-- Baris kedua: NISN dan Tahun Ajar -->
                                 <div class="col-md-6">
-                                    <p><strong>NISN:</strong> {{ $student->nisn }}</p>
+                                    <p><strong>Tempat dan Tanggal Lahir:</strong> {{ $student->ttl }}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    @if ($reportCard)
-                                    <p><strong>Tahun Ajar:</strong> {{ date('Y')-1 }}/{{ date('Y') }}</p>
-                                    @else
-                                    <p><strong>Tahun Ajar:</strong> Data tidak tersedia</p>
-                                    @endif
+                                    <p><strong>Nomor Pokok Sekolah Nasional:</strong> {{ $schoolProfile->npsn }}</p>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +198,7 @@
                     <div class="form-group text-center">
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
                         <a href="{{ route('admin.graduation_grades.export-pdf', ['studentId' => $student->id]) }}" class="btn btn-success">
-                            <i class="fas fa-print"></i> Cetak Ijazah</a>
+                            <i class="fas fa-print"></i> Cetak Nilai</a>
                     </div>
 
                 </div>

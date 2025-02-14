@@ -73,7 +73,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="nama" class="control-label">Nama</label>
-                                                <input type="text" name="nama" class="form-control" id="nama" required>
+                                                <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan Nama siswa..." required>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -103,13 +103,19 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="nis" class="control-label">NIS</label>
-                                                <input type="text" name="nis" class="form-control" id="nis" required>
+                                                <input type="text" name="nis" class="form-control" id="nis" placeholder="Masukkan NIS siswa..." required>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="nisn" class="control-label">NISN</label>
-                                                <input type="text" name="nisn" class="form-control" id="nisn" required>
+                                                <input type="text" name="nisn" class="form-control" id="nisn" placeholder="Masukkan NISN siswa..." required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="ttl" class="control-label">Tempat dan Tanggal Lahir</label>
+                                                <input type="text" name="ttl" class="form-control" id="ttl" placeholder="Contoh : Bogor, 1 Januari 2013">
                                             </div>
                                         </div>
                                     </div>

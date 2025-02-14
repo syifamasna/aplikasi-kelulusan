@@ -27,6 +27,26 @@
                 Menu
             </div>
 
+            <style>
+                .collapse-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    /* Jarak antara ikon dan teks */
+                    white-space: normal;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                }
+
+                .collapse-item i {
+                    min-width: 25px;
+                    /* Pastikan semua ikon memiliki lebar yang sama */
+                    text-align: center;
+                    flex-shrink: 0;
+                    /* Mencegah ikon mengecil jika teks panjang */
+                }
+            </style>
+
             <!-- Nav Item - Data Master -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -37,11 +57,24 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Data Master:</h6>
-                        <a class="collapse-item" href="{{ route('admin.students.index') }}"> <i class="fa fa-user fa-1x"></i> Data Siswa</a>
-                        <a class="collapse-item" href="{{ route('admin.teachers.index') }}"> <i class="fas fa-chalkboard-teacher fa-1x"></i> Data Guru</a>
-                        <a class="collapse-item" href="{{ route('admin.subjects.index') }}"> <i class="fas fa-book-reader fa-1x"></i> Mata Pelajaran</a>
-                        <a class="collapse-item" href="{{ route('admin.school_years.index') }}"> <i class="fas fa-calendar fa-1x"></i> Tahun Ajar</a>
-                        <a class="collapse-item" href="{{ route('admin.student_classes.index') }}"> <i class="fas fa-school fa-1x"></i> Kelas</a>
+                        <a class="collapse-item" href="{{ route('admin.students.index') }}">
+                            <i class="fa fa-user fa-1x"></i> Data Siswa
+                        </a>
+                        <a class="collapse-item" href="{{ route('admin.student_classes.index') }}">
+                            <i class="fas fa-chalkboard fa-1x"></i> Data Kelas
+                        </a>
+                        <a class="collapse-item" href="{{ route('admin.subjects.index') }}">
+                            <i class="fas fa-book-reader fa-1x"></i> Data Mata Pelajaran
+                        </a>
+                        <a class="collapse-item" href="{{ route('admin.school_years.index') }}">
+                            <i class="fas fa-calendar fa-1x"></i> Data Tahun Ajar
+                        </a>
+                        <a class="collapse-item" href="{{ route('admin.teachers.index') }}">
+                            <i class="fas fa-chalkboard-teacher fa-1x"></i> Data Guru
+                        </a>
+                        <a class="collapse-item" href="{{ route('admin.school_profiles.index') }}">
+                            <i class="fas fa-school fa-1x"></i> Data Sekolah
+                        </a>
                     </div>
                 </div>
             </li>
@@ -54,7 +87,7 @@
                 </a>
             </li>
 
-            <!-- Nav Item - Data Kelulusan -->
+            <!-- Nav Item - Data Kelulusan (TIDAK DIUBAH) -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
@@ -65,8 +98,17 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Data Kelulusan:</h6>
-                        <a class="collapse-item" href="{{ route('admin.graduation_grades.index') }}">Ijazah</a>
-                        <a class="collapse-item" href="{{ route('admin.ppdb_grades.index') }}">PPDB</a>
+                        <a class="collapse-item" href="{{ route('admin.graduation_grades.index') }}"
+                            style="display: flex; align-items: flex-start; gap: 8px; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
+                            <i class="fas fa-clipboard-check fa-1x" style="flex-shrink: 0; margin-top: 4px;"></i>
+                            Nilai Hasil Ujian Sekolah
+                        </a>
+
+                        <a class="collapse-item" href="{{ route('admin.ppdb_grades.index') }}"
+                            style="display: flex; align-items: flex-start; gap: 8px; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
+                            <i class="fas fa-file-invoice fa-1x" style="flex-shrink: 0; margin-top: 4px;"></i>
+                            Surat Keterangan Nilai Rapor
+                        </a>
                     </div>
                 </div>
             </li>

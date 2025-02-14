@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\TeacherController as AdminTeacherController;
 use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
 use App\Http\Controllers\Admin\StudentClassController as AdminStudentClassController;
 use App\Http\Controllers\Admin\SchoolYearController as AdminSchoolYearController;
+use App\Http\Controllers\Admin\SchoolProfileController as AdminSchoolProfileController;
 use App\Http\Controllers\Admin\ReportCardController as AdminReportCardController;
 use App\Http\Controllers\Admin\GraduationGradeController as AdminGraduationGradeController;
 use App\Http\Controllers\Admin\PPDBGradeController as AdminPPDBGradeController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\User\ProfileController as UserProfileController;
 use App\Http\Controllers\User\StudentController as UserStudentController;
 use App\Http\Controllers\User\SubjectController as UserSubjectController;
 use App\Http\Controllers\User\SchoolYearController as UserSchoolYearController;
+use App\Http\Controllers\User\SchoolProfileController as UserSchoolProfileController;
 use App\Http\Controllers\User\ReportCardController as UserReportCardController;
 use App\Http\Controllers\User\GraduationGradeController as UserGraduationGradeController;
 use App\Http\Controllers\User\PPDBGradeController as UserPPDBGradeController;
@@ -57,6 +59,13 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::get('profile', [AdminProfileController::class, 'index'])->name('admin.profile.index');
         Route::get('profile/edit', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
 
+        // Rute untuk update data sekolah
+        Route::get('school_profiles', [AdminSchoolProfileController::class, 'index'])->name('admin.school_profiles.index');
+        Route::get('school_profiles/{id}/edit', [AdminSchoolProfileController::class, 'edit'])->name('admin.school_profiles.edit');
+        Route::put('school_profiles/{id}', [AdminSchoolProfileController::class, 'update'])->name('admin.school_profiles.update');
+        Route::post('school_profiles/{id}/upload-logo', [AdminSchoolProfileController::class, 'uploadLogo'])->name('admin.school_profiles.uploadLogo');
+        Route::delete('school_profiles/{id}/delete-logo', [AdminSchoolProfileController::class, 'deleteLogo'])->name('admin.school_profiles.deleteLogo');
+
         // Rute untuk menampilkan daftar siswa berdasarkan kelas
         Route::get('report_cards', [AdminReportCardController::class, 'index'])->name('admin.report_cards.index');
         // Rute untuk menampilkan data rapor siswa tertentu
@@ -73,6 +82,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::put('/report_cards/{student_id}/{report_card_id}', [AdminReportCardController::class, 'update'])->name('admin.report_cards.update');
         // Rute untuk menghapus nilai rapor siswa
         Route::delete('report_cards/{id}', [AdminReportCardController::class, 'destroy'])->name('admin.report_cards.destroy');
+        // Rute untuk mengimpor nilai rapor
+        Route::post('report_cards/import', [AdminReportCardController::class, 'import'])->name('admin.report_cards.import');
         // Rute untuk mencetak nilai rapor siswa sesuai dengan ID rapor
         Route::get('report_cards/{student}/show/{reportCard}/export-pdf', [AdminReportCardController::class, 'exportPdf'])->name('admin.report_cards.export-pdf');
 
@@ -93,7 +104,6 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
         // Import & Export routes Admin
         Route::post('students/import', [AdminStudentController::class, 'import'])->name('admin.students.import');
-        Route::get('students/export-pdf', [AdminStudentController::class, 'exportPdf'])->name('admin.students.exportPdf');
     });
 });
 
@@ -119,6 +129,8 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
         Route::get('profile', [UserProfileController::class, 'index'])->name('user.profile.index');
         Route::get('profile/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit');
 
+        Route::get('school_profiles', [UserSchoolProfileController::class, 'index'])->name('user.school_profiles.index');
+
         // Rute untuk menampilkan daftar siswa berdasarkan kelas
         Route::get('report_cards', [UserReportCardController::class, 'index'])->name('user.report_cards.index');
         // Rute untuk menampilkan data rapor siswa tertentu
@@ -135,6 +147,8 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
         Route::put('/report_cards/{student_id}/{report_card_id}', [UserReportCardController::class, 'update'])->name('user.report_cards.update');
         // Rute untuk menghapus nilai rapor siswa
         Route::delete('report_cards/{id}', [UserReportCardController::class, 'destroy'])->name('user.report_cards.destroy');
+        // Rute untuk mengimpor nilai rapor
+        Route::post('report_cards/import', [UserReportCardController::class, 'import'])->name('user.report_cards.import');
         // Rute untuk mencetak nilai rapor siswa sesuai dengan ID rapor
         Route::get('report_cards/{student}/show/{reportCard}/export-pdf', [UserReportCardController::class, 'exportPdf'])->name('user.report_cards.export-pdf');
 
@@ -152,7 +166,6 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
 
         // Import & Export routes User
         Route::post('students/import', [UserStudentController::class, 'import'])->name('user.students.import');
-        Route::get('students/export', [UserStudentController::class, 'export'])->name('user.students.export');
     });
 });
 

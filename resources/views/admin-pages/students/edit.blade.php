@@ -72,7 +72,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="nama" class="control-label">Nama</label>
-                                                <input type="text" name="nama" value="{{ old('nama', $student->nama) }}" class="form-control" id="nama">
+                                                <input type="text" name="nama" value="{{ old('nama', $student->nama) }}" class="form-control" id="nama" placeholder="Masukkan nama siswa...">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -104,13 +104,19 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="nis" class="control-label">NIS</label>
-                                                <input type="text" name="nis" value="{{ old('nis', $student->nis) }}" class="form-control" id="nis">
+                                                <input type="text" name="nis" value="{{ old('nis', $student->nis) }}" class="form-control" id="nis" placeholder="Masukkan NIS siswa...">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="nisn" class="control-label">NISN</label>
-                                                <input type="text" name="nisn" value="{{ old('nisn', $student->nisn) }}" class="form-control" id="nisn">
+                                                <input type="text" name="nisn" value="{{ old('nisn', $student->nisn) }}" class="form-control" id="nisn" placeholder="Masukkan NISN siswa...">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="ttl" class="control-label">Tempat dan Tanggal Lahir</label>
+                                                <input type="text" name="ttl" value="{{ old('ttl', $student->ttl) }}" class="form-control" id="ttl" placeholder="Contoh : Bogor, 1 Januari 2013">
                                             </div>
                                         </div>
                                     </div>
