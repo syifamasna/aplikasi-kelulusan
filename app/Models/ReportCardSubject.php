@@ -11,15 +11,10 @@ class ReportCardSubject extends Model
 
     protected $table = 'report_card_subjects';
 
-    protected $casts = [
-        'details' => 'array', // Otomatis decode JSON menjadi array
-    ];
-
     protected $fillable = [
         'report_card_id',
         'subject_id',
         'nilai',
-        'details',
     ];
 
     public function reportCard()

@@ -63,25 +63,25 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4">
+                                <!-- Kolom Kiri -->
+                                <div class="col-md-9">
                                     <p><strong>Nama:</strong> {{ $student->nama }}</p>
+                                    <p><strong>NIS / NISN:</strong> {{ $student->nis }} / {{ $student->nisn }}</p>
+                                    <p><strong>Alamat Sekolah:</strong> {{ $schoolProfile->alamat }}</p>
                                 </div>
-                                <div class="col-md-4">
-                                    <p><strong>NIS:</strong> {{ $student->nis }}</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p><strong>NISN:</strong> {{ $student->nisn }}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
+                                <!-- Kolom Kanan -->
+                                <div class="col-md-3">
                                     <p><strong>Kelas:</strong> {{ $student->studentClass->kelas ?? 'Belum diatur' }}</p>
-                                </div>
-                                <div class="col-md-4">
                                     <p><strong>Semester:</strong> {{ $reportCard->semester }}</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p><strong>Tahun Ajar:</strong> {{ $reportCard->tahun_ajar }}</p>
+                                    <p><strong>Fase:</strong>
+                                        @if(in_array($reportCard->semester, ['Level 4 Semester 1', 'Level 4 Semester 2']))
+                                        B
+                                        @elseif(in_array($reportCard->semester, ['Level 5 Semester 1', 'Level 5 Semester 2', 'Level 6 Semester 1', 'Level 6 Semester 2']))
+                                        C
+                                        @else
+                                        Tidak Diketahui
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -103,136 +103,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($reportCard->subjects as $subject)
+                                        @foreach ($reportCard->subjects->sortBy('pivot.subject_id') as $subject)
                                         @php
-                                        // Cek apakah subject ini termasuk ID 12 hingga 15 dan nilai tidak diisi
-                                        $nilai = $reportCard->subjects->firstWhere('id', $subject->id)->pivot->nilai ?? null;
-                                        $is_optional_subject = in_array($subject->id, [12, 13, 14, 15]);
+                                        $nilai = $subject->pivot->nilai ?? 'Belum diisi';
                                         @endphp
-
-                                        @if (!$is_optional_subject || ($is_optional_subject && $nilai !== null)) <!-- Hanya tampilkan jika nilai ada -->
                                         <tr class="{{ $loop->odd ? 'odd-row' : 'even-row' }}">
                                             <td style="text-align: center; vertical-align: middle;">{{ $loop->iteration }}</td>
                                             <td>
-                                                <strong>{{ $subject->nama }}</strong><br>
-
-                                                <!-- Memastikan apakah subject memiliki detail -->
-                                                @php
-                                                $details = json_decode($subject->pivot->details, true);
-                                                @endphp
-
-                                                <!-- Garis Pemisah jika membutuhkan informasi tambahan -->
-                                                @if (in_array($subject->id, [12, 13, 14, 15]))
-                                                <hr style="border: 1px solid #ddd; margin-top: 5px; margin-bottom: 10px;">
-                                                @endif
-
-                                                <!-- Menampilkan informasi tambahan untuk mata pelajaran tertentu -->
-                                                @if ($subject->id == 12 || $subject->id == 13)
-                                                <p>Target Akhir Semester: {{ $details['target'] ?? 'Tidak ada target' }}</p>
-                                                <hr style="border: 1px solid #ddd; margin-top: 5px; margin-bottom: 10px;">
-                                                <p>Capaian Saat Ini: {{ $details['capaian'] ?? 'Tidak ada capaian' }}</p>
-                                                @elseif ($subject->id == 14)
-                                                <p>Target: {{ $details['target'] ?? 'Tidak ada target' }}</p>
-                                                @elseif ($subject->id == 15)
-                                                @php
-                                                $aplikasi = $details['aplikasi'] ?? null;
-                                                @endphp
-                                                <p>Aplikasi/Program: {{ $aplikasi ?? 'Tidak ada aplikasi/program' }}</p>
-                                                @endif
+                                                <strong>{{ $subject->nama }}</strong>
                                             </td>
-
-                                            <!-- Kolom Nilai -->
                                             <td style="text-align: center; vertical-align: middle;">
-                                                {{ $nilai ?? 'Belum diisi' }}
+                                                {{ $nilai }}
                                             </td>
                                         </tr>
-                                        @endif
                                         @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Prestasi -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3" style="background-color: #4e73df; color: white;">
-                            <h6 class="m-0 font-weight-bold text-center">Prestasi</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead style="background-color: #343a40; color: white; text-align: center;">
-                                        <tr>
-                                            <th style="text-align: center; vertical-align: middle; width: 10%;">No</th>
-                                            <th style="text-align: left; width: 30%;">Jenis Prestasi</th>
-                                            <th style="text-align: center; vertical-align: middle; width: 60%;">Keterangan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                        $prestasi = json_decode($reportCard->prestasi, true) ?? [];
-                                        $ket_prestasi = json_decode($reportCard->ket_prestasi, true) ?? [];
-                                        @endphp
-
-                                        @if (count($prestasi) > 0)
-                                        @foreach ($prestasi as $index => $prestasiItem)
-                                        <tr class="{{ $loop->odd ? 'odd-row' : 'even-row' }}">
-                                            <td style="text-align: center; vertical-align: middle;">{{ $index + 1 }}</td>
-                                            <td>{{ $prestasiItem ?? '-' }}</td>
-                                            <td style="text-align: center; vertical-align: middle;">{{ $ket_prestasi[$index] ?? '-' }}</td>
-                                        </tr>
-                                        @endforeach
-                                        @else
-                                        <!-- Jika tidak ada data prestasi, tampilkan baris kosong dengan nilai default -->
-                                        <tr>
-                                            <td style="text-align: center; vertical-align: middle;">1</td>
-                                            <td style="text-align: center; vertical-align: middle;">-</td>
-                                            <td style="text-align: center; vertical-align: middle;">-</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center; vertical-align: middle;">2</td>
-                                            <td style="text-align: center; vertical-align: middle;">-</td>
-                                            <td style="text-align: center; vertical-align: middle;">-</td>
-                                        </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Catatan Guru -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3" style="background-color: #4e73df; color: white;">
-                            <h6 class="m-0 font-weight-bold text-center">Catatan Guru</h6>
-                        </div>
-                        <div class="card-body">
-                            <p>{{ $reportCard->catatan ?? 'Tidak ada catatan dari guru.' }}</p>
-                        </div>
-                    </div>
-
-                    <!-- Ketidakhadiran -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3" style="background-color: #4e73df; color: white;">
-                            <h6 class="m-0 font-weight-bold text-center">Ketidakhadiran</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <tbody>
-                                        <tr>
-                                            <td style="text-align: left; width: 50%;">Sakit</td>
-                                            <td style="text-align: center; width: 50%;">{{ $reportCard->sakit ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: left;">Izin</td>
-                                            <td style="text-align: center;">{{ $reportCard->izin ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: left;">Tanpa Keterangan</td>
-                                            <td style="text-align: center;">{{ $reportCard->alfa ?? '-' }}</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

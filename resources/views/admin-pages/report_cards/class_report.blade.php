@@ -126,7 +126,7 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Daftar Rapor Kelas 6 SIT Aliya</h1><br>
 
-                    @if (session('success'))
+                    @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success') }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -135,7 +135,7 @@
                     </div>
                     @endif
 
-                    @if (session('error'))
+                    @if(session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         {{ session('error') }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -165,8 +165,12 @@
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa Kelas 6</h6>
+                            <!-- Tombol Import -->
+                            <div class="tombol">
+                                <button type="button" class="btn btn-success ml-2 mb-2" data-toggle="modal" data-target="#importReportCardModal">Import Excel</button>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -186,11 +190,10 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $student->nama }}</td>
-                                            <td>{{ $student->kelas }}</td>
+                                            <td>{{ $student->studentClass->kelas ?? '-' }}</td>
                                             <td>{{ $student->nis }}</td>
                                             <td>{{ $student->nisn }}</td>
                                             <td>
-                                                <!-- Tombol Input Nilai, Arahkan ke halaman student_report terlebih dahulu -->
                                                 <a href="{{ route('admin.report_cards.student_report', $student->id) }}" class="btn btn-warning btn-sm">Input Nilai</a>
                                             </td>
                                         </tr>
@@ -200,6 +203,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -215,6 +219,36 @@
 
     </div>
     <!-- End of Page Wrapper -->
+
+    <!-- Modal Impor -->
+    <div class="modal fade" id="importReportCardModal" tabindex="-1" role="dialog" aria-labelledby="importReportCardModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importReportCardModalLabel">Import Data Rapor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="importForm" action="{{ route('admin.report_cards.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="semester" value="6.1">
+                    <input type="hidden" name="tahun_ajar" value="2024/2025">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="file">Pilih File Excel:</label>
+                            <input type="file" name="file" id="file" class="form-control" accept=".xlsx,.xls" required>
+                            <small id="fileError" class="text-danger" style="display: none;">Harap pilih file sebelum mengimpor.</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success">Import</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -246,9 +280,31 @@
                 "info": true, // Tampilkan informasi pagination (misalnya, 1 to 10 of 100)
                 "autoWidth": false, // Nonaktifkan auto width
                 "responsive": true, // Membuat tabel responsif
-                "pageLength": 5, // Set default data per halaman (misalnya, 20 data per halaman)
+                "pageLength": 10, // Set default data per halaman (misalnya, 20 data per halaman)
                 "lengthMenu": [5, 10, 27, 50, 100], // Pilihan jumlah data per halaman
             });
+        });
+
+        document.getElementById("importForm").addEventListener("submit", function(event) {
+            let fileInput = document.getElementById("file");
+            let fileError = document.getElementById("fileError");
+
+            if (fileInput.files.length === 0) {
+                event.preventDefault(); // Hentikan pengiriman jika file tidak dipilih
+                fileError.style.display = "block"; // Tampilkan pesan error
+                return;
+            }
+
+            // Tambahkan konfirmasi sebelum submit
+            if (!confirm("Apakah Anda yakin ingin mengimpor data ini?")) {
+                event.preventDefault();
+                return;
+            }
+
+            // Tampilkan pesan sukses sebelum reload
+            setTimeout(() => {
+                alert("Impor berhasil! Halaman akan diperbarui.");
+            }, 500);
         });
     </script>
 

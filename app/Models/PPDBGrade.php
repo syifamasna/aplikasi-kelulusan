@@ -13,15 +13,14 @@ class PPDBGrade extends Model
 
     protected $fillable = [
         'student_id',
-        'report_card_ids', // Menyimpan referensi ID report card terkait
-        'average_subjects',
-        'final_average',
+        'report_card_ids',
+        'total_score',
+        'total_average',
     ];
 
     protected $casts = [
-        'report_card_ids' => 'array', // Untuk menyimpan array ID report cards
-        'average_subjects' => 'array', // Untuk menyimpan nilai rata-rata setiap mata pelajaran
-        'final_average' => 'decimal:2', // Nilai rata-rata akhir
+        'report_card_ids' => 'array',
+        'total_average' => 'decimal:2',
     ];
 
     public function student()

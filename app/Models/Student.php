@@ -17,6 +17,7 @@ class Student extends Model
         'jk',
         'nis',
         'nisn',
+        'ttl'
     ];
 
     public function studentClass()
@@ -41,6 +42,6 @@ class Student extends Model
 
     public function ppdbGrade()
     {
-        return $this->hasOne(GraduationGrade::class, 'student_id', 'id');
+        return $this->hasOne(PPDBGrade::class, 'student_id', 'id');
     }
 }

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Detail Ijazah PPDB {{ $student->nama }} - Aplikasi Kelulusan</title>
+    <title>Surat Keterangan Nilai Rapor {{ $student->nama }} - Aplikasi Kelulusan</title>
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
     <!-- Custom fonts for this template-->
@@ -36,34 +36,28 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800 text-center">Detail Ijazah PPDB - {{ $student->nama }}</h1>
+                    <h1 class="h3 mb-4 text-gray-800 text-center">Surat Keterangan Nilai Rapor - {{ $student->nama }}</h1>
 
                     <!-- Data Ijazah -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3" style="background-color: #4e73df; color: white;">
-                            <h6 class="m-0 font-weight-bold text-center">Identitas Ijazah</h6>
+                            <h6 class="m-0 font-weight-bold text-center">Identitas Siswa</h6>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <!-- Baris pertama: Nama dan NIS -->
                                 <div class="col-md-6">
                                     <p><strong>Nama:</strong> {{ $student->nama }}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p><strong>NIS:</strong> {{ $student->nis }}</p>
+                                    <p><strong>Nomor Induk Siswa Nasional:</strong> {{ $student->nisn }}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <!-- Baris kedua: NISN dan Tahun Ajar -->
                                 <div class="col-md-6">
-                                    <p><strong>NISN:</strong> {{ $student->nisn }}</p>
+                                    <p><strong>Tempat dan Tanggal Lahir:</strong> {{ $student->ttl }}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    @if ($reportCard)
-                                    <p><strong>Tahun Ajar:</strong> {{ date('Y')-1 }}/{{ date('Y') }}</p>
-                                    @else
-                                    <p><strong>Tahun Ajar:</strong> Data tidak tersedia</p>
-                                    @endif
+                                    <p><strong>Nomor Pokok Sekolah Nasional:</strong> {{ $schoolProfile->npsn }}</p>
                                 </div>
                             </div>
                         </div>
@@ -78,103 +72,68 @@
                                 <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr style="background-color: #343a40; color: white; text-align: center;">
-                                            <th>No</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Nilai</th>
+                                            <th rowspan="2" style="width: 5%;">No</th>
+                                            <th rowspan="2" style="width: 20%;">Muatan Pelajaran (Kurikulum Merdeka)
+                                            </th>
+                                            <th colspan="7">Nilai Rapor</th>
+                                        </tr>
+                                        <tr style="background-color: #343a40; color: white; text-align: center;">
+                                            <th>4.1</th>
+                                            <th>4.2</th>
+                                            <th>5.1</th>
+                                            <th>5.2</th>
+                                            <th>6.1</th>
+                                            <th>Jumlah</th>
+                                            <th>Rata-rata</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Kelompok A -->
-                                        <tr>
-                                            <td colspan="3" class="font-weight-bold">Kelompok A</td>
-                                        </tr>
                                         @php
-                                        $kelompokAIds = [1, 2, 3, 4, 5, 6];
-                                        $totalRataRata = 0; // Variabel untuk menghitung total rata-rata
-                                        $jumlahPelajaran = 0; // Variabel untuk menghitung jumlah mata pelajaran
-                                        $nomorUrut = 1; // Penghitung nomor urut untuk Kelompok A
+                                            $subjectIds = array_keys($averageSubjects);
+                                            $nomorUrut = 1;
+                                            $totalJumlahNilai = 0;
+                                            $jumlahSemester = 5; // Karena semester keys: 4.1,4.2,5.1,5.2,6.1
                                         @endphp
-                                        @foreach ($kelompokAIds as $subjectId)
-                                        @php
-                                        // Cek apakah subject ada
-                                        $subject = $subjects->firstWhere('id', $subjectId);
-                                        if (!$subject) {
-                                        continue; // Skip jika subject tidak ada
-                                        }
 
-                                        // Ambil nilai rata-rata dari $averageSubjects
-                                        $rataRata = $averageSubjects[$subjectId] ?? 0;
-                                        $totalRataRata += $rataRata; // Menambahkan nilai rata-rata untuk perhitungan rata-rata akhir
-                                        $jumlahPelajaran++; // Menambah jumlah mata pelajaran
-                                        @endphp
-                                        <tr>
-                                            <td class="text-center">{{ $nomorUrut++ }}</td> <!-- Nomor urut tetap berlanjut -->
-                                            <td><strong>{{ $subject->nama ?? 'Tidak ada data' }}</strong></td> <!-- Bold nama mata pelajaran -->
-                                            <td class="text-center">{{ number_format($rataRata, 2, ',', '.') }}</td> <!-- Format angka dengan dua desimal -->
-                                        </tr>
+                                        @foreach ($subjectIds as $subjectId)
+                                            @php
+                                                $subject = $subjects->firstWhere('id', $subjectId);
+                                                if (!$subject) {
+                                                    continue;
+                                                }
+
+                                                $nilaiSemesters = [
+                                                    '4.1' => $averageSubjects[$subjectId]['nilai']['4.1'] ?? 0,
+                                                    '4.2' => $averageSubjects[$subjectId]['nilai']['4.2'] ?? 0,
+                                                    '5.1' => $averageSubjects[$subjectId]['nilai']['5.1'] ?? 0,
+                                                    '5.2' => $averageSubjects[$subjectId]['nilai']['5.2'] ?? 0,
+                                                    '6.1' => $averageSubjects[$subjectId]['nilai']['6.1'] ?? 0,
+                                                ];
+
+                                                $jumlahNilai = array_sum($nilaiSemesters);
+                                                $rataRata = $jumlahNilai / $jumlahSemester;
+
+                                                $totalJumlahNilai += $jumlahNilai;
+                                            @endphp
+                                            <tr>
+                                                <td class="text-center">{{ $nomorUrut++ }}</td>
+                                                <td><strong>{{ $subject->nama ?? 'Tidak ada data' }}</strong></td>
+                                                @foreach ($nilaiSemesters as $nilai)
+                                                    <td class="text-center">
+                                                        {{ fmod($nilai, 1) == 0 ? number_format($nilai, 0, ',', '.') : number_format($nilai, 2, ',', '.') }}
+                                                    </td>
+                                                @endforeach
+                                                <td class="text-center font-weight-bold">
+                                                    {{ number_format($jumlahNilai, 0, ',', '.') }}</td>
+                                                <td class="text-center font-weight-bold">
+                                                    {{ number_format($rataRata, 2, ',', '.') }}</td>
+                                            </tr>
                                         @endforeach
 
-                                        <!-- Kelompok B -->
-                                        <tr>
-                                            <td colspan="3" class="font-weight-bold">Kelompok B</td>
-                                        </tr>
-                                        @php
-                                        $kelompokBIds = [8, 7]; // Mengubah urutan kelompok B
-                                        $muatanLokalIds = [10, 9, 11]; // Mengubah urutan Muatan Lokal
-                                        @endphp
-                                        @foreach ($kelompokBIds as $index => $subjectId)
-                                        @php
-                                        $subject = $subjects->firstWhere('id', $subjectId);
-                                        if (!$subject) {
-                                        continue; // Skip jika subject tidak ada
-                                        }
-
-                                        // Ambil nilai rata-rata dari $averageSubjects
-                                        $rataRata = $averageSubjects[$subjectId] ?? 0;
-                                        $totalRataRata += $rataRata; // Menambahkan nilai rata-rata untuk perhitungan rata-rata akhir
-                                        $jumlahPelajaran++; // Menambah jumlah mata pelajaran
-                                        @endphp
-                                        <tr>
-                                            <td class="text-center">{{ $index + 1 }}</td> <!-- Nomor urut tetap berlanjut -->
-                                            <td><strong>{{ $subject->nama ?? 'Tidak ada data' }}</strong></td> <!-- Bold nama mata pelajaran -->
-                                            <td class="text-center">{{ number_format($rataRata, 2, ',', '.') }}</td> <!-- Format angka dengan dua desimal -->
-                                        </tr>
-                                        @endforeach
-
-                                        <!-- Baris Muatan Lokal -->
-                                        <tr>
-                                            <td class="text-center">3</td>
-                                            <td><strong>Muatan Lokal</strong></td> <!-- Bold Muatan Lokal -->
-                                            <td></td>
-                                        </tr>
-                                        @foreach ($muatanLokalIds as $index => $subjectId)
-                                        @php
-                                        $subject = $subjects->firstWhere('id', $subjectId);
-                                        if (!$subject) {
-                                        continue; // Skip jika subject tidak ada
-                                        }
-
-                                        // Ambil nilai rata-rata dari $averageSubjects
-                                        $rataRata = $averageSubjects[$subjectId] ?? 0;
-                                        $totalRataRata += $rataRata; // Menambahkan nilai rata-rata untuk perhitungan rata-rata akhir
-                                        $jumlahPelajaran++; // Menambah jumlah mata pelajaran
-                                        @endphp
-                                        <tr>
-                                            <td class="text-center"></td>
-                                            <td><strong>{{ $subject->nama ?? 'Tidak ada data' }}</strong></td> <!-- Bold nama mata pelajaran -->
-                                            <td class="text-center">{{ number_format($rataRata, 2, ',', '.') }}</td> <!-- Format angka dengan dua desimal -->
-                                        </tr>
-                                        @endforeach
-
-                                        <!-- Rata-rata Akhir -->
-                                        <tr>
-                                            <td colspan="2" class="text-center font-weight-bold">Rata-rata</td>
-                                            <td class="text-center font-weight-bold">
-                                                @php
-                                                $rataRataAkhir = $jumlahPelajaran > 0 ? round($totalRataRata / $jumlahPelajaran, 2) : 0;
-                                                @endphp
-                                                {{ number_format($rataRataAkhir, 2, ',', '.') }} <!-- Format angka dengan dua desimal -->
-                                            </td>
+                                        <tr style="background-color: #f8f9fc; font-weight: bold; text-align: center;">
+                                            <td colspan="7">Total</td>
+                                            <td>{{ number_format($totalJumlahNilai, 0, ',', '.') }}</td>
+                                            <td>{{ number_format($ppdbGrade->total_average, 2, ',', '.') }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -204,7 +163,7 @@
                     <div class="form-group text-center">
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
                         <a href="{{ route('admin.ppdb_grades.export-pdf', ['studentId' => $student->id]) }}" class="btn btn-success">
-                            <i class="fas fa-print"></i> Cetak Ijazah</a>
+                            <i class="fas fa-print"></i> Cetak Nilai</a>
                     </div>
 
                 </div>

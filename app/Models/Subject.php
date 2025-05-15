@@ -17,6 +17,6 @@ class Subject extends Model
     public function reportCards()
     {
         return $this->belongsToMany(ReportCard::class, 'report_card_subjects')
-            ->withPivot('nilai', 'details'); // Kolom pada pivot harus sesuai
+            ->withPivot('nilai'); // Hanya nilai yang digunakan di pivot
     }
 }

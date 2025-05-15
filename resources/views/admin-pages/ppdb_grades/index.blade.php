@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Ijazah PPDB - Aplikasi Kelulusan</title>
+    <title>Surat Keterangan Nilai Rapor - Aplikasi Kelulusan</title>
 
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
@@ -124,7 +124,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Daftar Ijazah PPDB Kelas 6 SIT Aliya</h1><br>
+                    <h1 class="h3 mb-2 text-gray-800">Daftar Surat Keterangan Nilai Rapor Kelas 6 SIT Aliya</h1><br>
 
                     @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -191,7 +191,7 @@
                                             <td>{{ $student->nisn }}</td>
                                             <td>
                                                 <!-- Tombol Input Nilai, Arahkan ke halaman student_report terlebih dahulu -->
-                                                <a href="{{ route('admin.ppdb_grades.show', ['studentId' => $student->id]) }}" class="btn btn-warning btn-sm">Lihat Ijazah</a>
+                                                <a href="{{ route('admin.ppdb_grades.show', ['studentId' => $student->id]) }}" class="btn btn-warning btn-sm">Lihat Nilai</a>
                                             </td>
                                         </tr>
                                         @endforeach

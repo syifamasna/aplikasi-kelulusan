@@ -17,39 +17,35 @@ class DashboardController extends Controller
 
     public function index()
     {
-        // Ambil data user yang sedang login
-        $user = Auth::user(); // Mendapatkan pengguna yang sedang login
-
-        // Ambil kelas dari user yang login (dengan 'class_id' dari tabel 'users')
+        $user = Auth::user(); // User login
         $userClass = $user->class_id;
 
-        // Ambil jumlah siswa berdasarkan kelas pengguna yang login
+        // Jumlah siswa dan mata pelajaran
         $totalStudents = Student::where('kelas', $userClass)->count();
         $totalSubjects = Subject::count();
 
-        // Ambil 10 siswa dengan nilai rata-rata tertinggi pada tabel graduation_grades berdasarkan kelas user
+        // Top 10 nilai kelulusan
         $topGraduationScores = Student::with(['graduationGrade' => function ($query) {
             $query->select('student_id', 'final_average');
         }])
             ->join('graduation_grades', 'students.id', '=', 'graduation_grades.student_id')
-            ->where('students.kelas', $userClass) // Filter berdasarkan kelas user
+            ->where('students.kelas', $userClass)
             ->orderBy('graduation_grades.final_average', 'desc')
             ->select('students.id', 'students.nama', 'students.kelas', 'graduation_grades.final_average')
             ->limit(10)
             ->get();
 
-        // Ambil 10 siswa dengan nilai rata-rata tertinggi pada tabel ppdb_grades berdasarkan kelas user
+        // Top 10 nilai PPDB
         $topPPDBScores = Student::with(['ppdbGrade' => function ($query) {
-            $query->select('student_id', 'final_average');
+            $query->select('student_id', 'total_average');
         }])
             ->join('ppdb_grades', 'students.id', '=', 'ppdb_grades.student_id')
-            ->where('students.kelas', $userClass) // Filter berdasarkan kelas user
-            ->orderBy('ppdb_grades.final_average', 'desc')
-            ->select('students.id', 'students.nama', 'students.kelas', 'ppdb_grades.final_average')
+            ->where('students.kelas', $userClass)
+            ->orderBy('ppdb_grades.total_average', 'desc')
+            ->select('students.id', 'students.nama', 'students.kelas', 'ppdb_grades.total_average')
             ->limit(10)
             ->get();
 
-        // Kirim data ke view dashboard
         return view('user-pages.dashboard.index', [
             'totalStudents' => $totalStudents,
             'totalSubjects' => $totalSubjects,

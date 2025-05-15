@@ -75,8 +75,11 @@
             background-color: #F1F4F9;
         }
 
-        /* Membuat kolom Nama left-aligned */
         table.dataTable tbody td:nth-child(2) {
+            text-align: left;
+        }
+
+        table.dataTable tbody td:nth-child(3) {
             text-align: left;
         }
 

@@ -13,11 +13,13 @@
     <link rel="icon" type="image/png" href="{{ asset('img/logo_aliya.png') }}">
 
     <!-- Custom fonts for this template-->
-    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{ asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     <style>
         .card.border-left-primary:hover,
@@ -110,6 +112,19 @@
         table.dataTable tfoot th {
             background-color: #f8f9fc;
         }
+
+        @media (max-width: 991px) {
+            .table-responsive {
+                overflow-x: auto;
+                display: block;
+                width: 100%;
+            }
+
+            .table-responsive table {
+                min-width: 800px;
+                /* Pastikan tabel bisa di-scroll horizontal */
+            }
+        }
     </style>
 </head>
 
@@ -128,9 +143,11 @@
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     </div>
 
-                    <div class="alert alert-info alert-dismissible fade show" role="alert" style="background-color: #e9f7fe; border-radius: 8px; border: 1px solid #bee3f8;">
+                    <div class="alert alert-info alert-dismissible fade show" role="alert"
+                        style="background-color: #e9f7fe; border-radius: 8px; border: 1px solid #bee3f8;">
                         <strong>Selamat Datang, {{ Auth::user()->name }}!</strong>
-                        Selamat datang di dashboard Aplikasi Kelulusan! Anda dapat mulai mengelola data dengan mudah di sini.
+                        Selamat datang di dashboard Aplikasi Kelulusan! Anda dapat mulai mengelola data dengan mudah di
+                        sini.
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -147,7 +164,8 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                     Total Siswa</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalStudents }}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalStudents }}
+                                                </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-user fa-2x icon-card"></i>
@@ -167,7 +185,8 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                     Total Mata Pelajaran</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalSubjects }}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalSubjects }}
+                                                </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-book-open fa-2x icon-card"></i>
@@ -184,14 +203,16 @@
                         <div class="col-md-6 mb-3 px-md-3">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa dengan Nilai Ijazah Tertinggi</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa dengan Nilai Ujian
+                                        Tertinggi</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive" style="overflow-x: hidden;">
-                                        <table class="table table-bordered" id="dataTableIjazah" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" id="dataTableIjazah" width="100%"
+                                            cellspacing="0">
                                             <colgroup>
-                                                <col style="width: 20%;"> <!-- Lebar kolom No -->
-                                                <col style="width: 50%;"> <!-- Lebar kolom Nama Siswa -->
+                                                <col style="width: 10%;"> <!-- Lebar kolom No -->
+                                                <col style="width: 60%;"> <!-- Lebar kolom Nama Siswa -->
                                                 <col style="width: 30%;"> <!-- Lebar kolom Rata-rata -->
                                             </colgroup>
                                             <thead>
@@ -203,11 +224,11 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($topGraduationScores as $index => $student)
-                                                <tr>
-                                                    <td>{{ $index + 1 }}</td>
-                                                    <td>{{ $student->nama }}</td>
-                                                    <td>{{ number_format($student->final_average, 2) }}</td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td>{{ $student->nama }}</td>
+                                                        <td>{{ number_format($student->final_average, 2) }}</td>
+                                                    </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -215,35 +236,36 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Tabel Siswa dengan Nilai PPDB Tertinggi -->
-                        <div class="col-md-6 mb-3 px-md-3">
+                        <div class="col-6 mb-3 px-md-3">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa dengan Nilai PPDB Tertinggi</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa dengan Nilai
+                                        Rapor Tertinggi</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive" style="overflow-x: hidden;">
-                                        <table class="table table-bordered" id="dataTablePPDB" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" id="dataTablePPDB" width="100%"
+                                            cellspacing="0">
                                             <colgroup>
-                                                <col style="width: 20%;"> <!-- Lebar kolom No -->
-                                                <col style="width: 50%;"> <!-- Lebar kolom Nama Siswa -->
-                                                <col style="width: 30%;"> <!-- Lebar kolom Rata-rata -->
+                                                <col style="width: 10%;">
+                                                <col style="width: 60%;">
+                                                <col style="width: 30%;">
                                             </colgroup>
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nama Siswa</th>
-                                                    <th>Rata-rata</th>
+                                                    <th>Total Rata-rata</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($topPPDBScores as $index => $student)
-                                                <tr>
-                                                    <td>{{ $index + 1 }}</td>
-                                                    <td>{{ $student->nama }}</td>
-                                                    <td>{{ number_format($student->final_average, 2) }}</td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td>{{ $student->nama }}</td>
+                                                        <td>{{ number_format($student->total_average, 2) }}</td>
+                                                    </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -279,14 +301,14 @@
             $('#dataTableIjazah').DataTable({
                 searching: false, // Matikan pencarian otomatis karena sudah ada filter manual
                 paging: false, // Nonaktifkan pagination otomatis
-                ordering: true, // Tetap aktifkan fitur sorting
+                ordering: false, // Tetap aktifkan fitur sorting
                 info: false,
             });
 
             $('#dataTablePPDB').DataTable({
                 searching: false,
                 paging: false,
-                ordering: true,
+                ordering: false,
                 info: false
             });
         });

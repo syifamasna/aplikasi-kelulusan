@@ -8,6 +8,7 @@ use App\Models\GraduationGrade;
 use App\Models\ReportCard;
 use App\Models\Subject;
 use App\Models\StudentClass;
+use App\Models\SchoolProfile;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
@@ -111,6 +112,8 @@ class GraduationGradeController extends Controller
             'final_average' => $finalAverage,
         ]);
 
+        $schoolProfile = SchoolProfile::first();
+
         // Tampilkan tampilan graduation_grade
         return view('admin-pages.graduation_grades.show', compact(
             'graduationGrade',
@@ -119,7 +122,8 @@ class GraduationGradeController extends Controller
             'student',
             'reportCards',  // Ini yang mendeklarasikan reportCards
             'reportCard',   // Pastikan reportCard ditambahkan ke compact
-            'subjects'
+            'subjects',
+            'schoolProfile'
         ));
     }
 
@@ -182,6 +186,8 @@ class GraduationGradeController extends Controller
             'final_average' => $finalAverage,
         ]);
 
+        $schoolProfile = SchoolProfile::first(); // Jika hanya ada satu data, gunakan first()
+
         // Render view ke PDF
         $pdf = PDF::loadView('admin-pages.graduation_grades.show-pdf', compact(
             'student',
@@ -190,10 +196,11 @@ class GraduationGradeController extends Controller
             'finalAverage',  // Pastikan $finalAverage digunakan
             'reportCards',
             'reportCard',   // Pastikan reportCard juga ditambahkan ke compact
-            'subjects'
+            'subjects',
+            'schoolProfile'
         ));
 
         // Return PDF
-        return $pdf->stream('Ijazah_' . $student->nama . '.pdf');
+        return $pdf->stream('Daftar Nilai Hasil Ujian Sekolah' . ' - ' . $student->nama . '.pdf');
     }
 }

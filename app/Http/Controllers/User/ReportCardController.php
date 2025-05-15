@@ -7,6 +7,8 @@ use App\Models\Student;
 use App\Models\SchoolYear;
 use App\Models\ReportCard;
 use App\Models\Subject;
+use App\Models\StudentClass;
+use App\Models\SchoolProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -61,22 +63,10 @@ class ReportCardController extends Controller
     {
         // Validasi data yang diterima
         $validatedData = $request->validate([
-            'semester' => 'required|in:Level 1 Semester 1,Level 1 Semester 2,Level 2 Semester 1,Level 2 Semester 2,Level 3 Semester 1,Level 3 Semester 2,Level 4 Semester 1,Level 4 Semester 2,Level 5 Semester 1,Level 5 Semester 2,Level 6 Semester 1,Level 6 Semester 2',
+            'semester' => 'required|in:Level 4 Semester 1,Level 4 Semester 2,Level 5 Semester 1,Level 5 Semester 2,Level 6 Semester 1,Level 6 Semester 2',
             'tahun_ajar' => 'required|string|max:20',
-            'mata_pelajaran' => 'required|array',
-            'mata_pelajaran.*' => 'nullable|numeric|min:0|max:100',
-            'sakit' => 'nullable|numeric|min:0',
-            'izin' => 'nullable|numeric|min:0',
-            'alfa' => 'nullable|numeric|min:0',
-            'prestasi' => 'nullable|array',
-            'ket_prestasi' => 'nullable|array',
-            'catatan' => 'nullable|string',
-            'target' => 'nullable|array',
-            'target.*' => 'nullable|string|max:255',
-            'capaian' => 'nullable|array',
-            'capaian.*' => 'nullable|string|max:255',
-            'aplikasi' => 'nullable|array',
-            'aplikasi.*' => 'nullable|string|max:255',
+            'mata_pelajaran' => 'required|array', // memastikan mata pelajaran harus ada
+            'mata_pelajaran.*' => 'required|numeric|min:0|max:100' // memastikan nilai tidak null dan di antara 0-100
         ]);
 
         DB::beginTransaction();
@@ -90,31 +80,15 @@ class ReportCardController extends Controller
                 'student_id' => $studentId,
                 'semester' => $validatedData['semester'],
                 'tahun_ajar' => $validatedData['tahun_ajar'],
-                'sakit' => $validatedData['sakit'],
-                'izin' => $validatedData['izin'],
-                'alfa' => $validatedData['alfa'],
-                'prestasi' => !empty($validatedData['prestasi']) ? json_encode(array_filter($validatedData['prestasi'])) : null,
-                'ket_prestasi' => !empty($validatedData['ket_prestasi']) ? json_encode(array_filter($validatedData['ket_prestasi'])) : null,
-                'catatan' => $validatedData['catatan']
             ]);
 
             // Simpan nilai mata pelajaran ke tabel pivot
             if (!empty($validatedData['mata_pelajaran'])) {
                 foreach ($validatedData['mata_pelajaran'] as $subjectId => $nilai) {
-                    if (!is_null($nilai)) {
-                        // Siapkan data 'details' dalam bentuk array untuk setiap mata pelajaran
-                        $details = [
-                            'target' => $validatedData['target'][$subjectId] ?? null,
-                            'capaian' => $validatedData['capaian'][$subjectId] ?? null,
-                            'aplikasi' => $validatedData['aplikasi'][$subjectId] ?? null,
-                        ];
-
-                        // Simpan ke pivot tabel dengan nilai dan details (JSON)
-                        $reportCard->subjects()->attach($subjectId, [
-                            'nilai' => $nilai,
-                            'details' => json_encode($details), // Simpan sebagai JSON
-                        ]);
-                    }
+                    // Simpan hanya nilai tanpa 'details'
+                    $reportCard->subjects()->attach($subjectId, [
+                        'nilai' => $nilai
+                    ]);
                 }
             }
 
@@ -141,8 +115,10 @@ class ReportCardController extends Controller
         // Ambil semua mata pelajaran yang terkait dengan raport ini
         $subjects = $reportCard->subjects; // Tidak perlu `get()` lagi karena sudah otomatis terambil
 
+        $schoolProfile = SchoolProfile::first();
+
         // Kirim data ke view
-        return view('user-pages.report_cards.show', compact('student', 'reportCard', 'subjects'));
+        return view('user-pages.report_cards.show', compact('student', 'reportCard', 'subjects', 'schoolProfile'));
     }
 
     public function edit($id)
@@ -157,16 +133,12 @@ class ReportCardController extends Controller
         $nilai = []; // Inisialisasi array untuk menyimpan nilai
 
         foreach ($reportCard->subjects as $subject) {
-            // Mengambil data details (json) dari pivot
-            $details = json_decode($subject->pivot->details, true); // Mengambil sebagai array
-
             // Memasukkan nilai untuk mata pelajaran
             $nilai[$subject->id] = $subject->pivot->nilai; // Ambil nilai dari pivot
 
+            // Tidak ada lagi penggunaan details
             $pivotData[$subject->id] = [
-                'target' => $details['target'] ?? '',
-                'capaian' => $details['capaian'] ?? '',
-                'aplikasi' => $details['aplikasi'] ?? '',
+                'nilai' => $subject->pivot->nilai, // Cukup ambil nilai
             ];
         }
 
@@ -184,22 +156,10 @@ class ReportCardController extends Controller
     {
         // Validasi data yang diterima
         $validatedData = $request->validate([
-            'semester' => 'required|in:Level 1 Semester 1,Level 1 Semester 2,Level 2 Semester 1,Level 2 Semester 2,Level 3 Semester 1,Level 3 Semester 2,Level 4 Semester 1,Level 4 Semester 2,Level 5 Semester 1,Level 5 Semester 2,Level 6 Semester 1,Level 6 Semester 2',
+            'semester' => 'required|in:Level 4 Semester 1,Level 4 Semester 2,Level 5 Semester 1,Level 5 Semester 2,Level 6 Semester 1,Level 6 Semester 2',
             'tahun_ajar' => 'required|string|max:20',
             'mata_pelajaran' => 'required|array',
-            'mata_pelajaran.*' => 'nullable|numeric|min:0|max:100',
-            'sakit' => 'nullable|numeric|min:0',
-            'izin' => 'nullable|numeric|min:0',
-            'alfa' => 'nullable|numeric|min:0',
-            'prestasi' => 'nullable|array',
-            'ket_prestasi' => 'nullable|array',
-            'catatan' => 'nullable|string',
-            'target' => 'nullable|array',
-            'target.*' => 'nullable|string|max:255',
-            'capaian' => 'nullable|array',
-            'capaian.*' => 'nullable|string|max:255',
-            'aplikasi' => 'nullable|array',
-            'aplikasi.*' => 'nullable|string|max:255',
+            'mata_pelajaran.*' => 'nullable|numeric|min:0|max:100'
         ]);
 
         DB::beginTransaction();
@@ -212,28 +172,20 @@ class ReportCardController extends Controller
             $reportCard->update([
                 'semester' => $validatedData['semester'],
                 'tahun_ajar' => $validatedData['tahun_ajar'],
-                'sakit' => $validatedData['sakit'],
-                'izin' => $validatedData['izin'],
-                'alfa' => $validatedData['alfa'],
-                'prestasi' => !empty($validatedData['prestasi']) ? json_encode(array_filter($validatedData['prestasi'])) : null,
-                'ket_prestasi' => !empty($validatedData['ket_prestasi']) ? json_encode(array_filter($validatedData['ket_prestasi'])) : null,
-                'catatan' => $validatedData['catatan'],
             ]);
 
+            // Jika ada data mata pelajaran
             if (!empty($validatedData['mata_pelajaran'])) {
                 $syncData = [];
                 foreach ($validatedData['mata_pelajaran'] as $subjectId => $nilai) {
                     if (!is_null($nilai)) {
+                        // Simpan nilai ke pivot tanpa 'details'
                         $syncData[$subjectId] = [
-                            'nilai' => $nilai,
-                            'details' => json_encode(array_filter([
-                                'target' => $validatedData['target'][$subjectId] ?? null,
-                                'capaian' => $validatedData['capaian'][$subjectId] ?? null,
-                                'aplikasi' => $validatedData['aplikasi'][$subjectId] ?? null,
-                            ])),
+                            'nilai' => $nilai,  // Hanya nilai yang disimpan
                         ];
                     }
                 }
+                // Sinkronkan nilai pada pivot
                 $reportCard->subjects()->sync($syncData);
             }
 
@@ -269,28 +221,27 @@ class ReportCardController extends Controller
 
     public function exportPdf($student_id, $reportCard_id)
     {
-        // Ambil data siswa berdasarkan student_id
         $student = Student::find($student_id);
 
-        // Pastikan data siswa ditemukan
         if (!$student) {
             abort(404, 'Siswa tidak ditemukan.');
         }
 
-        // Ambil data rapor berdasarkan student_id dan reportCard_id
+        $schoolProfile = SchoolProfile::first();
+        $studentClass = StudentClass::where('kelas', $student->kelas)->first();
+
         $reportCard = ReportCard::where('student_id', $student_id)
             ->where('id', $reportCard_id)
             ->first();
 
-        // Pastikan data rapor ditemukan
         if (!$reportCard) {
             abort(404, 'Rapor tidak ditemukan.');
         }
 
-        // Logic untuk generate PDF
-        $pdf = Pdf::loadView('user-pages.report_cards.show-pdf', compact('student', 'reportCard'));
+        $pdf = Pdf::loadView('user-pages.report_cards.show-pdf', compact(
+            'student', 'reportCard', 'schoolProfile', 'studentClass'
+        ));
 
-        // Render PDF untuk preview di browser
         return $pdf->stream('Detail Rapor ' . $student->nama . ' - ' . $reportCard->semester . '.pdf');
     }
 }

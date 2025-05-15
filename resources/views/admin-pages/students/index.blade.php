@@ -249,7 +249,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('user.students.import') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.students.import') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
