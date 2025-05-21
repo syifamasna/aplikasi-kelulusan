@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2025 at 06:32 PM
+-- Generation Time: May 21, 2025 at 06:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -84,10 +84,7 @@ CREATE TABLE `graduation_grades` (
 INSERT INTO `graduation_grades` (`id`, `student_id`, `report_card_ids`, `average_subjects`, `final_average`, `created_at`, `updated_at`) VALUES
 (2, 134, '\"[37,45,46,79]\"', '\"{\\\"1\\\":85.5,\\\"3\\\":89.75,\\\"4\\\":90.25,\\\"5\\\":90.75,\\\"6\\\":88.5,\\\"7\\\":85.75,\\\"8\\\":86.25,\\\"9\\\":86.25,\\\"10\\\":85,\\\"11\\\":85.25}\"', 87.33, '2025-01-04 09:44:45', '2025-01-29 20:07:07'),
 (3, 135, '\"[55,56,57,63]\"', '\"{\\\"1\\\":86.5,\\\"3\\\":87.5,\\\"4\\\":88,\\\"5\\\":86.75,\\\"6\\\":87.75,\\\"7\\\":87.5,\\\"8\\\":87.75,\\\"9\\\":91.75,\\\"10\\\":91.75,\\\"11\\\":91.5}\"', 88.68, '2025-01-05 19:05:09', '2025-01-22 22:04:10'),
-(4, 107, '\"[24,39,42,43]\"', '\"{\\\"1\\\":43.5,\\\"3\\\":48.75,\\\"4\\\":45.5,\\\"5\\\":48,\\\"6\\\":45.5,\\\"7\\\":43.5,\\\"8\\\":43.5,\\\"9\\\":45.25,\\\"10\\\":43.75,\\\"11\\\":45.75}\"', 45.30, '2025-01-05 19:30:07', '2025-01-06 20:27:31'),
-(10, 136, '\"[47,48,49,50]\"', '\"{\\\"1\\\":84.75,\\\"3\\\":86,\\\"4\\\":86.5,\\\"5\\\":86.75,\\\"6\\\":90.5,\\\"7\\\":85.75,\\\"8\\\":85.25,\\\"9\\\":87.75,\\\"10\\\":86.5,\\\"11\\\":86.75}\"', 86.65, '2025-01-06 23:59:14', '2025-01-06 23:59:14'),
-(12, 197, '\"[67,68,69,70]\"', '\"{\\\"1\\\":95.25,\\\"3\\\":92.5,\\\"4\\\":89,\\\"5\\\":89.75,\\\"6\\\":91.75,\\\"7\\\":89,\\\"8\\\":89.5,\\\"9\\\":94.75,\\\"10\\\":91,\\\"11\\\":93.75}\"', 91.63, '2025-01-23 20:03:48', '2025-01-23 20:03:48'),
-(13, 182, '\"[73,74,75,76]\"', '\"{\\\"1\\\":93.75,\\\"3\\\":94.75,\\\"4\\\":94,\\\"5\\\":94.25,\\\"6\\\":91.75,\\\"7\\\":90.5,\\\"8\\\":93.25,\\\"9\\\":94,\\\"10\\\":93.5,\\\"11\\\":94.5}\"', 93.43, '2025-01-29 13:38:05', '2025-01-29 13:38:32');
+(12, 197, '\"[67,68,69,70]\"', '\"{\\\"1\\\":95.25,\\\"3\\\":92.5,\\\"4\\\":89,\\\"5\\\":89.75,\\\"6\\\":91.75,\\\"7\\\":89,\\\"8\\\":89.5,\\\"9\\\":94.75,\\\"10\\\":91,\\\"11\\\":93.75}\"', 91.63, '2025-01-23 20:03:48', '2025-01-23 20:03:48');
 
 -- --------------------------------------------------------
 
@@ -274,8 +271,9 @@ CREATE TABLE `ppdb_grades` (
 --
 
 INSERT INTO `ppdb_grades` (`id`, `student_id`, `report_card_ids`, `total_score`, `total_average`, `created_at`, `updated_at`) VALUES
-(8, 182, '\"[71,72,73,74,75]\"', 2289, 457.80, '2025-05-15 07:12:38', '2025-05-15 08:25:47'),
-(9, 134, '[37,45,46,77,78]', 2217, 443.40, '2025-05-15 08:31:54', '2025-05-15 08:35:48');
+(9, 134, '\"[37,45,46,77,78]\"', 2217, 443.40, '2025-05-15 08:31:54', '2025-05-21 08:23:35'),
+(10, 197, '[66,67,68,69,82]', 2233, 446.60, '2025-05-18 23:46:23', '2025-05-18 23:46:23'),
+(12, 182, '[71,72,73,74,75]', 2289, 457.80, '2025-05-21 09:20:05', '2025-05-21 09:20:05');
 
 -- --------------------------------------------------------
 
@@ -306,24 +304,17 @@ CREATE TABLE `report_cards` (
 --
 
 INSERT INTO `report_cards` (`id`, `student_id`, `semester`, `tahun_ajar`, `sakit`, `izin`, `alfa`, `prestasi`, `ket_prestasi`, `catatan`, `ekskul`, `nilai_ekskul`, `ket_ekskul`, `created_at`, `updated_at`) VALUES
-(24, 107, 'Level 5 Semester 2', '2024/2025', 2, 3, NULL, '[\"Juara 2 Cerdas Cermat\",null]', '[null,null]', NULL, '\"[\\\"Pramuka\\\",null]\"', '\"[\\\"95\\\",null]\"', '\"[\\\"Sangat Baik\\\",null]\"', '2024-12-13 00:21:30', '2025-01-05 19:29:10'),
-(25, 107, 'Level 4 Semester 1', '2022/2023', NULL, 2, 3, NULL, '', NULL, '\"[\\\"Pramuka\\\",\\\"Silat\\\"]\"', '\"[\\\"90\\\",\\\"70\\\"]\"', '\"[\\\"Sangat Baik\\\",\\\"Kurang Baik\\\"]\"', '2024-12-16 02:28:40', '2024-12-16 03:24:27'),
 (37, 134, 'Level 6 Semester 1', '2023/2024', 2, 3, 1, '[]', '[]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 21:23:59', '2025-01-21 02:44:38'),
-(39, 107, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:02:10', '2025-01-05 19:32:05'),
-(42, 107, 'Level 6 Semester 1', '2021/2022', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:21:53', '2025-01-05 19:31:29'),
-(43, 107, 'Level 5 Semester 1', '2022/2023', 3, 2, 1, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-02 23:41:45', '2025-01-02 23:41:45'),
 (45, 134, 'Level 5 Semester 1', '2022/2023', 2, 2, NULL, '[\"Juara 3 Kompetisi Silat\"]', '[]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:00:40', '2025-01-12 23:53:25'),
 (46, 134, 'Level 5 Semester 2', '2023/2024', NULL, NULL, NULL, '[]', '[]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:01:49', '2025-01-12 23:55:03'),
 (47, 136, 'Level 5 Semester 1', '2023/2024', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:52:20', '2025-01-06 23:52:20'),
 (48, 136, 'Level 5 Semester 2', '2023/2024', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:54:14', '2025-01-06 23:54:14'),
 (49, 136, 'Level 6 Semester 1', '2023/2024', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:58:12', '2025-01-06 23:58:12'),
-(50, 136, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[null,null]', '[null,null]', NULL, '\"[null,null]\"', '\"[null,null]\"', '\"[null,null]\"', '2025-01-06 23:58:58', '2025-01-06 23:58:58'),
 (55, 135, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[\"Juara 1 Lomba Story Telling\",\"Juara 2 Cerdas Cermat\",\"Juara 3 Karate\"]', '[\"Kece badai\",\"lanjutkan!!\"]', NULL, NULL, NULL, NULL, '2025-01-12 03:31:34', '2025-01-21 01:33:14'),
 (56, 135, 'Level 6 Semester 1', '2023/2024', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-12 03:53:35', '2025-01-12 03:53:35'),
 (57, 135, 'Level 5 Semester 2', '2023/2024', NULL, NULL, NULL, '[\"Juara 1 Cerdas Cermat\",\"Juara 2 Lomba Story Telling\",\"Juara 3 Karate\"]', '[]', NULL, NULL, NULL, NULL, '2025-01-12 03:54:39', '2025-01-21 01:34:01'),
 (59, 135, 'Level 4 Semester 2', '2022/2023', NULL, NULL, NULL, '[\"Juara 1 Lomba MTQ\",\"Juara 2 Lomba Story Telling\",\"Juara 1 Cerdas Cermat\"]', '[\"Tingkat provinsi\"]', NULL, NULL, NULL, NULL, '2025-01-12 20:08:04', '2025-01-12 20:14:54'),
 (60, 135, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, '[\"Juara 1 Lomba Story Telling\",\"Juara 3 Karate\"]', '[]', NULL, NULL, NULL, NULL, '2025-01-12 20:15:53', '2025-01-12 20:16:21'),
-(61, 136, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-21 00:54:08', '2025-01-21 00:54:08'),
 (62, 136, 'Level 4 Semester 2', '2022/2023', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-21 01:10:14', '2025-01-21 01:10:14'),
 (63, 135, 'Level 5 Semester 1', '2022/2023', 1, 1, 1, '[\"Juara 1 Kompetisi Matematika\"]', '[]', 'Perkembangan anak sangat baik', NULL, NULL, NULL, '2025-01-21 01:30:46', '2025-01-21 01:32:02'),
 (64, 165, 'Level 4 Semester 1', '2021/2022', 2, 1, NULL, '[\"Juara 1 Lomba MTQ\"]', '[]', NULL, NULL, NULL, NULL, '2025-01-21 01:43:38', '2025-01-21 01:43:38'),
@@ -332,12 +323,11 @@ INSERT INTO `report_cards` (`id`, `student_id`, `semester`, `tahun_ajar`, `sakit
 (68, 197, 'Level 5 Semester 2', '2023/2024', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-23 20:02:07', '2025-01-23 20:02:07'),
 (69, 197, 'Level 6 Semester 1', '2023/2024', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-23 20:02:54', '2025-01-23 20:02:54'),
 (70, 197, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-23 20:03:36', '2025-01-23 20:03:36'),
-(71, 182, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, '[\"Juara 3 Lomba Story Telling\"]', '[]', NULL, NULL, NULL, NULL, '2025-01-29 13:11:54', '2025-01-29 13:11:54'),
+(71, 182, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, '[\"Juara 3 Lomba Story Telling\"]', '[]', NULL, NULL, NULL, NULL, '2025-01-29 13:11:54', '2025-05-21 09:19:48'),
 (72, 182, 'Level 4 Semester 2', '2022/2023', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-29 13:35:10', '2025-01-29 13:35:10'),
 (73, 182, 'Level 5 Semester 1', '2022/2023', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-29 13:35:49', '2025-01-29 13:35:49'),
 (74, 182, 'Level 5 Semester 2', '2023/2024', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-29 13:36:33', '2025-01-29 13:36:33'),
 (75, 182, 'Level 6 Semester 1', '2023/2024', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-29 13:37:11', '2025-01-29 13:37:11'),
-(76, 182, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-29 13:37:50', '2025-01-29 13:37:50'),
 (77, 134, 'Level 4 Semester 1', '2021/2022', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-29 19:18:32', '2025-01-29 19:18:32'),
 (78, 134, 'Level 4 Semester 2', '2022/2023', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-29 19:19:01', '2025-01-29 19:19:01'),
 (79, 134, 'Level 6 Semester 2', '2024/2025', NULL, NULL, NULL, '[]', '[]', NULL, NULL, NULL, NULL, '2025-01-29 20:00:18', '2025-01-29 20:00:18'),
@@ -363,26 +353,6 @@ CREATE TABLE `report_card_subjects` (
 --
 
 INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai`) VALUES
-(29, 24, 1, 86),
-(30, 24, 3, 85),
-(31, 24, 4, 90),
-(32, 24, 5, 99),
-(33, 24, 6, 91),
-(34, 24, 7, 84),
-(35, 24, 8, 85),
-(36, 24, 9, 88),
-(37, 24, 10, 80),
-(38, 24, 11, 90),
-(43, 25, 1, 70),
-(44, 25, 3, 98),
-(45, 25, 4, 65),
-(46, 25, 5, 50),
-(47, 25, 6, 90),
-(48, 25, 7, 99),
-(49, 25, 8, 97),
-(50, 25, 9, 98),
-(51, 25, 10, 80),
-(52, 25, 11, 81),
 (183, 37, 1, 85),
 (184, 37, 3, 86),
 (185, 37, 4, 87),
@@ -393,36 +363,6 @@ INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai
 (190, 37, 9, 87),
 (191, 37, 10, 85),
 (192, 37, 11, 85),
-(211, 39, 1, 1),
-(212, 39, 3, 1),
-(213, 39, 4, 1),
-(214, 39, 5, 1),
-(215, 39, 6, 1),
-(216, 39, 7, 1),
-(217, 39, 8, 1),
-(218, 39, 9, 1),
-(219, 39, 10, 1),
-(220, 39, 11, 1),
-(253, 42, 1, 2),
-(254, 42, 3, 22),
-(255, 42, 4, 2),
-(256, 42, 5, 2),
-(257, 42, 6, 2),
-(258, 42, 7, 2),
-(259, 42, 8, 2),
-(260, 42, 9, 2),
-(261, 42, 10, 2),
-(262, 42, 11, 2),
-(267, 43, 1, 85),
-(268, 43, 3, 87),
-(269, 43, 4, 89),
-(270, 43, 5, 90),
-(271, 43, 6, 88),
-(272, 43, 7, 87),
-(273, 43, 8, 86),
-(274, 43, 9, 90),
-(275, 43, 10, 92),
-(276, 43, 11, 90),
 (295, 45, 1, 80),
 (296, 45, 3, 86),
 (297, 45, 4, 87),
@@ -473,16 +413,6 @@ INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai
 (358, 49, 9, 85),
 (359, 49, 10, 87),
 (360, 49, 11, 88),
-(365, 50, 1, 87),
-(366, 50, 3, 85),
-(367, 50, 4, 86),
-(368, 50, 5, 90),
-(369, 50, 6, 99),
-(370, 50, 7, 91),
-(371, 50, 8, 85),
-(372, 50, 9, 86),
-(373, 50, 10, 87),
-(374, 50, 11, 88),
 (420, 55, 1, 85),
 (421, 55, 3, 86),
 (422, 55, 4, 85),
@@ -533,16 +463,6 @@ INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai
 (477, 60, 9, 89),
 (478, 60, 10, 93),
 (479, 60, 11, 85),
-(480, 61, 1, 89),
-(481, 61, 3, 85),
-(482, 61, 4, 87),
-(483, 61, 5, 90),
-(484, 61, 6, 88),
-(485, 61, 7, 89),
-(486, 61, 8, 87),
-(487, 61, 9, 92),
-(488, 61, 10, 83),
-(489, 61, 11, 88),
 (490, 62, 1, 90),
 (491, 62, 3, 95),
 (492, 62, 4, 92),
@@ -673,16 +593,6 @@ INSERT INTO `report_card_subjects` (`id`, `report_card_id`, `subject_id`, `nilai
 (639, 75, 9, 95),
 (640, 75, 10, 96),
 (641, 75, 11, 95),
-(642, 76, 1, 98),
-(643, 76, 3, 97),
-(644, 76, 4, 95),
-(645, 76, 5, 96),
-(646, 76, 6, 94),
-(647, 76, 7, 91),
-(648, 76, 8, 98),
-(649, 76, 9, 99),
-(650, 76, 10, 97),
-(651, 76, 11, 98),
 (652, 77, 1, 89),
 (653, 77, 3, 87),
 (654, 77, 4, 88),
@@ -848,7 +758,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('hFP8OmLuEK8QLskBjCje7yv0nfzjrhN6w5QV0jRl', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiVXZOM0VQVE5md2szM0ZKYWJKU0VCSVV3MWcySTBsQW52aUpaV3h3QSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMS9sb2dpbiI7fX0=', 1747326535);
+('gcSA0see4mxhSwmWvKVSuS5PDuz1c5hmovBW6zaw', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidm0xZktvOWtabGpnT0JQNGZ3aXAzcUUwYlZ4Z3NMS21YcWpmVWladyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMS9sb2dpbiI7fX0=', 1747844513);
 
 -- --------------------------------------------------------
 
@@ -1274,7 +1184,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `graduation_grades`
 --
 ALTER TABLE `graduation_grades`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -1304,19 +1214,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `ppdb_grades`
 --
 ALTER TABLE `ppdb_grades`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `report_cards`
 --
 ALTER TABLE `report_cards`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `report_card_subjects`
 --
 ALTER TABLE `report_card_subjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=723;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=733;
 
 --
 -- AUTO_INCREMENT for table `roles`
