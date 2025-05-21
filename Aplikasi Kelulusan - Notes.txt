@@ -17,6 +17,6 @@ BUG & REVISI :
 1. Import rapor semester belum bisa ke input
 2. Show daftar siswa dengan nilai rapor tertinggi di dashboard ✔
 3. Nama wali kelas pada kolom ttd pdf belum muncul ✔
-4. Export Surat Keterangan Nilai Rapor dalam bentuk excel (IDUKA)
+4. Export Surat Keterangan Nilai Rapor dalam bentuk excel (IDUKA) ✔
 5. Print pdf rapor semester, nilai hasil ujian, dan surat keterangan nilai rapor sekaligus per kelas (IDUKA)
 6. Hapus logo aliya di kertas rapor ✔

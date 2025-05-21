@@ -100,7 +100,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::get('ppdb_grades/{studentId}', [AdminPPDBGradeController::class, 'show'])->name('admin.ppdb_grades.show');
         // Route untuk mencetak ijazah ppdb sesuai dengan ID siswa
         Route::get('ppdb_grades/{studentId}/export-pdf', [AdminPPDBGradeController::class, 'exportPdf'])->name('admin.ppdb_grades.export-pdf');
-
+        Route::get('ppdb-grades/{studentId}/export-excel', [AdminPPDBGradeController::class, 'exportExcel'])->name('admin.ppdb_grades.export-excel');
 
         // Import & Export routes Admin
         Route::post('students/import', [AdminStudentController::class, 'import'])->name('admin.students.import');
@@ -163,6 +163,7 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
         Route::get('ppdb_grades/{studentId}', [UserPPDBGradeController::class, 'show'])->name('user.ppdb_grades.show');
         // Route untuk mencetak ijazah ppdb sesuai dengan ID siswa
         Route::get('ppdb_grades/{studentId}/export-pdf', [UserPPDBGradeController::class, 'exportPdf'])->name('user.ppdb_grades.export-pdf');
+        Route::get('ppdb-grades/{studentId}/export-excel', [UserPPDBGradeController::class, 'exportExcel'])->name('user.ppdb_grades.export-excel');
 
         // Import & Export routes User
         Route::post('students/import', [UserStudentController::class, 'import'])->name('user.students.import');

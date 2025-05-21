@@ -281,87 +281,31 @@
                         </div>
 
                         <div class="row">
-                            <!-- Tabel Siswa dengan Nilai Ujian Tertinggi -->
-                            <div class="col-6 mb-3 px-md-3">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa dengan Nilai Ujian
-                                            Tertinggi</h6>
+                            <!-- Grafik Graduation -->
+                            <div class="col-md-12 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header">
+                                        <h6 class="m-0 font-weight-bold text-primary text-center">Daftar Siswa dengan
+                                            Nilai Ujian Tertinggi</h6>
                                     </div>
                                     <div class="card-body">
-                                        <div class="table-responsive" style="overflow-x: hidden;">
-                                            <table class="table table-bordered" id="dataTableIjazah" width="100%"
-                                                cellspacing="0">
-                                                <colgroup>
-                                                    <col style="width: 10%;"> <!-- Lebar kolom No -->
-                                                    <col style="width: 50%;"> <!-- Lebar kolom Nama Siswa -->
-                                                    <col style="width: 20%;"> <!-- Lebar kolom Kelas -->
-                                                    <col style="width: 20%;"> <!-- Lebar kolom Rata-rata -->
-                                                </colgroup>
-                                                <thead>
-                                                    <tr>
-                                                        <th>No</th>
-                                                        <th>Nama Siswa</th>
-                                                        <th>Kelas</th>
-                                                        <th>Rata-rata</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($topGraduationScores as $index => $student)
-                                                        <tr>
-                                                            <td>{{ $index + 1 }}</td>
-                                                            <td class="nama-siswa">{{ $student->nama }}</td>
-                                                            <td>{{ $student->kelas }}</td>
-                                                            <td>{{ number_format($student->final_average, 2) }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Tabel Siswa dengan Nilai PPDB Tertinggi -->
-                            <div class="col-6 mb-3 px-md-3">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa dengan Nilai
-                                            Rapor Tertinggi</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive" style="overflow-x: hidden;">
-                                            <table class="table table-bordered" id="dataTablePPDB" width="100%"
-                                                cellspacing="0">
-                                                <colgroup>
-                                                    <col style="width: 10%;">
-                                                    <col style="width: 45%;">
-                                                    <col style="width: 15%;">
-                                                    <col style="width: 30%;">
-                                                </colgroup>
-                                                <thead>
-                                                    <tr>
-                                                        <th>No</th>
-                                                        <th>Nama Siswa</th>
-                                                        <th>Kelas</th>
-                                                        <th>Total Rata-rata</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($topPPDBScores as $index => $student)
-                                                        <tr>
-                                                            <td>{{ $index + 1 }}</td>
-                                                            <td>{{ $student->nama }}</td>
-                                                            <td>{{ $student->kelas }}</td>
-                                                            <td>{{ number_format($student->total_average, 2) }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        <canvas id="graduationChart" height="70"></canvas>
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- Grafik PPDB -->
+                            <div class="col-md-12 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header">
+                                        <h6 class="m-0 font-weight-bold text-primary text-center">Daftar Siswa dengan
+                                            Nilai Rapor Tertinggi</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="ppdbChart" height="70"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -381,25 +325,58 @@
         <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <!-- DataTables -->
         <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
         <script>
-            $(document).ready(function() {
-                $('#dataTableIjazah').DataTable({
-                    searching: false, // Matikan pencarian otomatis karena sudah ada filter manual
-                    paging: false, // Nonaktifkan pagination otomatis
-                    ordering: false, // Tetap aktifkan fitur sorting
-                    info: false,
-                });
+            const graduationLabels = {!! json_encode($topGraduationScores->map(fn($s) => $s->nama . ' (' . $s->kelas . ')')) !!};
+            const graduationData = {!! json_encode($topGraduationScores->pluck('final_average')) !!};
 
-                $('#dataTablePPDB').DataTable({
-                    searching: false,
-                    paging: false,
-                    ordering: false,
-                    info: false
-                });
+            const ppdbLabels = {!! json_encode($topPPDBScores->map(fn($s) => $s->nama . ' (' . $s->kelas . ')')) !!};
+            const ppdbData = {!! json_encode($topPPDBScores->pluck('total_average')) !!};
+
+            const graduationChart = new Chart(document.getElementById('graduationChart'), {
+                type: 'bar',
+                data: {
+                    labels: graduationLabels,
+                    datasets: [{
+                        label: 'Rata-rata Ujian',
+                        data: graduationData,
+                        backgroundColor: '#4e73df'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    indexAxis: 'y'
+                }
+            });
+
+            const ppdbChart = new Chart(document.getElementById('ppdbChart'), {
+                type: 'bar',
+                data: {
+                    labels: ppdbLabels,
+                    datasets: [{
+                        label: 'Total Rata-rata Rapor',
+                        data: ppdbData,
+                        backgroundColor: '#1cc88a'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    indexAxis: 'y'
+                }
             });
         </script>
 </body>

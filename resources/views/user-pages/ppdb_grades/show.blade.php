@@ -165,9 +165,23 @@
                     <!-- Tombol Kembali -->
                     <div class="form-group text-center">
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
-                        <a href="{{ route('user.ppdb_grades.export-pdf', ['studentId' => $student->id]) }}"
-                            class="btn btn-success">
-                            <i class="fas fa-print"></i> Cetak Nilai</a>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Export
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                    href="{{ route('user.ppdb_grades.export-pdf', ['studentId' => $student->id]) }}">
+                                    <i class="fas fa-file-pdf text-danger"></i> PDF
+                                </a>
+                                <a class="dropdown-item"
+                                    href="{{ route('user.ppdb_grades.export-excel', ['studentId' => $student->id]) }}">
+                                    <i class="fas fa-file-excel text-success"></i> Excel
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
