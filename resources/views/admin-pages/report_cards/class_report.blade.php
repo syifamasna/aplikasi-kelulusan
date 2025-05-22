@@ -167,10 +167,6 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h6 class="m-0 font-weight-bold text-primary">Tabel Siswa Kelas 6</h6>
-                            <!-- Tombol Import -->
-                            <div class="tombol">
-                                <button type="button" class="btn btn-success ml-2 mb-2" data-toggle="modal" data-target="#importReportCardModal">Import Excel</button>
-                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -219,36 +215,6 @@
 
     </div>
     <!-- End of Page Wrapper -->
-
-    <!-- Modal Impor -->
-    <div class="modal fade" id="importReportCardModal" tabindex="-1" role="dialog" aria-labelledby="importReportCardModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="importReportCardModalLabel">Import Data Rapor</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="importForm" action="{{ route('admin.report_cards.import') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="semester" value="6.1">
-                    <input type="hidden" name="tahun_ajar" value="2024/2025">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="file">Pilih File Excel:</label>
-                            <input type="file" name="file" id="file" class="form-control" accept=".xlsx,.xls" required>
-                            <small id="fileError" class="text-danger" style="display: none;">Harap pilih file sebelum mengimpor.</small>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-success">Import</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">

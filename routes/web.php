@@ -82,8 +82,6 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::put('/report_cards/{student_id}/{report_card_id}', [AdminReportCardController::class, 'update'])->name('admin.report_cards.update');
         // Rute untuk menghapus nilai rapor siswa
         Route::delete('report_cards/{id}', [AdminReportCardController::class, 'destroy'])->name('admin.report_cards.destroy');
-        // Rute untuk mengimpor nilai rapor
-        Route::post('report_cards/import', [AdminReportCardController::class, 'import'])->name('admin.report_cards.import');
         // Rute untuk mencetak nilai rapor siswa sesuai dengan ID rapor
         Route::get('report_cards/{student}/show/{reportCard}/export-pdf', [AdminReportCardController::class, 'exportPdf'])->name('admin.report_cards.export-pdf');
 
@@ -147,8 +145,6 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
         Route::put('/report_cards/{student_id}/{report_card_id}', [UserReportCardController::class, 'update'])->name('user.report_cards.update');
         // Rute untuk menghapus nilai rapor siswa
         Route::delete('report_cards/{id}', [UserReportCardController::class, 'destroy'])->name('user.report_cards.destroy');
-        // Rute untuk mengimpor nilai rapor
-        Route::post('report_cards/import', [UserReportCardController::class, 'import'])->name('user.report_cards.import');
         // Rute untuk mencetak nilai rapor siswa sesuai dengan ID rapor
         Route::get('report_cards/{student}/show/{reportCard}/export-pdf', [UserReportCardController::class, 'exportPdf'])->name('user.report_cards.export-pdf');
 
